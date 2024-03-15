@@ -1,0 +1,193 @@
+body {
+  /* background-color: #e8eaed; */
+}
+.header {
+  background-color: rgb(223, 226, 255);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+#logo-header {
+  margin-left: 20px;
+  padding: 10px;
+}
+#info-sv {
+  margin: 20px;
+}
+/* Sidebar */
+.sidebar {
+  /* padding-top: 90px; */
+  margin-top: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 100%;
+  width: fit-content;
+  /* background-color: aquamarine; */
+}
+aside {
+}
+/**********************************************************/
+html {
+  /* Nasconde la barra di scorrimento verticale */
+  /* overflow-y: hidden; */
+}
+.retro-mainView > div {
+  min-height: calc(100vh - 3.5rem);
+}
+/**********************************************************/
+#datatime {
+  color: rgba(255, 255, 255, 0.75);
+  padding-left: 5rem;
+}
+/**********************************************************/
+/* Formattazione barra #my-sidebar */
+@media (min-width: 768px) {
+  #my-sidebar {
+    flex: 0 0 11rem; /* Three values: flex-grow | flex-shrink | flex-basis (width)*/
+    min-width: 11rem;
+    height: 100%;
+  }
+}
+#my-sidebar a:hover {
+  background-color: #eee;
+}
+#my-sidebar .retro-subMemu {
+  font-size: 0.875rem; /* 14px, invece .small = 85% */
+}
+#my-sidebar a.nav-link {
+  /* style="font-weight: 700; == */
+  font-weight: 600 !important;
+}
+
+#myAccordion {
+  /* max-height: calc(100vh - 3.5rem); */
+  overflow-y: auto;
+}
+#user[connected="true"] > i {
+  color: lime;
+}
+/**********************************************************/
+/********** BS Exstension ************/
+.mt-6 {
+  margin-top: 3.5rem !important;
+}
+
+/*************************************/
+
+.retro-navbar {
+  /*min-height: 50px;  height = 55.99 */
+  background-color: #006699 !important;
+}
+.retro-navbar .navbar-nav .dropdown-menu {
+  position: absolute !important;
+}
+.retro-navbar .navbar-nav .nav-link .badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.retro-bg-retro {
+  background-color: #006699 !important;
+}
+.retro-noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+}
+/************** BS Retro Toggler ****************/
+.retro-navbar-toggler {
+  padding-right: 0;
+  border-color: transparent !important;
+}
+.retro-navbar-toggler:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+.retro-navbar-toggler:focus {
+  color: rgba(255, 255, 255, 1);
+  outline: 1px none;
+}
+.retro-navbar-toggler > .navbar-toggler-icon {
+  background-image: none !important;
+}
+
+/* main */
+.main {
+  margin-top: 10px;
+}
+
+.content {
+  /* margin-top: 10px; */
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.icon-dropdown {
+  margin-right: 10px;
+}
+
+/* pagination */
+.pagination {
+  /* display: inline-block; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* margin-bottom: 10px; */
+  padding-bottom: 10px;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 5px 10px;
+  text-decoration: none;
+
+  transition: background-color 0.3s;
+}
+
+.pagination a.active {
+  background-color: #3836b4;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 5px;
+  height: auto;
+  background-color: rgb(223, 226, 255);
+}
+
+.profile {
+  margin-top: 10px;
+  padding: 20px;
+  /* background-color: rgb(223, 226, 255); */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: flex;
+}
+.prf-left {
+  text-align: center;
+}
+
+/* Seach */
+.search {
+}
+
+/* input[type="text"] {
+  padding: 10px 7px !important;
+} */
+.breadcrumb {
+  margin: 0 !important;
+}
+#nav-search {
+  background-color: #e9ecef;
+}
