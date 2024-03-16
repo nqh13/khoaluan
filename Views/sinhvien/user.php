@@ -34,14 +34,14 @@
             <div class="form-group">
                 <div class="control-label"> <span>Chuyên ngành: <b>Hệ thống thông tin</b> </span> </div>
             </div>
-            <!-- <div>
-                                <a href="" class="btn btn-primary">Cập nhật thông tin</a>
-                            </div> -->
+            <div>
+                <a type="button" class="btn btn-success" href="?page=doithongtin">
+                    Cập nhật thông tin
+                </a>
+
+            </div>
         </div>
 
     </div>
 
-</div>
-</div>
-</div>
 </div>

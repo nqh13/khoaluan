@@ -176,6 +176,11 @@ footer {
 }
 .prf-left {
   text-align: center;
+  margin-top: 40px;
+  padding: 50px;
+  /* background-color: #dfe2ff; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
 }
 
 /* Seach */
@@ -190,4 +195,58 @@ footer {
 }
 #nav-search {
   background-color: #e9ecef;
+}
+
+/* Style báo cáo */
+.activityiconcontainer.assessment {
+  background-color: #007bff;
+}
+
+.activityiconcontainer {
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 0.7rem;
+}
+
+.page-context-header {
+  overflow: hidden;
+  padding: 0.25rem 0;
+  display: flex;
+}
+
+/* 
+  .path-mod-assign .gradingsummarytable,
+  .path-mod-assign .feedbacktable,
+  .path-mod-assign .lockedsubmission,
+  .path-mod-assign .submissionsummarytable {
+      margin-top: 1em;
+  } */
+
+.generaltable {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #1d2125;
+}
+
+/* Đổi pass */
+
+.doi-pass {
+  width: 30%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
+}
+.frm-changepass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
