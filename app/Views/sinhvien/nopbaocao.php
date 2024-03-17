@@ -1,7 +1,7 @@
 <style>
-.form-file {
-    padding-bottom: 10px;
-}
+    .form-file {
+        padding-bottom: 10px;
+    }
 </style>
 <div class="content p-3 mt-3">
     <header id="page-header" class="header-maxwidth d-print-none">
@@ -33,8 +33,7 @@
                 <span id="maincontent"></span>
                 <div class="activity-header" data-for="page-activity-header">
                     <span class="sr-only">Các yêu cầu hoàn thành</span>
-                    <div data-region="activity-information" data-activityname="NOP BAI TAP CA NHAN NGAY 1/3/24"
-                        class="activity-information">
+                    <div data-region="activity-information" data-activityname="NOP BAI TAP CA NHAN NGAY 1/3/24" class="activity-information">
 
 
                         <div data-region="activity-dates" class="activity-dates">

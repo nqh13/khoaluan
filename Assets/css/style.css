@@ -250,3 +250,17 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
+/* .title-them {
+  margin-top: 15px;
+} */
+.formdetai {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
+.btndetai {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  place-self: center;
+}
