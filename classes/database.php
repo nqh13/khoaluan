@@ -4,102 +4,70 @@ define("DB_USER", "root");
 define("DB_PASS", "");
 define("DB_NAME", "db_khoaluan");
 
-?>
-
-
-<?php
 class Database
 {
-    public $host   = DB_HOST;
-    public $user   = DB_USER;
-    public $pass   = DB_PASS;
-    public $dbname = DB_NAME;
-    public $link;
-    public $error;
+    private $host = DB_HOST;
+    private $user = DB_USER;
+    private $pass = DB_PASS;
+    private $dbname = DB_NAME;
+    private $dbh;
+    private $error;
+
     public function __construct()
     {
-        $this->connectDB();
-    }
-
-    private function connectDB()
-    {
-        $this->link = new mysqli(
-            $this->host,
-            $this->user,
-            $this->pass,
-            $this->dbname
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $options = array(
+            PDO::ATTR_PERSISTENT    => true,
+            PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
         );
-        if (!$this->link) {
-            $this->error = "Connection fail" . $this->link->connect_error;
-            return false;
+
+        try {
+            $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+        } catch (PDOException $e) {
+            $this->error = $e->getMessage();
         }
     }
 
-    // Select or Read data
+    public function prepare($sql)
+    {
+        return $this->dbh->prepare($sql);
+    }
+
     public function select($query)
     {
-        $result = $this->link->query($query) or
-            die($this->link->error . __LINE__);
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return false;
-        }
+        $stmt = $this->dbh->query($query);
+        return $stmt;
     }
 
-    // Insert data
     public function insert($query)
     {
-        $insert_row = $this->link->query($query) or
-            die($this->link->error . __LINE__);
-        if ($insert_row) {
-            return $insert_row;
-        } else {
-            return false;
-        }
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
 
-    // Update data
     public function update($query)
     {
-        $update_row = $this->link->query($query) or
-            die($this->link->error . __LINE__);
-        if ($update_row) {
-            return $update_row;
-        } else {
-            return false;
-        }
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
 
-    // Delete data
     public function delete($query)
     {
-        $delete_row = $this->link->query($query) or
-            die($this->link->error . __LINE__);
-        if ($delete_row) {
-            return $delete_row;
-        } else {
-            return false;
-        }
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
+
     public function last_id()
     {
-        return $this->link->insert_id;
+        return $this->dbh->lastInsertId();
     }
 
     public function get_Numrow($query)
     {
-        $num_row = $this->link->query($query);
-
-        if ($num_row !== false) {
-
-            if ($num_row->num_rows > 0) {
-                return $result =  $num_row->num_rows;
-            } else {
-                return 0;
-            }
-        } else {
-            return false;
-        }
+        $stmt = $this->dbh->query($query);
+        return $stmt->rowCount();
     }
 }

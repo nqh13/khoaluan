@@ -8,16 +8,20 @@
                         <a class="nav-link" href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a>
                     </li>
                     <li class="nav-item border-bottom">
-                        <a class="nav-link accordion-toggle collapsed" data-toggle="collapse" data-target="#item-2"><i class="fas fa-university fa-fw"></i> Quản lý đề tài <i class="fa-solid fa-caret-down"></i></a>
-                        <div id="item-2" class="collapse">
+                        <a class="nav-link accordion-toggle collapsed" data-toggle="collapse" data-target="#item-2"><i
+                                class="fas fa-university fa-fw"></i> Quản lý đề tài <i
+                                class="fa-solid fa-caret-down"></i></a>
+                        <div id="item-2" class="collapse show">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link pl-5 accordion-toggle collapsed" href="?page=danhsach" data-parent="#item-2">
+                                    <a class="nav-link pl-5 accordion-toggle collapsed" href="?page=danhsach"
+                                        data-parent="#item-2">
                                         Danh sách đề tài</a>
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link pl-5 accordion-toggle collapsed" href="?page=themdetai" data-parent="#item-2">Thêm đề tài mới</a>
+                                    <a class="nav-link pl-5 accordion-toggle collapsed" href="?page=themdetai"
+                                        data-parent="#item-2">Thêm đề tài mới</a>
 
                                 </li>
 
@@ -26,8 +30,9 @@
                     </li>
                     <li class="nav-item border-bottom">
                         <a class="nav-link accordion-toggle collapsed" data-toggle="collapse" data-target="#item-3">
-                            <i class="fas fa-chart-line fa-fw"></i> Quản lý đăng ký đề tài<i class="fa-solid fa-caret-down ml-1"></i></a>
-                        <div id="item-3" class="collapse">
+                            <i class="fas fa-chart-line fa-fw"></i> Quản lý đăng ký đề tài<i
+                                class="fa-solid fa-caret-down ml-1"></i></a>
+                        <div id="item-3" class="collapse show">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link pl-5" href="?page=danhsachdk">Sinh viên đăng ký đề tài</a>
@@ -40,8 +45,9 @@
                         </div>
                     </li>
                     <li class="nav-item border-bottom">
-                        <a class="nav-link accordion-toggle collapsed" data-toggle="collapse" data-target="#item-4"><i class="fa-solid fa-user"></i> Tài khoản <i class="fa-solid fa-caret-down"></i></a>
-                        <div id="item-4" class="collapse">
+                        <a class="nav-link accordion-toggle collapsed" data-toggle="collapse" data-target="#item-4"><i
+                                class="fa-solid fa-user"></i> Tài khoản <i class="fa-solid fa-caret-down"></i></a>
+                        <div id="item-4" class="collapse show">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link pl-5" href="?page=thongtin">Xem thông tin</a>

@@ -4,6 +4,27 @@
     if (!isset($_SESSION['ma_nguoidung']) || $_SESSION['vaitro'] != '2') {
         header('location: ../index.php');
     }
+
+    require_once('./../classes/topic.php');
+    $topic = new Topic();
+
+    if (isset($_POST['them'])) {
+        $_POST['ma_GV'] = $_SESSION['ma_nguoidung'];
+
+        $topic->insertTopic($_POST);
+        echo '<div>Đề tài đã được thêm</div>';
+        header('location: index.php?page=danhsach');
+        exit();
+    }
+
+    if (isset($_POST['update']) && isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $topic->updateTopic($_POST, $id);
+        echo '<div>Đề tài đã được cập nhật</div>';
+        header('location: index.php?page=danhsach');
+        exit();
+    }
+
     ?>
 
 
@@ -79,9 +100,44 @@
              <div class="col-lg-10  col-md-10 col-sm-12  main">
                  <nav class="d-flex justify-content-between align-items-center" id="nav-search">
                      <ol class="breadcrumb">
-                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                         <li class="breadcrumb-item"><a href="#">Sinh vien</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">Data</li>
+                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                         <li class="breadcrumb-item"><a href="index.php?page=<?php echo $page; ?>">
+                                 <?php
+                                    switch ($page) {
+                                        case 'danhsach':
+                                            echo ('Trang chủ');
+                                            break;
+                                        case 'themdetai':
+                                            echo ('Thêm mới');
+                                            break;
+                                        case 'capnhat':
+                                            echo ('Cập nhật');
+                                            break;
+                                        case 'thaoluan':
+                                            echo ('Thảo luận');
+                                            break;
+                                        case 'doipass':
+                                            echo ("Đổi mật khẩu");
+                                            break;
+                                        case 'doithongtin':
+                                            echo ("Đổi thông tin");
+                                            break;
+                                        case 'thongtin':
+                                            echo ("Thông tin");
+                                            break;
+                                        case 'thembai':
+                                            echo ("Nộp bài");
+                                            break;
+
+                                        default:
+                                            echo "404 NOT FOUND! ";
+                                            break;
+                                    }
+
+                                    ?>
+
+                             </a></li>
+
                      </ol>
                      <form action="" class="d-flex mr-3">
                          <input class="form-control me-2" name="key" type="text" placeholder="search" required />

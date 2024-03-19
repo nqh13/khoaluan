@@ -1,3 +1,10 @@
+<?php
+
+
+$detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
+
+
+?>
 <div class="content">
     <h5 class="text-center text-primary p-3 font-weight-bold">DANH SÁCH ĐỀ TÀI KHÓA LUẬN</h5>
     <div class=" p-3">
@@ -9,47 +16,48 @@
                     <th scope="col" style="width: 5%">LOẠI</th>
                     <th scope="col" style="width: 20%">MÔ TẢ</th>
                     <th scope="col" style="width: 20%">YÊU CẦU</th>
-                    <th scope="col" style="width: 10%">KIẾN THỨC</th>
-                    <th scope="col" style="width: 5%">KỸ NĂNG</th>
+                    <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
+
 
                     <th scope="col" style="width: 5%"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th class="text-center" scope="row">1</th>
-                    <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
-                    <td class="text-center" style="width: 15%">KLTN - ĐH</td>
-                    <td style="width: 10%">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nam
-                        fugiat accusamus quam beatae provident laudantium nobis, mollitia
-                        sapiente in veritatis totam, hic vitae amet ipsam quia asperiores
-                        minima qui.
-                    </td>
-                    <td style="width: 15%">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum rem
-                        commodi tenetur dicta, libero quisquam ipsum quod totam amet
-                        similique quasi quis excepturi delectus id alias velit debitis
-                        asperiores. Quae?L
-                    </td>
-                    <td class="text-center" style="width: 10%">PHP, MySQL</td>
-                    <td style="width: 10%">
-                        Hệ thống website xử lý công việc có độ bảo mật cao
-                    </td>
+                <?php
+                $stt = 1;
+                while ($row = $detaiList->fetch(PDO::FETCH_ASSOC)) {
 
-                    <td style="width: 10%">
-                        <a type="button" class="btn btn-outline-primary btn-sm" href="?page=capnhat">
-                            <i class="fas fa-edit"></i>
-                            Cập nhật
-
-                        </a>
-                        <button type="button" class="mt-3   btn btn-outline-danger btn-sm">
-                            <i class="fas fa-cancel"></i>
-                            Xóa
-
-                        </button>
-                    </td>
-                </tr>
+                    echo '
+                            <tr>
+                                <th class="text-center" scope="row">' . $stt++ . '</th>
+                                <td class="text-center" style="width: 5%">' . $row['tendetai'] . '</td>
+                                <td class="text-center" style="width: 15%">' . $row['tenloai'] . '</td>
+                                <td style="width: 10%">
+                                ' . $row['mota'] . '
+                                </td>
+                                <td style="width: 15%">
+                                ' . $row['yeucau'] . '
+                                </td>
+                                <td class="text-center" style="width: 10%">' . $row['kienthuc'] . '</td>
+                              
+                                <td style="width: 10%">
+                                <a type="button" class="btn btn-outline-primary btn-sm" href="?page=capnhat&&id=' . $row['ma_detai'] . '">
+                                    <i class="fas fa-edit"></i>
+                                    Cập nhật
+        
+                                </a>
+                                <a type="button" class="mt-3   btn btn-outline-danger btn-sm" href=""id=' . $row['ma_detai'] . '"
+                                    onclick="deleteTopic(' . $row['ma_detai'] . ')"
+                                >
+                                    <i class="fas fa-cancel"></i>
+                                    Xóa
+        
+                                </a>
+                            </td>
+                            </tr>
+                            ';
+                }
+                ?>
 
             </tbody>
         </table>
@@ -65,3 +73,10 @@
         <a href="#">&raquo;</a>
     </div>
 </div>
+<script>
+function deleteTopic(id) {
+    if (confirm("Bạn có chắc muốn xóa đề tài này?")) {
+
+    }
+}
+</script>

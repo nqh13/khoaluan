@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <div class="content mt-1">
     <div class="p-3 border-bottom">
         <h5 class="text-primary text-center font-weight-bold ">THÊM ĐỀ TÀI MỚI</h5>
@@ -20,18 +24,14 @@
             <small id="erMoTa" class="form-text "></small>
         </div>
         <div class="form-group">
-            <label class="font-weight-bold" for="">Kiến thức</label>
+            <label class="font-weight-bold" for="">Kiến thức & Kỹ Năng</label>
             <input type="text" class="form-control" name="kienthuc" id="kienthuc" aria-describedby="helpId" placeholder="Kiến thức thực hiện đề tài" value="">
             <small id="erGia" class="form-text "></small>
         </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="">Kỹ năng</label>
-            <input type="text" class="form-control" name="kynang" id="kynang" aria-describedby="helpId" placeholder="Kỹ năng phục vụ đề tài" value="">
-            <small id="erChiPhi" class="form-text "></small>
-        </div>
+
         <div class="form-group">
             <label class="font-weight-bold" for="">Số lượng</label>
-            <input type="number" class="form-control" name="soluong" id="soluong" placeholder="Số lượng sinh viên có thể đăng ký" aria-describedby="soluongHelpId">
+            <input type="number" class="form-control" name="soluong_SV" id="soluong_SV" placeholder="Số lượng sinh viên có thể đăng ký" aria-describedby="soluongHelpId">
             <small id="erFile" class="form-text "></small>
         </div>
 
