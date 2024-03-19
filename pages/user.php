@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="row profile">
-        <div class="col-lg-4 col-md-4 col-sm-12 prf-left">
+        <!-- <div class="col-lg-4 col-md-4 col-sm-12 prf-left">
             <div>
-                <img src="./Uploads/avt.jpg" alt="" style="height: 180px; width: 180px;">
+                <img src="./../Uploads/avt.jpg" alt="" style="height: 180px; width: 180px;">
             </div>
             <div class="form-group">
                 <div class="control-label"> <span>Mã số sinh viên: <b>19508461</b> </span> </div>
@@ -12,6 +12,17 @@
             </div>
 
 
+        </div> -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="user-block-2">
+                    <img class="img-fluid" src="./../Uploads/avt.jpg" style="height: 180px; width:180px"
+                        alt="user-header">
+                    <h5>NGUYỄN QUANG HÀ</h5>
+                    <h6>MSSV: 19508461</h6>
+                </div>
+
+            </div>
         </div>
 
         <div class="col-lg-8 col-md-8 col-sm-12 prf-right">

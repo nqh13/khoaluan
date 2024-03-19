@@ -1,9 +1,7 @@
 <?php
-    
-
 define("DB_HOST", "localhost");
-define("DB_USER", "user_kl");
-define("DB_PASS", "kltn@2024");
+define("DB_USER", "root");
+define("DB_PASS", "");
 define("DB_NAME", "db_khoaluan");
 
 ?>
@@ -105,11 +103,3 @@ class Database
         }
     }
 }
-
-
-
-
-
-
-
-?>

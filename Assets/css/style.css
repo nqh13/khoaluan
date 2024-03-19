@@ -264,3 +264,43 @@ footer {
   grid-column-end: 3;
   place-self: center;
 }
+
+/* Main Css */
+.card {
+  margin-bottom: 30px;
+  border: none;
+  -webkit-box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06),
+    0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+}
+.user-block-2 {
+  background-image: url("../../Uploads/user-block-2.jpg");
+  background-size: cover;
+  padding: 20px 0;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.user-block-2 img {
+  display: inline-block;
+  border: 5px solid rgba(251, 137, 101, 0.43);
+  border-radius: 50%;
+}
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+
+/* Validator css */
+.form-group.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-text {
+  color: #f33a58;
+}
+
+.form-control:hover {
+  border-color: #1dbfaf;
+}
