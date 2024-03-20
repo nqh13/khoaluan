@@ -27,4 +27,44 @@ class User
         // Trả về kết quả
         return $result;
     }
+    //Get information user
+    public function getUserInfo($id)
+    {
+        $sql = "SELECT * FROM tbl_users  
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien
+        JOIN tbl_chuyennganh ON tbl_users.ma_nganh = tbl_chuyennganh.ma_nganh
+        WHERE ma_nguoidung = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    //Update information user
+
+    public function updateUser($id, $data)
+    {
+        $sdt = $data['sdt'];
+        $email = $data['email'];
+        $diachi = $data['diachi'];
+
+        $sql = "UPDATE `tbl_users` SET  `sodienthoai` = :sdt, `email` = :email, `diachi` = :diachi 
+        WHERE `tbl_users`.`ma_nguoidung` = $id";
+
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindParam(':sdt', $sdt);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':diachi', $diachi);
+
+        $stmt->execute();
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Change password
+
 }

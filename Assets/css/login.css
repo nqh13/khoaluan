@@ -3,9 +3,10 @@
   padding: 0;
 }
 /* .wrapper {
-  background-color: #ffffff;
-  height: 800px;
+  background-color: #b02525;
+  height: fit-content;
   width: 100%;
+  border: #8b8e98 1px solid;
 } */
 .header-login {
   margin-top: 5px;

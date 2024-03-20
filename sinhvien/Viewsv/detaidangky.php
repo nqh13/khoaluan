@@ -1,22 +1,57 @@
+<?php
+require_once(__DIR__ . './../../classes/signUpTopic.php');
+$sign  = new SignUptopic();
+$result = $sign->getTopicSignUp($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+?>
 <div class="content">
-    <h5 class="text-center text-primary p-3">ĐỀ TÀI KHÓA LUẬN ĐÃ ĐĂNG KÝ</h5>
-    <div class="p-2">
-        <table class="table table-bordered">
-            <thead>
-                <tr class="text-center">
-                    <th style="width: 1%">STT</th>
-                    <th style="width: 10%">TÊN ĐỀ TÀI</th>
-                    <th style="width: 5%">LOẠI</th>
-                    <th style="width: 20%">MÔ TẢ</th>
-                    <th style="width: 20%">YÊU CẦU</th>
-                    <th style="width: 10%">KIẾN THỨC</th>
-                    <th style="width: 5%">KỸ NĂNG</th>
-                    <th style="width: 15%">GVHD</th>
-                    <th style="width: 10%">TRẠNG THÁI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+  <h5 class="text-center text-primary p-3">ĐỀ TÀI KHÓA LUẬN ĐÃ ĐĂNG KÝ</h5>
+  <div class="p-2">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="text-center">
+          <th style="width: 1%">STT</th>
+          <th style="width: 10%">TÊN ĐỀ TÀI</th>
+          <th style="width: 5%">LOẠI</th>
+          <th style="width: 20%">MÔ TẢ</th>
+          <th style="width: 20%">YÊU CẦU</th>
+          <th style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
+          <th style="width: 15%">GVHD</th>
+          <th style="width: 10%">TRẠNG THÁI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($result as $key => $value) {
+          echo '<tr>
+          <th class="text-center" scope="row">' . ($key + 1) . '</th>
+          <td class="text-center" style="width: 5%">' . $value['tendetai'] . '</td>
+          <td class="text-center" style="width: 15%">' . $value['tenloai'] . '</td>
+          <td style="width: 10%">
+          ' . $value['mota'] . '
+          </td>
+          <td style="width: 15%">
+            ' . $value['yeucau'] . '
+          </td>
+          <td class="text-center" style="width: 10%">' . $value['kienthuc'] . '</td>
+          
+          <td class="text-center" style="width: 15%">
+            ' . $value['hoten'] . '
+          </td>
+          <td class="text-center" style="width: 10%">
+            ' . $value['tentrangthai'] . '
+          </td>
+          <td style="width: 10%">
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              onclick="cancelTopic(' . $value['ma_dangky'] . ');"
+            >
+              <i class="fas fa-cancel"></i>
+              Hủy đăng ký
+            </button>
+          </td>
+        </tr>';
+        }
+        ?>
+        <!-- <tr>
                     <th class="text-center" scope="row">1</th>
                     <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
                     <td class="text-center" style="width: 5%">KLTN - ĐH</td>
@@ -43,9 +78,9 @@
                         <span>Đã khóa</span>
 
                     </td>
-                </tr>
+                </tr> -->
 
-            </tbody>
-        </table>
-    </div>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -18,71 +18,94 @@ jQuery(function ($) {
     $(".page-wrapper").addClass("toggled");
   });
 });
+//Sweat alert.
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 //Xóa đề tài.
 
-function changeStatus(id, value) {
-  $.ajax({
-    url: "handle/xulytrangthai.php",
-    method: "POST",
-    data: {
-      id: id,
-      value: value,
-    },
-    success: (data) => {
-      alert(data.trim());
-      window.location.reload();
-    },
-  });
+function handelDeleteTopic(id) {
+  var option = confirm("Bạn có muốn xoá đề tài này không?");
+  if (option === true) {
+    $.ajax({
+      url: "./../handle/xuly.php",
+      method: "Post",
+      data: {
+        id: id,
+        action: "delete",
+      },
+      success: function (data) {
+        Toast.fire({
+          icon: "success",
+          title: "xóa đề tài thành công!",
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 2000);
+      },
+    });
+  }
 }
 
-$(document).on("click", ".mamon", function () {
-  if (confirm("Bạn muốn đổi trạng thái món này?")) {
-    var id = $(this).data("idmon");
-    var status = getValue();
-    console.log(id, status);
-
-    changeStatus(id, status);
-  }
-});
-
-function getOrder(mapdm) {
+// Đăng ký đề tài
+function signUpTopic(id, ma_SV) {
   $.ajax({
     type: "POST",
-    url: "./handle/loadorder.php",
+    url: "./../sinhvien/handle/SignUpTopic.php",
     data: {
-      mapdm: mapdm,
-      act: "PDM",
+      action: "signUpTopic",
+      ma_detai: id,
+      ma_SV: ma_SV,
     },
     success: function (response) {
-      // location.reload();
-      $("#detail_order").html(response);
-      $("#exampleModalLabel").html("Chi tiết phiếu đặt món: " + mapdm);
+      alert("Đăng ký thành công!");
+      window.location.href = "index.php?page=detai";
     },
   });
 }
 
-$(document).on("click", ".detail_order", function () {
-  var ma = $(this).data("mapdm");
+// Hủy đề tài đã đăng ký.
+function cancelTopic(id) {
+  var cofirm = confirm("Bạn chắc chắn muốn hủy đề tài này?");
+  if (cofirm === true) {
+    $.ajax({
+      type: "POST",
+      url: "./../sinhvien/handle/SignUpTopic.php",
+      data: {
+        action: "cancelTopic",
+        ma_dangky: id,
+      },
+      success: function (response) {
+        alert("Đã hủy đăng ký đề tài!");
+        window.location.href = "index.php";
+      },
+    });
+  }
+}
 
-  getOrder(ma);
-});
+//Cập nhật thông tin cá nhân.
 
-// $.each($('.detail_order'), function(indexInArray, valueOfElement) {
-//   valueOfElement.addEventListener('click', (e) => {
-//     const mapdm = (e.target.dataset.mapdm);
-// $.ajax({
-//       type: "POST",
-//       url: "./handle/loadorder.php",
-//       data: {
-//         mapdm,
-//         act: 'PDM'
-//       },
-//       success: function(response) {
-//         // location.reload();
-//         $('#detail_order').html(response);
-//       }
-//     });
-
-//   })
-// });
+function updateInfoUser(id) {
+  var sdt = document.getElementById(id);
+  $.ajax({
+    type: "POST",
+    url: "./../sinhvien/handle/UserHandle.php",
+    data: {
+      action: "updateInfo",
+      id: id,
+    },
+    success: function (response) {
+      alert("Đã cập nhật!");
+      window.location.href = "index.php";
+    },
+  });
+}

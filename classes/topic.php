@@ -92,4 +92,15 @@ class Topic
         $stmt->execute();
         return $stmt;
     }
+    // Get topic to student
+
+
+    public function getTopicByStudent($ma_nganh)
+    {
+        $sql = "SELECT * FROM tbl_detai JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien JOIN tbl_chuyennganh ON tbl_khoavien.ma_khoavien = tbl_chuyennganh.ma_nganh JOIN tbl_loaidetai ON tbl_detai.loaidetai= tbl_loaidetai.id_loai WHERE tbl_detai.nganh = tbl_chuyennganh.ma_nganh AND tbl_chuyennganh.ma_nganh = :ma_nganh";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':ma_nganh', $ma_nganh);
+        $result->execute();
+        return $result;
+    }
 }

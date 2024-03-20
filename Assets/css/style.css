@@ -232,6 +232,11 @@ footer {
   margin-bottom: 1rem;
   color: #1d2125;
 }
+/* style active */
+.active {
+  color: #1d2125 !important;
+  background-color: #dfe2ff;
+}
 
 /* Đổi pass */
 
@@ -303,4 +308,9 @@ img {
 
 .form-control:hover {
   border-color: #1dbfaf;
+}
+
+/* Form thêm đề tài */
+#formthemdetai {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

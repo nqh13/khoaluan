@@ -1,13 +1,24 @@
+<?php
+
+require_once('./../classes/user.php');
+
+$user = new User();
+
+
+$info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
 <div class="content">
     <div class="container-fluid">
         <div class="row profile">
             <div class="col-lg-4 col-md-4 col-sm-12 prf-left" style="margin-top: 40px;">
                 <div class="card">
                     <div class="user-block-2">
-                        <img class="img-fluid" src="./../Uploads/avt.jpg" style="height: 180px; width:180px"
-                            alt="user-header">
-                        <h5>NGUYỄN QUANG HÀ</h5>
-                        <h6>MSSV: 19508461</h6>
+                        <img class="img-fluid" src="./../Uploads/<?php echo $info[0]['hinhanh']; ?>" style="height: 180px; width:180px" alt="user-header">
+                        <h5><?php echo  mb_strtoupper($info[0]['hoten'], 'UTF-8'); ?></h5>
+                        <h6>MSSV: <?php echo $info[0]['ma_nguoidung']; ?></h6>
                     </div>
 
                 </div>
@@ -21,28 +32,24 @@
                 <div class="border-bottom">
                     <h4 class="text-primary text-center ">CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
                 </div>
-                <form action="" method="post" class="" id="formSuaMon" style=" padding:50px"
-                    enctype="multipart/form-data">
+                <form action="./../sinhvien/handle/UserHandle.php" method="post" class="" id="formUpdateInfo" style=" padding:50px" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Số điện thoại:</label>
-                        <input type="text" class="form-control" name="sdt" id="sđt" aria-describedby="helpId" value=""
-                            placeholder="Nhập số điện thoại" required>
+                        <input type="text" class="form-control" name="sdt" id="sđt" aria-describedby="helpId" value="<?php echo $info[0]['sodienthoai']; ?>" placeholder="Nhập số điện thoại" required>
                         <small id="erSdt" class="form-text "></small>
                     </div>
                     <div class="form-group">
                         <label for="">Email</label>
-                        <input type="text" class="form-control" name="sdt" id="email" aria-describedby="helpId" value=""
-                            placeholder="Nhập email" required>
+                        <input type="text" class="form-control" name="email" id="email" aria-describedby="helpId" value="<?php echo $info[0]['email']; ?>" placeholder="Nhập email" required>
                         <small id="erEmail" class="form-text "></small>
                     </div>
                     <div class="form-group">
                         <label for="">Nhập địa chỉ</label>
-                        <input type="text" class="form-control" name="sdt" id="diachi" aria-describedby="helpId"
-                            value="" placeholder="Nhập địa chỉ mới" required>
+                        <input type="text" class="form-control" name="diachi" id="diachi" aria-describedby="helpId" value="<?php echo $info[0]['diachi']; ?>" placeholder="Nhập địa chỉ mới" required>
                         <small id="ersdt" class="form-text "></small>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-success" href="">
+                        <button type="submit" name="updateInfo" class="btn btn-success" href="">
                             Cập nhật thông tin
                         </button>
 

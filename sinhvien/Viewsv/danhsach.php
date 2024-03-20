@@ -1,3 +1,17 @@
+<?php
+require_once(__DIR__ . './../../classes/topic.php');
+require_once(__DIR__ . './../../classes/signuptopic.php');
+$topic = new Topic();
+$signUp = new SignUptopic();
+
+
+$result = $topic->getTopicByStudent($_SESSION['ma_nganh'])->fetchAll(PDO::FETCH_ASSOC);
+
+$checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
 <div class="content">
   <h5 class="text-center text-primary p-3">DANH SÁCH ĐỀ TÀI KHÓA LUẬN</h5>
   <div class=" p-3">
@@ -9,97 +23,65 @@
           <th scope="col" style="width: 5%">LOẠI</th>
           <th scope="col" style="width: 20%">MÔ TẢ</th>
           <th scope="col" style="width: 20%">YÊU CẦU</th>
-          <th scope="col" style="width: 10%">KIẾN THỨC</th>
-          <th scope="col" style="width: 5%">KỸ NĂNG</th>
+          <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
+
           <th scope="col" style="width: 15%">GVHD</th>
-          <th scope="col" style="width: 5%"></th>
+          <th scope="col" style="width: 5%">SINH VIÊN ĐĂNG KÝ</th>
+
+          <th scope="col" style="width: 5%">CHỨC NĂNG</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th class="text-center" scope="row">1</th>
-          <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
-          <td class="text-center" style="width: 15%">KLTN - ĐH</td>
-          <td style="width: 10%">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nam
-            fugiat accusamus quam beatae provident laudantium nobis, mollitia
-            sapiente in veritatis totam, hic vitae amet ipsam quia asperiores
-            minima qui.
-          </td>
-          <td style="width: 15%">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum rem
-            commodi tenetur dicta, libero quisquam ipsum quod totam amet
-            similique quasi quis excepturi delectus id alias velit debitis
-            asperiores. Quae?L
-          </td>
-          <td class="text-center" style="width: 10%">PHP, MySQL</td>
-          <td style="width: 10%">
-            Hệ thống website xử lý công việc có độ bảo mật caoL
-          </td>
-          <td class="text-center" style="width: 15%">GVHD 1</td>
-          <td style="width: 10%">
-            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fas fa-edit"></i>
-              Đăng ký
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th class="text-center" scope="row">1</th>
-          <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
-          <td class="text-center" style="width: 15%">KLTN - ĐH</td>
-          <td style="width: 10%">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nam
-            fugiat accusamus quam beatae provident laudantium nobis, mollitia
-            sapiente in veritatis totam, hic vitae amet ipsam quia asperiores
-            minima qui.
-          </td>
-          <td style="width: 15%">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum rem
-            commodi tenetur dicta, libero quisquam ipsum quod totam amet
-            similique quasi quis excepturi delectus id alias velit debitis
-            asperiores. Quae?L
-          </td>
-          <td class="text-center" style="width: 10%">PHP, MySQL</td>
-          <td style="width: 10%">
-            Hệ thống website xử lý công việc có độ bảo mật caoL
-          </td>
-          <td class="text-center" style="width: 15%">GVHD 1</td>
-          <td style="width: 10%">
-            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fas fa-edit"></i>
-              Đăng ký
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th class="text-center" scope="row">1</th>
-          <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
-          <td class="text-center" style="width: 15%">KLTN - ĐH</td>
-          <td style="width: 10%">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nam
-            fugiat accusamus quam beatae provident laudantium nobis, mollitia
-            sapiente in veritatis totam, hic vitae amet ipsam quia asperiores
-            minima qui.
-          </td>
-          <td style="width: 15%">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum rem
-            commodi tenetur dicta, libero quisquam ipsum quod totam amet
-            similique quasi quis excepturi delectus id alias velit debitis
-            asperiores. Quae?L
-          </td>
-          <td class="text-center" style="width: 10%">PHP, MySQL</td>
-          <td style="width: 10%">
-            Hệ thống website xử lý công việc có độ bảo mật caoL
-          </td>
-          <td class="text-center" style="width: 15%">GVHD 1</td>
-          <td style="width: 10%">
-            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fas fa-edit"></i>
-              Đăng ký
-            </button>
-          </td>
-        </tr>
+        <?php
+        // if (!$checkSignUp) {
+
+        foreach ($result as $key => $value) {
+          $count = $signUp->getCountSignUpTopic($value['ma_detai'])->fetchAll(PDO::FETCH_ASSOC);
+          $sldk = $count[0]['Soluongdk'];
+
+          echo '<tr>
+              <th class="text-center" scope="row">' . ($key + 1) . '</th>
+              <td class="text-center" style="width: 5%">' . $value['tendetai'] . '</td>
+              <td class="text-center" style="width: 15%">' . $value['tenloai'] . '</td>
+              <td style="width: 10%">
+              ' . $value['mota'] . '
+              </td>
+              <td style="width: 15%">
+                ' . $value['yeucau'] . '
+              </td>
+              <td class="text-center" style="width: 10%">' . $value['kienthuc'] . '</td>
+              
+              <td class="text-center" style="width: 15%">
+                ' . $value['hoten'] . '
+              </td>
+              <td class="text-center font-weight-bold" style="width: 10%"> ' . $sldk . ' / ' . $value['soluong_SV'] . '
+              </td>
+              <td style="width: 10%">';
+
+          if ($sldk < $value['soluong_SV']) {
+            echo '
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                onclick="signUpTopic(' . $value['ma_detai'] . ', ' . $_SESSION['ma_nguoidung'] . ');">
+              <i class="fas fa-edit"></i>Đăng ký</button>
+                
+                ';
+          }
+
+
+          echo '</td>
+            </tr>';
+        }
+        // } else {
+        //   echo ('
+        //     <h4 class="text-center"> Bạn đã đăng ký đề tài </h4>
+
+        //   ');
+        // }
+
+
+
+        ?>
+
       </tbody>
     </table>
   </div>

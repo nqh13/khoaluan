@@ -5,6 +5,7 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
 
 
 ?>
+
 <div class="content">
     <h5 class="text-center text-primary p-3 font-weight-bold">DANH SÁCH ĐỀ TÀI KHÓA LUẬN</h5>
     <div class=" p-3">
@@ -19,7 +20,7 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                     <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
 
 
-                    <th scope="col" style="width: 5%"></th>
+                    <th scope="col" style="width: 5%">CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,13 +47,13 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                                     Cập nhật
         
                                 </a>
-                                <a type="button" class="mt-3   btn btn-outline-danger btn-sm" href=""id=' . $row['ma_detai'] . '"
-                                    onclick="deleteTopic(' . $row['ma_detai'] . ')"
+                                <button type="button" class="delete-topic mt-3   btn btn-outline-danger btn-sm" href="" id=" ' . $row['ma_detai'] . '"
+                                    onclick="handelDeleteTopic(' . $row['ma_detai'] . ');"
                                 >
                                     <i class="fas fa-cancel"></i>
                                     Xóa
         
-                                </a>
+                                </button>
                             </td>
                             </tr>
                             ';
@@ -73,10 +74,3 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
         <a href="#">&raquo;</a>
     </div>
 </div>
-<script>
-function deleteTopic(id) {
-    if (confirm("Bạn có chắc muốn xóa đề tài này?")) {
-
-    }
-}
-</script>

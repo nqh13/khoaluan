@@ -1,3 +1,20 @@
+<?php
+
+
+require_once('./../classes/user.php');
+
+$user = new User();
+
+
+$info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($info);
+
+
+
+
+
+
+?>
 <div class="container-fluid">
     <div class="row profile">
         <!-- <div class="col-lg-4 col-md-4 col-sm-12 prf-left">
@@ -16,10 +33,9 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="user-block-2">
-                    <img class="img-fluid" src="./../Uploads/avt.jpg" style="height: 180px; width:180px"
-                        alt="user-header">
-                    <h5>NGUYỄN QUANG HÀ</h5>
-                    <h6>MSSV: 19508461</h6>
+                    <img class="img-fluid" src="./../Uploads/<?php echo $info[0]['hinhanh']; ?>" style="height: 180px; width:180px" alt="user-header">
+                    <h5><?php echo  mb_strtoupper($info[0]['hoten'], 'UTF-8'); ?></h5>
+                    <h6><?php echo $info[0]['ma_nguoidung']; ?></h6>
                 </div>
 
             </div>
@@ -30,20 +46,21 @@
                 <h4 class="text-primary bold ">THÔNG TIN CÁ NHÂN</h4>
             </div>
             <div class="form-group">
-                <div class="control-label"> <span>Số điện thoại: <b> 0968896032 </b> </span> </div>
+                <div class="control-label"> <span>Số điện thoại: <b> <?php echo $info[0]['sodienthoai']; ?> </b> </span>
+                </div>
             </div>
             <div class="form-group">
-                <div class="control-label"> <span>Email: <b> abc@gmail.com</b> </span> </div>
+                <div class="control-label"> <span>Email: <b> <?php echo $info[0]['email']; ?></b> </span> </div>
             </div>
             <div class="form-group">
-                <div class="control-label"> <span>Địa chỉ: <b> 37A Trần Bá Giao, P5, Q.Gò Vấp,
-                            TP.HCM</b> </span> </div>
+                <div class="control-label"> <span>Địa chỉ: <b><?php echo $info[0]['diachi']; ?> </b> </span> </div>
             </div>
             <div class="form-group">
-                <div class="control-label"> <span>Khoa: <b> Công nghệ thông tin</b> </span> </div>
+                <div class="control-label"> <span>Khoa: <b><?php echo $info[0]['ten_khoavien']; ?> </b> </span> </div>
             </div>
             <div class="form-group">
-                <div class="control-label"> <span>Chuyên ngành: <b>Hệ thống thông tin</b> </span> </div>
+                <div class="control-label"> <span>Chuyên ngành: <b><?php echo $info[0]['ten_nganh']; ?></b> </span>
+                </div>
             </div>
             <div>
                 <a type="button" class="btn btn-success" href="?page=doithongtin">
