@@ -37,6 +37,12 @@
                 case 'thaoluan':
                     echo ('Thảo luận');
                     break;
+                case 'chitietthaoluan':
+                    echo ('Chi tiết');
+                    break;
+                case 'taothaoluan':
+                    echo ('Tạo Thảo luận');
+                    break;
                 case 'diemso':
                     echo ('Điểm số');
                     break;
@@ -69,13 +75,10 @@
 
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-         crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
      <link rel="stylesheet" href="./../Assets/css/style.css">
  </head>
 
@@ -111,6 +114,12 @@
                                             break;
                                         case 'thaoluan':
                                             echo ('Thảo luận');
+                                            break;
+                                        case 'taothaoluan':
+                                            echo ('Tạo Thảo luận');
+                                            break;
+                                        case 'chitietthaoluan':
+                                            echo ('Chi tiết thảo luận');
                                             break;
                                         case 'diemso':
                                             echo ('Điểm số');
@@ -164,7 +173,13 @@
                             include("./Viewsv/baocao.php");
                             break;
                         case 'thaoluan':
-                            include("./Viewsv/thaoluan.php");
+                            include("./../pages/thaoluan.php");
+                            break;
+                        case 'taothaoluan':
+                            include("./../pages/taothaoluan.php");
+                            break;
+                        case 'chitietthaoluan':
+                            include("./../pages/chitietthaoluan.php");
                             break;
                         case 'diemso':
                             include("./Viewsv/diemso.php");
@@ -198,24 +213,21 @@
      </div>
 
      <?php
-            include("../includes/footer.php");
+        include("../includes/footer.php");
 
-            ?>
+        ?>
 
      <!-- Optional JavaScript -->
-     ?>
+
      <!-- Optional JavaScript -->
      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
      </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
      </script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
      </script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -227,7 +239,67 @@
      </script>
 
      <script src="./../Assets/js/index.js"></script>
+     <!-- <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script> -->
 
+
+     <script type="module">
+         // Import the functions you need from the SDKs you need
+         import {
+             initializeApp,
+         } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+         import {
+             getDatabase,
+             ref,
+             set,
+             onValue
+         } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+         // TODO: Add SDKs for Firebase products that you want to use
+         // https://firebase.google.com/docs/web/setup#available-libraries
+
+         // Your web app's Firebase configuration
+         const firebaseConfig = {
+             apiKey: "AIzaSyC4mK9JdDdJUjUQtkm3kLWIbG7gIBntArs",
+             authDomain: "hocvu-5dedf.firebaseapp.com",
+             projectId: "hocvu-5dedf",
+             storageBucket: "hocvu-5dedf.appspot.com",
+             messagingSenderId: "109221762575",
+             appId: "1:109221762575:web:c4d9ce59b68ea75906b57a",
+             databaseURL: "https://hocvu-5dedf-default-rtdb.asia-southeast1.firebasedatabase.app",
+         };
+
+         // Initialize Firebase
+         // Initialize Firebase
+         const app = initializeApp(firebaseConfig);
+
+
+         // Initialize Realtime Database and get a reference to the service
+         const database = getDatabase(app);
+         console.log({
+             database,
+             app
+         });
+
+         function writeUserData(id_post, title, content) {
+             set(ref(database, 'comment/' + id_post), {
+                 title: title,
+                 content: content,
+             });
+         }
+         //  writeUserData(1, 'hello', 'content');
+         const starCountRef = ref(database, 'comment');
+         onValue(starCountRef, (snapshot) => {
+             const data = snapshot.val();
+             console.log(data);
+         });
+         const btnComment = document.getElementById('btn_comment');
+
+         function handleComment(id) {
+             writeUserData(id, 'hello' + id, 'content' + id);
+         }
+         btnComment.addEventListener('click', function() {
+             handleComment(Math.floor(Math.random() * 100));
+         });
+     </script>
  </body>
 
  </html>

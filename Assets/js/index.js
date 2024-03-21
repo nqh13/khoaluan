@@ -94,18 +94,79 @@ function cancelTopic(id) {
 
 //Cập nhật thông tin cá nhân.
 
-function updateInfoUser(id) {
-  var sdt = document.getElementById(id);
+// function updateInfoUser(id) {
+//   var sdt = document.getElementById(id);
+//   $.ajax({
+//     type: "POST",
+//     url: "./../sinhvien/handle/UserHandle.php",
+//     data: {
+//       action: "updateInfo",
+//       id: id,
+//     },
+//     success: function (response) {
+//       alert("Đã cập nhật!");
+//       window.location.href = "index.php";
+//     },
+//   });
+// }
+
+// Đổi mật khẩu.
+function validateForm() {
+  var password = document.getElementById("password").value;
+  var newPassword = document.getElementById("newpassword").value;
+  var confirmPassword = document.getElementById("confirmpass").value;
+  var errorElement = document.getElementById("er_pass");
+  var errorNewPassword = document.getElementById("er_newpass");
+  var errorConfirmPassword = document.getElementById("er_confirmpass");
+
+  // Regex pattern để kiểm tra tính hợp lệ của mật khẩu
+  var passwordPattern =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?\/><,.\[\]\\\-]).{8,}$/;
+
+  // Kiểm tra tính hợp lệ của mật khẩu cũ
+  if (password.trim() === "") {
+    errorElement.innerText = "Vui lòng nhập mật khẩu cũ!";
+    return false;
+  } else {
+    errorElement.innerText = "";
+  }
+
+  // Kiểm tra tính hợp lệ của mật khẩu mới
+  if (!passwordPattern.test(newPassword)) {
+    errorNewPassword.innerText =
+      "Mật khẩu mới không hợp lệ! Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm ít nhất một chữ số, một chữ thường, một chữ hoa và một ký tự đặc biệt.";
+    return false;
+  } else {
+    errorNewPassword.innerText = "";
+  }
+
+  // Kiểm tra xác nhận mật khẩu
+  if (newPassword !== confirmPassword) {
+    errorConfirmPassword.innerText =
+      "Mật khẩu mới và xác nhận mật khẩu không khớp!";
+    return false;
+  } else {
+    errorConfirmPassword.innerText = "";
+  }
+
+  return true;
+}
+function changePassword(id) {
+  if (!validateForm()) return alert("Điền đầy đủ thông tin!");
+  var password = document.getElementById("password").value;
+  var newPassword = document.getElementById("newpassword").value;
   $.ajax({
     type: "POST",
     url: "./../sinhvien/handle/UserHandle.php",
     data: {
-      action: "updateInfo",
-      id: id,
+      action: "changePassword",
+      id_user: id,
+      password: password,
+      newPassword: newPassword,
     },
     success: function (response) {
-      alert("Đã cập nhật!");
-      window.location.href = "index.php";
+      alert(response);
+      console.log(response);
     },
   });
 }

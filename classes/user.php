@@ -64,7 +64,37 @@ class User
             return false;
         }
     }
+    // Check Password old
+    public function checkPassword($id, $password)
+    {
+        $sql = "SELECT * FROM tbl_users WHERE ma_nguoidung = :id AND matkhau = :password";
+        $stmt = $this->db->prepare($sql);
+        $hashed_password = md5($password);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+        if ($result) {
+            return $result['matkhau'] == md5($password);
+        }
+        return false;
+    }
+
+
 
     //Change password
-
+    public function changePassword($id, $password)
+    {
+        $hashed_password = md5($password);
+        $sql = "UPDATE tbl_users SET matkhau = :password WHERE ma_nguoidung = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

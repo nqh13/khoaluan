@@ -34,9 +34,23 @@ if (isset($_GET['page'])) {
                                         cáo đề tài</a>
 
                                 </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item border-bottom">
+                        <a class="nav-link accordion-toggle collapsed " data-toggle="collapse" data-target="#item-2"><i class="fas fa-comment fa-fw"></i> Thảo luận đề tài <i class="fa-solid fa-caret-down"></i></a>
+                        <div id="item-2" class="collapse show">
+                            <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link pl-5 <?php echo ($active == "thaoluan" ? "active" : "") ?>" href="?page=thaoluan">Thảo luận đề tài</a>
+                                    <a class="nav-link pl-5 accordion-toggle collapsed <?php echo ($active == "taothaoluan" ? "active" : "") ?>" href="?page=taothaoluan" data-parent="#item-2">
+                                        Tạo thảo luận mới</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link pl-5 accordion-toggle collapsed <?php echo ($active == "thaoluan" ? "active" : "") ?>" href="?page=thaoluan" data-parent="#item-2">
+                                        Danh sách cuộc thảo luận</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>

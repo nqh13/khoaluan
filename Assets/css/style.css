@@ -277,6 +277,7 @@ footer {
   -webkit-box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06),
     0 1px 0px 0 rgba(0, 0, 0, 0.02);
   box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  background-color: #e9ecef;
 }
 .user-block-2 {
   background-image: url("../../Uploads/user-block-2.jpg");
@@ -313,4 +314,23 @@ img {
 /* Form thêm đề tài */
 #formthemdetai {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Post - main */
+
+.post-main {
+  width: 100%;
+  /* height: fit-content; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.post-comments {
+  height: fit-content;
+  width: 100%;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.article-content__title {
+  font-weight: bold;
 }

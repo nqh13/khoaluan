@@ -12,3 +12,11 @@ if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
         echo "Xóa thất bại";
     }
 }
+
+//Change PassWord
+
+require_once('../classes/user.php');
+
+$user = new User();
+if (isset($_POST['changePass']) && isset($_POST['newpassword'])) {
+}

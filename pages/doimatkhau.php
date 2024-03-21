@@ -5,21 +5,21 @@
         </div>
         <div class="form-group" style="width: 100%">
             <!-- <label for="">Mật khẩu cũ:</label> -->
-            <input type="text" class="form-control" name="sdt" id="sđt" aria-describedby="helpId" value="" placeholder="Mật khẩu cũ" required>
-            <small id="erSdt" class="form-text "></small>
+            <input type="password" class="form-control" name="password" id="password" aria-describedby="helpId" value="" placeholder="Mật khẩu cũ" required>
+            <small id="er_pass" class="form-text text-danger"></small>
         </div>
         <div class="form-group" style="width: 100%">
             <!-- <label for="">Mật khẩu mới:</label> -->
-            <input type="text" class="form-control" name="sdt" id="email" aria-describedby="helpId" value="" placeholder="Mật khẩu mới" required>
-            <small id="erEmail" class="form-text "></small>
+            <input type="password" class="form-control" name="newpassword" id="newpassword" aria-describedby="helpId" value="" placeholder="Mật khẩu mới" required>
+            <small id="er_newpass" class="form-text text-danger"></small>
         </div>
         <div class="form-group" style="width: 100%">
             <!-- <label for="">Nhập lại mật khẩu mới:</label> -->
-            <input type="text" class="form-control" name="sdt" id="diachi" aria-describedby="helpId" value="" placeholder="Nhập lại mật khẩu mới" required>
-            <small id="ersdt" class="form-text "></small>
+            <input type="password" class="form-control" name="confirmpassword" id="confirmpass" aria-describedby="helpId" value="" placeholder="Nhập lại mật khẩu mới" required>
+            <small id="er_confirmpass" class="form-text text-danger"></small>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" href="">
+            <button type="button" name="changePasss" id=" " onclick="changePassword(<?php echo $_SESSION['ma_nguoidung'] ?>)" class="btn btn-primary" href="">
                 Lưu thay đổi
             </button>
 
