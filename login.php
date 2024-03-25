@@ -155,7 +155,7 @@ if (isset($_POST['madangnhap']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
                             <?php
 
                             if ($flag == 0) {
-                                echo '<div class="alert alert-danger" role="alert" style = >
+                                echo '<div class="alert alert-danger" role="alert" style ="font-size: 13px;">
                                 <strong> Tài khoản hoặc mật khẩu không đúng!</strong>
                                 </div>';
                             }

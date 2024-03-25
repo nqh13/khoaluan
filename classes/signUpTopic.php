@@ -11,18 +11,30 @@ class SignUpTopic
         $this->db = new Database();
     }
     // sign up topic
-
     public function signUpTopic($data)
     {
         $ma_SV = $data['ma_SV'];
         $ma_detai = $data['ma_detai'];
         $sql = "INSERT INTO `tbl_dangkydetai` (`ma_SV`, `ma_detai`) VALUES (:ma_SV, :ma_detai)";
-        var_dump($ma_SV, $ma_detai, $sql);
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':ma_SV', $ma_SV);
         $stmt->bindParam(':ma_detai', $ma_detai);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            $lastInsertedId = $this->db->last_id();
+
+
+            $sqlUpdate = "UPDATE `tbl_dangkydetai` SET `nhom` = :nhom WHERE `ma_dangky` = :ma_dangky";
+            $stmtUpdate = $this->db->prepare($sqlUpdate);
+            $stmtUpdate->bindParam(':nhom', $lastInsertedId);
+            $stmtUpdate->bindParam(':ma_dangky', $lastInsertedId);
+            $stmtUpdate->execute();
+        }
+
+
+        return $success;
     }
 
 
@@ -74,5 +86,41 @@ class SignUpTopic
         $statement->execute();
 
         return $statement;
+    }
+    //Get students from topic
+    public function getStudent($id_topic)
+    {
+        $sql = "SELECT * FROM tbl_dangkydetai JOIN tbl_users ON tbl_dangkydetai.ma_SV = tbl_users.ma_nguoidung WHERE ma_detai = :id_topic";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':id_topic', $id_topic);
+        $result->execute();
+        return $result;
+    }
+
+    //Check quality student
+    public function checkQualityStudent($nhom)
+    {
+        $sql = "SELECT COUNT(*) as count FROM tbl_dangkydetai WHERE nhom = :nhom";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':nhom', $nhom);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Trả về số lượng sinh viên
+        return $result['count'];
+    }
+
+
+
+
+    //update group
+    public function updateGroup($ma_SV, $manhom)
+    {
+        $sql = "UPDATE `tbl_dangkydetai` SET `nhom` = :manhom WHERE `ma_SV` = :ma_SV";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':ma_SV', $ma_SV);
+        $stmt->bindParam(':manhom', $manhom);
+        $success = $stmt->execute();
+        return $success;
     }
 }

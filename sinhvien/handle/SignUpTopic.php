@@ -7,7 +7,7 @@ require_once("../../classes/signUpTopic.php");
 
 $signUp = new SignUpTopic();
 if (isset($_POST['ma_SV']) && $_POST['action'] == 'signUpTopic') {
-    $signUp->signUpTopic($_POST);
+    $dangky = $signUp->signUpTopic($_POST);
 }
 
 
@@ -22,3 +22,24 @@ if (isset($_POST['action']) == "cancelTopic" && isset($_POST['ma_dangky'])) {
         echo "fail";
     }
 }
+
+// Add Group
+
+if (isset($_POST['action']) == "addGroup" && isset($_POST['ma_SV']) && isset($_POST['nhom'])) {
+    $ma_SV = $_POST['ma_SV'];
+    $nhom = $_POST['nhom'];
+
+    $checkQuality = $signUp->checkQualityStudent($nhom);
+    if ($checkQuality < 2) {
+        $signUp->updateGroup($ma_SV, $nhom);
+        if ($signUp) {
+            echo "Lập nhóm thành công!";
+        } else {
+            echo "Lỗi, vui lòng thủ lại sau!";
+        }
+    } else {
+        echo "Nhóm đã đủ số lượng!";
+    }
+}
+
+// check member group

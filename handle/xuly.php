@@ -1,11 +1,11 @@
 <?php
-require_once('../classes/.php');
+require_once('../classes/topic.php');
 $topic = new Topic();
 
 if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
     $id_topic = $_POST['id'];
     $delete = $topic->deleteTopic($id_topic);
-    var_dump($delete);
+
     if ($delete) {
         echo "Xóa thành công";
     } else {

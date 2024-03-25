@@ -43,14 +43,14 @@ function handelDeleteTopic(id) {
         id: id,
         action: "delete",
       },
-      success: function (data) {
+      success: function (response) {
         Toast.fire({
           icon: "success",
           title: "xóa đề tài thành công!",
         });
         setTimeout(function () {
           window.location.reload();
-        }, 2000);
+        }, 1000);
       },
     });
   }
@@ -67,7 +67,7 @@ function signUpTopic(id, ma_SV) {
       ma_SV: ma_SV,
     },
     success: function (response) {
-      alert("Đăng ký thành công!");
+      alert(response);
       window.location.href = "index.php?page=detai";
     },
   });
@@ -91,24 +91,6 @@ function cancelTopic(id) {
     });
   }
 }
-
-//Cập nhật thông tin cá nhân.
-
-// function updateInfoUser(id) {
-//   var sdt = document.getElementById(id);
-//   $.ajax({
-//     type: "POST",
-//     url: "./../sinhvien/handle/UserHandle.php",
-//     data: {
-//       action: "updateInfo",
-//       id: id,
-//     },
-//     success: function (response) {
-//       alert("Đã cập nhật!");
-//       window.location.href = "index.php";
-//     },
-//   });
-// }
 
 // Đổi mật khẩu.
 function validateForm() {
@@ -169,4 +151,25 @@ function changePassword(id) {
       console.log(response);
     },
   });
+}
+
+//Chọn nhóm.
+function addGroup(id_nhom, ma_SV) {
+  $comfirm = confirm("Bạn chắc chắn muốn chọn nhóm này?");
+  if ($comfirm === true) {
+    $.ajax({
+      type: "POST",
+      url: "./../sinhvien/handle/SignUpTopic.php",
+      data: {
+        action: "addGroup",
+        nhom: id_nhom,
+        ma_SV: ma_SV,
+      },
+      success: function (response) {
+        alert(response);
+        // console.log(response);
+        window.location.reload();
+      },
+    });
+  }
 }

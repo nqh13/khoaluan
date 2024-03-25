@@ -12,28 +12,28 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
 
 ?>
 
-<div class="content">
-  <h5 class="text-center text-primary p-3">DANH SÁCH ĐỀ TÀI KHÓA LUẬN</h5>
-  <div class=" p-3">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr class="text-center">
-          <th scope="col" style="width: 5%">STT</th>
-          <th scope="col" style="width: 10%">TÊN ĐỀ TÀI</th>
-          <th scope="col" style="width: 5%">LOẠI</th>
-          <th scope="col" style="width: 20%">MÔ TẢ</th>
-          <th scope="col" style="width: 20%">YÊU CẦU</th>
-          <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
+<div class="content mt-2">
+    <h5 class="text-center text-primary p-3">DANH SÁCH ĐỀ TÀI KHÓA LUẬN</h5>
+    <div class=" p-3">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" style="width: 5%">STT</th>
+                    <th scope="col" style="width: 10%">TÊN ĐỀ TÀI</th>
+                    <th scope="col" style="width: 5%">LOẠI</th>
+                    <th scope="col" style="width: 20%">MÔ TẢ</th>
+                    <th scope="col" style="width: 20%">YÊU CẦU</th>
+                    <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
 
-          <th scope="col" style="width: 15%">GVHD</th>
-          <th scope="col" style="width: 5%">SINH VIÊN ĐĂNG KÝ</th>
+                    <th scope="col" style="width: 15%">GVHD</th>
+                    <th scope="col" style="width: 5%">SINH VIÊN ĐĂNG KÝ</th>
 
-          <th scope="col" style="width: 5%">CHỨC NĂNG</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        // if (!$checkSignUp) {
+                    <th scope="col" style="width: 5%">CHỨC NĂNG</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
 
         foreach ($result as $key => $value) {
           $count = $signUp->getCountSignUpTopic($value['ma_detai'])->fetchAll(PDO::FETCH_ASSOC);
@@ -68,31 +68,27 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
           }
 
 
+
           echo '</td>
             </tr>';
         }
-        // } else {
-        //   echo ('
-        //     <h4 class="text-center"> Bạn đã đăng ký đề tài </h4>
-
-        //   ');
-        // }
 
 
 
         ?>
 
-      </tbody>
-    </table>
-  </div>
-  <div class="pagination">
-    <a href="#">&laquo;</a>
-    <a href="#" class="active">1</a>
-    <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">&raquo;</a>
-  </div>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+    </div>
 </div>

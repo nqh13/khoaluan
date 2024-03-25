@@ -32,12 +32,12 @@ if (isset($_POST['action']) == 'changePassword') {
     $checkpass = $user->checkPassword($ma_nguoidung, $password);
     if ($checkpass == true) {
         $changepass = $user->changePassword($ma_nguoidung, $new_password);
-        var_dump($checkpass, "password");
+        // var_dump($checkpass, "password");
 
         if ($changepass) {
             echo 'Đã đổi password';
         } else {
-            echo 'lỗi';
+            echo 'lỗi, vui lòng thử lại';
             $er = 1;
         }
         return $er;

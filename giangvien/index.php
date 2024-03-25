@@ -10,6 +10,7 @@
 
     if (isset($_POST['them'])) {
         $_POST['ma_GV'] = $_SESSION['ma_nguoidung'];
+        $_POST['ma_nganh'] = $_SESSION['ma_nganh'];
 
         $topic->insertTopic($_POST);
         echo '<div>Đề tài đã được thêm</div>';
@@ -48,6 +49,10 @@
                 case 'capnhat':
                     echo ('Cập nhật');
                     break;
+                case 'danhsachdk':
+                    echo ('Danh sách');
+                    break;
+
                 case 'thaoluan':
                     echo ('Thảo luận');
                     break;
@@ -94,6 +99,13 @@
          <div class="row">
 
              <?php
+
+                if (isset($_GET['page'])) {
+                    $active = $_GET['page'];
+                } else {
+                    $active = "";
+                }
+
                 include("./../includes/sidebargv.php");
 
                 ?>
@@ -116,6 +128,9 @@
                                             break;
                                         case 'thaoluan':
                                             echo ('Thảo luận');
+                                            break;
+                                        case 'danhsachdk':
+                                            echo ('Danh sách');
                                             break;
                                         case 'doipass':
                                             echo ("Đổi mật khẩu");
@@ -161,6 +176,23 @@
                         case 'capnhat':
                             include("./Viewgv/suadetai.php");
                             break;
+                        case 'thaoluan':
+                            include("./../pages/thaoluan.php");
+                            break;
+                        case 'danhsachdk':
+                            include('./viewgv/danhsachdangki.php');
+                            break;
+                        case 'doipass':
+                            include("./../pages/doimatkhau.php");
+                            break;
+                        case 'doithongtin':
+                            include("./../pages/doithongtin.php");
+                            break;
+                        case 'thongtin':
+                            include("./../pages/user.php");
+                            break;
+
+
 
                         default:
                             echo "<h3> 404 NOT FOUND! </h3> ";
@@ -185,13 +217,11 @@
          </script>
          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-         <script src="./../Assets/js/index.js"></script>
 
          <!-- Include jQuery library -->
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-         <script>
 
-         </script>
+         <script src="./../Assets/js/index.js"></script>
 
      </div>
      <?php

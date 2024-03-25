@@ -99,8 +99,12 @@
              <div class="col-lg-10  col-md-10 col-sm-12  main">
                  <nav class="d-flex justify-content-between align-items-center" id="nav-search">
                      <ol class="breadcrumb">
-                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                         <li class="breadcrumb-item"><a href="?page=<?php echo $page; ?>">
+                         <li class="breadcrumb-item  <?php if ($page == 'danhsach') {
+                                                            echo 'font-weight-bold';
+                                                        } ?>">
+                             <a href="index.php">Home</a>
+                         </li>
+                         <li class="breadcrumb-item font-weight-bold"><a href="?page=<?php echo $page; ?>">
                                  <?php
                                     switch ($page) {
                                         case 'danhsach':
@@ -153,7 +157,7 @@
                      </ol>
                      <form action="" class="d-flex mr-3">
                          <input class="form-control me-2" name="key" type="text" placeholder="search" required />
-                         <button class="btn btn-primary mx-2" type="submit">
+                         <button class="btn btn-primary mx-2" type="button">
                              <i class="fa-solid fa-magnifying-glass" style="color: #ffffff"></i>
                          </button>
                      </form>
@@ -234,72 +238,13 @@
 
      <!-- Include jQuery library -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script>
-
-     </script>
+     <script src='./../Assets/js/firebase.js' type="module"></script>
 
      <script src="./../Assets/js/index.js"></script>
      <!-- <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script> -->
 
 
-     <script type="module">
-         // Import the functions you need from the SDKs you need
-         import {
-             initializeApp,
-         } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-         import {
-             getDatabase,
-             ref,
-             set,
-             onValue
-         } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-         // TODO: Add SDKs for Firebase products that you want to use
-         // https://firebase.google.com/docs/web/setup#available-libraries
 
-         // Your web app's Firebase configuration
-         const firebaseConfig = {
-             apiKey: "AIzaSyC4mK9JdDdJUjUQtkm3kLWIbG7gIBntArs",
-             authDomain: "hocvu-5dedf.firebaseapp.com",
-             projectId: "hocvu-5dedf",
-             storageBucket: "hocvu-5dedf.appspot.com",
-             messagingSenderId: "109221762575",
-             appId: "1:109221762575:web:c4d9ce59b68ea75906b57a",
-             databaseURL: "https://hocvu-5dedf-default-rtdb.asia-southeast1.firebasedatabase.app",
-         };
-
-         // Initialize Firebase
-         // Initialize Firebase
-         const app = initializeApp(firebaseConfig);
-
-
-         // Initialize Realtime Database and get a reference to the service
-         const database = getDatabase(app);
-         console.log({
-             database,
-             app
-         });
-
-         function writeUserData(id_post, title, content) {
-             set(ref(database, 'comment/' + id_post), {
-                 title: title,
-                 content: content,
-             });
-         }
-         //  writeUserData(1, 'hello', 'content');
-         const starCountRef = ref(database, 'comment');
-         onValue(starCountRef, (snapshot) => {
-             const data = snapshot.val();
-             console.log(data);
-         });
-         const btnComment = document.getElementById('btn_comment');
-
-         function handleComment(id) {
-             writeUserData(id, 'hello' + id, 'content' + id);
-         }
-         btnComment.addEventListener('click', function() {
-             handleComment(Math.floor(Math.random() * 100));
-         });
-     </script>
  </body>
 
  </html>

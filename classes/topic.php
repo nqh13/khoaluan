@@ -44,8 +44,9 @@ class Topic
         $kienthuc = $data['kienthuc'];
         $soluong_SV = $data['soluong_SV'];
         $loaidetai = $data['loai'];
-        $sql = "INSERT INTO `tbl_detai` (`tendetai`,`loaidetai`, `ma_GV`, `mota`, `yeucau`, `kienthuc`, `soluong_SV`) 
-                VALUES (:tendetai,:loaidetai ,:ma_GV, :mota, :yeucau, :kienthuc, :soluong_SV)";
+        $ma_nganh = $data['ma_nganh'];
+        $sql = "INSERT INTO `tbl_detai` (`tendetai`,`loaidetai`, `ma_GV`, `mota`, `yeucau`, `kienthuc`, `soluong_SV`, `nganh`) 
+                VALUES (:tendetai,:loaidetai ,:ma_GV, :mota, :yeucau, :kienthuc, :soluong_SV, :ma_nganh)";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':tendetai', $tendetai);
         $stmt->bindParam(':loaidetai', $loaidetai);
@@ -54,7 +55,9 @@ class Topic
         $stmt->bindParam(':yeucau', $yeucau);
         $stmt->bindParam(':kienthuc', $kienthuc);
         $stmt->bindParam(':soluong_SV', $soluong_SV);
+        $stmt->bindParam(':ma_nganh', $ma_nganh);
         $stmt->execute();
+
         return $stmt;
     }
 
