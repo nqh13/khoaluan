@@ -1,21 +1,36 @@
+<?php
+session_start();
+if (!isset($_SESSION['vaitro']) && ($_SESSION['vaitro'] != 3)) {
+    header('Location: login.php');
+}
+$pages = "dashboard";
+
+if (isset($_GET['pages'])) {
+    $pages = $_GET['pages'];
+}
+
+
+
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+    session_destroy();
+    header('Location: login.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Admin</title>
-    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="assets/images/icon65d669c1-0-e.ico" type="image/x-icon" />
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="assets/images/icon65d669c1-0-e.ico" type="image/x-icon" />
+
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet" />
@@ -53,16 +68,18 @@
         <!-- Navbar-->
 
         <?php
-    include('./include/header_admin.php');
 
-    ?>
+
+        include('./include/header_admin.php');
+
+        ?>
         <!-- Side-Nav-->
 
         <?php
 
-    include('./include/sidebar_admin.php');
+        include('./include/sidebar_admin.php');
 
-    ?>
+        ?>
         <div class="content-wrapper">
             <!-- Container-fluid starts -->
             <!-- Main content starts -->
@@ -72,63 +89,39 @@
                         <h4>Dashboard</h4>
                     </div>
                 </div>
-                <!-- 4-blocks row start -->
-                <div class="row dashboard-header">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card dashboard-product">
-                            <span>Người dùng</span>
-                            <h2 class="dashboard-total-products">4500</h2>
-                            <span class="label label-warning">Sales</span>Arriving Today
-                            <div class="side-box">
-                                <i class="ti-user text-warning-color"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card dashboard-product">
-                            <span>Đề tài</span>
-                            <h2 class="dashboard-total-products">37,500</h2>
-                            <span class="label label-primary">Views</span>View Today
-                            <div class="side-box">
-                                <i class="ti-book text-primary-color"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card dashboard-product">
-                            <span>Lượt đăng ký</span>
-                            <h2 class="dashboard-total-products">$<span>30,780</span></h2>
-                            <span class="label label-success">Sales</span>Reviews
-                            <div class="side-box">
-                                <i class="ti-check text-success-color"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card dashboard-product">
-                            <span>Hủy</span>
-                            <h2 class="dashboard-total-products">$<span>30,780</span></h2>
-                            <span class="label label-danger">Sales</span>Reviews
-                            <div class="side-box">
-                                <i class="ti-close text-danger-color"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 4-blocks row end -->
+
+                <?php
+
+
+                switch ($pages) {
+                    case "dashboard":
+                        include("./pages/dashboard.php");
+                        break;
+                    case "user":
+                        include("./pages/quanlyUsers.php");
+                        break;
+                    case "addUser":
+                        include("./pages/addUser.php");
+                        break;
+                }
+
+
+                ?>
+
+
             </div>
             <!-- Main content ends -->
             <!-- Container-fluid ends -->
-            <div class="fixed-button">
-                <a href="#!" class="btn btn-md btn-primary">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Upgrade To
-                    Pro
-                </a>
-            </div>
+
             <!-- Main content ends -->
             <!-- Container-fluid ends -->
         </div>
     </div>
+
+
+
+
+
 
     <!-- Required Jqurey -->
     <script src="assets/plugins/Jquery/dist/jquery.min.js"></script>
@@ -168,16 +161,41 @@
     <script type="text/javascript" src="assets/pages/elements.js"></script>
     <script src="assets/js/menu.min.js"></script>
     <script>
-    var $window = $(window);
-    var nav = $(".fixed-button");
-    $window.scroll(function() {
-        if ($window.scrollTop() >= 200) {
-            nav.addClass("active");
-        } else {
-            nav.removeClass("active");
-        }
-    });
+        var $window = $(window);
+        var nav = $(".fixed-button");
+        $window.scroll(function() {
+            if ($window.scrollTop() >= 200) {
+                nav.addClass("active");
+            } else {
+                nav.removeClass("active");
+            }
+        });
+
+
+        //
+        $(document).ready(function() {
+            $('#id_khoa').change(function() {
+                var id_khoa = $(this).val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "./adminHandle/handleAddUser.php",
+                    data: {
+                        id_khoa: id_khoa
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        $('#id_nganh').html(data);
+                    }
+                });
+
+            });
+        });
     </script>
+
+
+
+
 </body>
 
 </html>

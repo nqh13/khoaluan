@@ -17,7 +17,7 @@
                 <li class="dropdown">
                     <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
                         <span><img class="img-circle" src="assets/images/avatar-1.png" style="width: 40px" alt="User Image" /></span>
-                        <span><b> Admin</b> <i class="icofont icofont-simple-down"></i></span>
+                        <span><b><?php echo $_SESSION["username"]; ?></b> <i class="icofont icofont-simple-down"></i></span>
                     </a>
                     <ul class="dropdown-menu settings-menu">
                         <li>
@@ -27,7 +27,7 @@
                             <a href="#"><i class="icon-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="login1.html"><i class="icon-logout"></i> Logout</a>
+                            <a href="?action=logout"><i class="icon-logout"></i>Đăng xuất</a>
                         </li>
                     </ul>
                 </li>

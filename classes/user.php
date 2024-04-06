@@ -7,7 +7,7 @@ class User
     {
         $this->db = new Database();
     }
-
+    //Login
     public function login($username, $password)
     {
         // Sử dụng Prepared Statement để ngăn chặn SQL Injection
@@ -27,6 +27,25 @@ class User
         // Trả về kết quả
         return $result;
     }
+    //Login admin
+
+    public function loginAdmin($username, $password)
+    {
+        $sql = "SELECT * FROM tbl_quantrivien WHERE tendangnhap = :username AND matkhau = :password LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $hashed_password = md5($password);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result; // Trả về chỉ một mảng
+        } else {
+            return false;
+        }
+    }
+
+
     //Get information user
     public function getUserInfo($id)
     {
@@ -82,6 +101,8 @@ class User
 
 
 
+
+
     //Change password
     public function changePassword($id, $password)
     {
@@ -96,5 +117,15 @@ class User
         } else {
             return false;
         }
+    }
+
+
+    // Get role.
+
+    public function getRoles()
+    {
+        $sql = " SELECT *FROM tbl_vaitro ";
+        $result = $this->db->select($sql);
+        return $result;
     }
 }

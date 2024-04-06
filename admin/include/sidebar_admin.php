@@ -3,7 +3,7 @@
         <!-- Sidebar Menu-->
         <ul class="sidebar-menu">
             <li class="active treeview border-top" style="border-top: 1px solid #dee2e6;">
-                <a class="waves-effect waves-dark" href="index.html">
+                <a class="waves-effect waves-dark" href="index.php">
                     <i class="icon-speedometer"></i><span> Dashboard</span>
                 </a>
             </li>
@@ -69,11 +69,11 @@
                     <i class="icon-arrow-down"></i></a>
                 <ul class="treeview-menu">
                     <li>
-                        <a class="waves-effect waves-dark" href="float-chart.html"><i class="icon-arrow-right"></i>
+                        <a class="waves-effect waves-dark" href="?pages=quanlyUsers"><i class="icon-arrow-right"></i>
                             Danh sách người dùng</a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="morris-chart.html"><i class="icon-arrow-right"></i>
+                        <a class="waves-effect waves-dark" href="?pages=addUser"><i class="icon-arrow-right"></i>
                             Thêm người dùng mới</a>
                     </li>
                 </ul>
