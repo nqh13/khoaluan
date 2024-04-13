@@ -742,9 +742,9 @@ textarea {
 ==========================  **/
 /* Raised Button css*/
 .btn {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   border-radius: 2px;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+  -webkit-box-shadow: 0 2px 5px 0 rgba(38, 36, 36, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   font-size: 13px;
@@ -1697,6 +1697,10 @@ Basic card CSS
   align-items: center;
   text-align: left;
   background-color: #2196f3;
+}
+.bg-themes-web {
+  background-color: #39444e !important;
+  color: white;
 }
 .login h3 {
   color: #666666;

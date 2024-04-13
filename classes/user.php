@@ -45,6 +45,20 @@ class User
         }
     }
 
+    //Get all users
+
+    public function getAllUsers()
+    {
+        $sql = "SELECT * FROM tbl_users 
+                JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien 
+                JOIN tbl_chuyennganh ON tbl_users.ma_nganh = tbl_chuyennganh.ma_nganh
+                JOIN tbl_vaitro ON tbl_users.vaitro = tbl_vaitro.ma_vaitro 
+                JOIN tbl_trangthaitk ON tbl_users.trangthai = tbl_trangthaitk.id_trangthaitk";
+
+        $result = $this->db->select($sql);
+
+        return $result;
+    }
 
     //Get information user
     public function getUserInfo($id)
@@ -57,6 +71,41 @@ class User
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt;
+    }
+    // Check IDUser
+    public function checkIDUser($id)
+    {
+        $sql = "SELECT * FROM tbl_users WHERE ma_nguoidung = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return ($result !== false);
+    }
+
+
+
+
+    // Add new user
+    public function     addUser($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro,)
+    {
+
+        $hashed_password = md5($password);
+        $sql = "INSERT INTO tbl_users (ma_nguoidung,hoten, email, sodienthoai, diachi, hinhanh, matkhau, khoavien, ma_nganh, vaitro) 
+        VALUES (:manguoidung,:hoten, :email, :sodienthoai, :diachi, :hinhanh,:password, :khoavien, :chuyennganh, :vaitro)";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':manguoidung', $manguoidung);
+        $stmt->bindParam(':sodienthoai', $sodienthoai);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':diachi', $diachi);
+        $stmt->bindParam(':hinhanh', $hinhanh);
+        $stmt->bindParam(':hoten', $hoten);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':khoavien', $khoavien);
+        $stmt->bindParam(':chuyennganh', $chuyennganh);
+        $stmt->bindParam(':vaitro', $vaitro);
+        $stmt->execute();
     }
 
     //Update information user
@@ -128,4 +177,34 @@ class User
         $result = $this->db->select($sql);
         return $result;
     }
+    // Search users by ma_nguoidung
+    public function searchUserByID($ma_nguoidung)
+    {
+        $sql = "SELECT * FROM tbl_users 
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien 
+        JOIN tbl_chuyennganh ON tbl_users.ma_nganh = tbl_chuyennganh.ma_nganh
+        JOIN tbl_vaitro ON tbl_users.vaitro = tbl_vaitro.ma_vaitro 
+        JOIN tbl_trangthaitk ON tbl_users.trangthai = tbl_trangthaitk.id_trangthaitk WHERE ma_nguoidung = :manguoidung";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':manguoidung', $ma_nguoidung);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /* Filter Users*/
+
+    public function filterForRole($role)
+    {
+        $sql = "SELECT * FROM tbl_users 
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien 
+        JOIN tbl_chuyennganh ON tbl_users.ma_nganh = tbl_chuyennganh.ma_nganh
+        JOIN tbl_vaitro ON tbl_users.vaitro = tbl_vaitro.ma_vaitro 
+        JOIN tbl_trangthaitk ON tbl_users.trangthai = tbl_trangthaitk.id_trangthaitk WHERE vaitro = :role";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':role', $role);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /*End Filter */
 }

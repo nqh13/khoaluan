@@ -1,5 +1,5 @@
 <header class="main-header-top hidden-print bg-white">
-    <a href="index.html" class="logo border-bottom"><img class="img-fluid able-logo" src="assets/images/Logo_IUH.png" style="height: 50px; " alt="Theme-logo" /></a>
+    <a href="index.php" class="logo border-bottom"><img class="img-fluid able-logo" src="assets/images/Logo_IUH.png" style="height: 50px; " alt="Theme-logo" /></a>
     <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
         <a href="#!" data-toggle="offcanvas" class="sidebar-toggle"></a>

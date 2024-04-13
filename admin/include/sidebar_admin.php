@@ -9,57 +9,23 @@
             </li>
             <li class="nav-level">--- MODULES</li>
             <li class="treeview">
-                <a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> UI
-                        Elements</span><i class="icon-arrow-down"></i></a>
+                <a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> Quản lý Khoa - Ngành
+                    </span><i class="icon-arrow-down"></i></a>
                 <ul class="treeview-menu">
                     <li>
-                        <a class="waves-effect waves-dark" href="accordion.html"><i class="icon-arrow-right"></i>
-                            Accordion</a>
+                        <a class="waves-effect waves-dark" href="?pages=quanlykhoa"><i class="icon-arrow-right"></i>
+                            Khoa viên</a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="button.html"><i class="icon-arrow-right"></i>
-                            Button</a>
+                        <a class="waves-effect waves-dark" href="?pages=themkhoa"><i class="icon-arrow-right"></i>
+                            Thêm khoa mới</a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="label-badge.html"><i class="icon-arrow-right"></i>
-                            Label Badge</a>
+                        <a class="waves-effect waves-dark" href="?pages=themnganh"><i class="icon-arrow-right"></i>
+                            Thêm ngành Mới</a>
                     </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="bootstrap-ui.html"><i class="icon-arrow-right"></i>
-                            Grid system</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="box-shadow.html"><i class="icon-arrow-right"></i> Box
-                            Shadow</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="color.html"><i class="icon-arrow-right"></i>
-                            Color</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="light-box.html"><i class="icon-arrow-right"></i> Light
-                            Box</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="notification.html"><i class="icon-arrow-right"></i>
-                            Notification</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="panels-wells.html"><i class="icon-arrow-right"></i>
-                            Panels-Wells</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="tabs.html"><i class="icon-arrow-right"></i>
-                            Tabs</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="tooltips.html"><i class="icon-arrow-right"></i>
-                            Tooltips</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="typography.html"><i class="icon-arrow-right"></i>
-                            Typography</a>
-                    </li>
+
+
                 </ul>
             </li>
 
@@ -80,24 +46,37 @@
             </li>
 
             <li class="treeview">
-                <a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Forms</span><i class="icon-arrow-down"></i></a>
+                <a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Quản lý đề
+                        tài</span><i class="icon-arrow-down"></i></a>
                 <ul class="treeview-menu">
                     <li>
-                        <a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a>
+                        <a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i
+                                class="icon-arrow-right"></i> Đề tài</a>
                     </li>
 
                     <li>
-                        <a class="waves-effect waves-dark" href="form-elements-advance.html"><i class="icon-arrow-right"></i> Form Elements Advance</a>
+                        <a class="waves-effect waves-dark" href="form-elements-advance.html"><i
+                                class="icon-arrow-right"></i> Tạo đề tài</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a class="waves-effect waves-dark" href="#!"><i class="fa-regular fa-newspaper"></i>
+                    <span> Tin tức - Thông báo</span><i class="icon-arrow-down"></i></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i
+                                class="icon-arrow-right"></i>Tin tức</a>
+                    </li>
+
+                    <li>
+                        <a class="waves-effect waves-dark" href="form-elements-advance.html"><i
+                                class="icon-arrow-right"></i> Thêm tin tức</a>
                     </li>
                 </ul>
             </li>
 
-            <li class="treeview">
-                <a class="waves-effect waves-dark" href="basic-table.html">
-                    <i class="icon-list"></i><span> Table</span>
-                </a>
-            </li>
-
+            <!-- 
             <li class="nav-level">--- More</li>
 
             <li class="treeview">
@@ -179,7 +158,7 @@
                         </ul>
                     </li>
                 </ul>
-            </li>
+            </li> -->
         </ul>
     </section>
 </aside>

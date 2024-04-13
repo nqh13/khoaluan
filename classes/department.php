@@ -10,8 +10,6 @@ class Department
         $this->db = new Database();
     }
 
-
-    // Get all departments
     public function getDepartments()
     {
         $sql = "SELECT * FROM tbl_khoavien";

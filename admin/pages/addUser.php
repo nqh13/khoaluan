@@ -6,41 +6,48 @@ $d = new Department();
 $department = $d->getDepartments();
 
 
-
+if (isset($_POST['themUser'])) {
+}
 
 ?>
 
 <div class="row m-5 ">
     <div class="col-md-3"></div>
     <div class="card col-md-6  ">
-        <div class="card-header">
+        <div class="card-header border-bottom">
             <h5 class=" text-center">THÊM NGƯỜI DÙNG MỚI</h5>
         </div>
 
         <div class="card-block">
-            <form method="" action="" class="" style="display: flex; flex-direction: column">
-
+            <form method="POST" action="" class="" id="formAddUser" style="display: flex; flex-direction: column"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="form-control-label">Mã người dùng:</label>
+                    <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung"
+                        placeholder=" Nhập mã người dùng, nếu bỏ trống hệ thống sẽ tự tạo mã">
+                    <small class="form-text text-muted"></small>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label">Tên người dùng:</label>
-                    <input name="" type="text" class="form-control form-control-success" id="txt_ten"
+                    <input name="hoten" type="text" class="form-control form-control-success" id="hoten"
                         placeholder="Nhập họ tên người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Email:</label>
-                    <input name="" type="text" class="form-control form-control-success" id="txt_email"
+                    <input name="email" type="text" class="form-control form-control-success" id="email"
                         placeholder="Nhập họ tên người dùng" placeholder="Nhập email người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Số điện thoại:</label>
-                    <input name="" type="text" class="form-control form-control-success" id="txt_sdt"
+                    <input name="sdt" type="text" class="form-control form-control-success" id="sdt"
                         placeholder="Nhập số điện thoại người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Địa chỉ:</label>
-                    <input name="" type="text" class="form-control form-control-success" id="txt_diachi"
+                    <input name="diachi" type="text" class="form-control form-control-success" id="diachi"
                         placeholder="Nhập địa chỉ người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
@@ -69,10 +76,10 @@ $department = $d->getDepartments();
                 </div>
                 <div class="form-group">
                     <label for="exampleSelect1" class="form-control-label">Vai Trò:</label>
-                    <select class="form-control" id="id_vaitro" name="vaitro">
+                    <select class="form-control" id="vaitro" name="vaitro">
                         <option selected value=""></option>
                         <?php
-                        // $u = new User();
+
                         $vaitro = $d->getRoles();
 
                         foreach ($vaitro as $roles) {
@@ -85,11 +92,29 @@ $department = $d->getDepartments();
 
                     </select>
                 </div>
+                <div class="form-group row" id="">
+                    <label for="file" class="col-md-2 col-form-label form-control-label">Ảnh:</label>
+                    <div class="col-md-9" id="hinhanh">
+                        <label for="file" class="custom-file">
+                            <input type="file" name="hinhanh" id="file" class="custom-file-input">
+                            <span class="custom-file-control"></span>
+                        </label>
 
+                    </div>
 
+                </div>
+
+                <div style="display:flex; justify-content:start; align-items:start">
+                    <div class=" d-none" style="position:relative" id="divAnh">
+                        <span class=" "
+                            style="position:absolute;top:-10px; right:-10px ;font-size: 16px; border-radius: 50%; cursor:pointer; color:red ; font-weight: bold;  "
+                            id="btnXoaAnh">x</span>
+                        <img src="" alt="" id="imgPreview" width="100px" height="100px">
+                    </div>
+                </div>
                 <div class="form-group text-center">
-                    <button class="btn btn-primary mt-3" type="button" name="them">Thêm người
-                        dùng</button>
+                    <button class="btn btn-primary" style="margin-top: 10px" type="button" id="btnThemUser"
+                        name="themUser">Thêm người dùng</button>
 
                 </div>
 
@@ -98,3 +123,5 @@ $department = $d->getDepartments();
     </div>
     <div class="col-md-3"></div>
 </div>
+
+<!-- <script src='assets/js/validator.js'></script> -->

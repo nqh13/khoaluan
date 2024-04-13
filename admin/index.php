@@ -41,6 +41,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <!-- iconfont -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- simple line icon -->
     <link rel="stylesheet" type="text/css" href="assets/icon/simple-line-icons/css/simple-line-icons.css" />
 
@@ -86,7 +88,21 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
             <div class="container-fluid">
                 <div class="row">
                     <div class="main-header">
-                        <h4>Dashboard</h4>
+                        <h4><?php
+                            switch ($pages) {
+                                case "dashboard":
+                                    echo "Dashboard";
+                                    break;
+                                case "quanlyUsers":
+                                    echo "Quản lý tài khoản";
+                                    break;
+                                case "addUser":
+                                    echo "Thêm tài khoản";
+                                    break;
+                            }
+
+
+                            ?></h4>
                     </div>
                 </div>
 
@@ -97,8 +113,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                     case "dashboard":
                         include("./pages/dashboard.php");
                         break;
-                    case "user":
-                        include("./pages/quanlyUsers.php");
+                    case "quanlyUsers":
+                        include("./pages/adminUsers.php");
                         break;
                     case "addUser":
                         include("./pages/addUser.php");
@@ -149,17 +165,22 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <script src="assets/plugins/countdown/js/jquery.counterup.js"></script>
 
     <!-- Echart js -->
-    <script src="assets/plugins/charts/echarts/js/echarts-all.js"></script>
+    <!-- <script src="assets/plugins/charts/echarts/js/echarts-all.js"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script> -->
 
     <!-- custom js -->
     <script type="text/javascript" src="assets/js/main.min.js"></script>
     <script type="text/javascript" src="assets/pages/dashboard.js"></script>
     <script type="text/javascript" src="assets/pages/elements.js"></script>
     <script src="assets/js/menu.min.js"></script>
+    <script type="text/javascript" src="assets/js/indexAdmin.js"></script>
+
+
+
+
     <script>
         var $window = $(window);
         var nav = $(".fixed-button");
@@ -173,27 +194,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 
 
         //
-        $(document).ready(function() {
-            $('#id_khoa').change(function() {
-                var id_khoa = $(this).val();
 
-                $.ajax({
-                    type: "POST",
-                    url: "./adminHandle/handleAddUser.php",
-                    data: {
-                        id_khoa: id_khoa
-                    },
-                    success: function(data) {
-                        // console.log(data);
-                        $('#id_nganh').html(data);
-                    }
-                });
 
-            });
+        Validator({
+            form: '#formAddUser',
+            rules: [
+                Validator.isRequired('#hoten'),
+                Validator.isRequired('#email'),
+            ],
         });
     </script>
-
-
 
 
 </body>
