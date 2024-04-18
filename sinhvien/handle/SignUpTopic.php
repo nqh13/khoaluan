@@ -8,6 +8,13 @@ require_once("../../classes/signUpTopic.php");
 $signUp = new SignUpTopic();
 if (isset($_POST['ma_SV']) && $_POST['action'] == 'signUpTopic') {
     $dangky = $signUp->signUpTopic($_POST);
+
+    if (!$dangky) {
+        echo "Vui lòng thử lại sau!";
+    } else {
+
+        echo "Đăng ký thành công!";
+    }
 }
 
 

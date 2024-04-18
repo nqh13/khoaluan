@@ -208,6 +208,17 @@ textarea {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+/* Validate Form CSS */
+
+.form-group.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-text {
+  color: #f33a58 !important;
+}
+
+/* End Validate Form CSS */
 
 /**====== Custom css end ======**/
 /**  =====================

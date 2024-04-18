@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
 
     if ($manguoidung == "") {
 
-        $_POST['manguoidung'] =  $utils->randomIDUser();
+        $manguoidung =  $utils->randomIDUser();
     }
 
     $checkXSS = $utils->checkXSS($hoten, $email, $sdt, $diachi, $vaitro, $id_nganh, $id_khoa);
@@ -53,9 +53,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
 
         $file_tmp = $_FILES['file']['tmp_name'];
         if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
-            echo "Upload thành công";
+            // echo "Upload thành công-";
         } else {
-            echo "Upload thất bại";
+            // echo "Upload thất bại";
         }
     }
 

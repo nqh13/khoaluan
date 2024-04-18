@@ -2,7 +2,9 @@
 require_once './../classes/comment.php';
 $comment = new comment();
 $data = $comment->getDiscussionById($_GET['id']);
-var_dump($data['ma_cuocthaoluan']);
+// var_dump($data);
+
+
 ?>
 
 <div class="content-component container-fluid p-3">
@@ -53,8 +55,7 @@ var_dump($data['ma_cuocthaoluan']);
         <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="card d-flex justify-content-center align-items-center p-2 ">
                 <div class=" d-flex flex-row p-1">
-                    <img class="img-fluid" src="./../Uploads/avt.jpg"
-                        style="height: 80px; width:80px; border-radius: 50%" alt="user-header">
+                    <img class="img-fluid" src="./../Uploads/avt.jpg" style="height: 80px; width:80px; border-radius: 50%" alt="user-header">
                     <div class="mt-3 ml-2">
                         <h6>NGUYỄN QUANG HÀ</h6>
                         <h6 class="text-center">19508461</h6>
@@ -72,18 +73,14 @@ var_dump($data['ma_cuocthaoluan']);
             <div class="comment-threads">
                 <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                     <div class="d-flex flex-start w-100">
-                        <img class="rounded-circle shadow-1-strong me-3 mr-3" src="./../Uploads/avt.jpg" alt="avatar"
-                            width="50" height="50" />
+                        <img class="rounded-circle shadow-1-strong me-3 mr-3" src="./../Uploads/avt.jpg" alt="avatar" width="50" height="50" />
                         <div class="form-outline w-100">
-                            <textarea class="form-control" id="textAreaContent" rows="4"
-                                style="background: #fff;"></textarea>
+                            <textarea class="form-control" id="textAreaContent" rows="4" style="background: #fff;"></textarea>
                             <label class="form-label" for="textAreaExample">Message</label>
                         </div>
                     </div>
                     <div class=" mt-2 pt-1 d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary  m-1" id="btn_comment"
-                            data-ma_cuocthaoluan="<?php echo $data['ma_cuocthaoluan'] ?>"
-                            data-ma_nguoidung="<?php echo $_SESSION['ma_nguoidung'] ?>">
+                        <button type="button" class="btn btn-primary  m-1" id="btn_comment" data-ma_cuocthaoluan="<?php echo $data['ma_cuocthaoluan'] ?>" data-ma_nguoidung="<?php echo $_SESSION['ma_nguoidung'] ?>">
                             Bình luận
                         </button>
                         <!-- <button type="button" class="btn btn-outline-primary btn-sm m-1">
@@ -99,7 +96,7 @@ var_dump($data['ma_cuocthaoluan']);
                 <div class="col-md-12 col-lg-10 col-xl-8 ">
                     <div class="card">
                         <div class="card-body p-4">
-                            <h4 class="text-center mb-4 pb-2">Danh sách binh luan</h4>
+                            <h4 class="text-center mb-4 pb-2">Danh sách bình luận</h4>
 
                             <div class="row">
                                 <div class="col" id="comments">

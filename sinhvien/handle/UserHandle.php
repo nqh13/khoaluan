@@ -5,26 +5,23 @@ require_once("../../classes/user.php");
 
 
 $user = new User();
-// var_dump($_POST);
-
-if (isset($_POST['updateInfo'])) {
 
 
+if (isset($_POST['action']) && $_POST['action'] == 'updateInfo') {
+
+    // $id  = $_POST['id'];
     $p = $user->updateUser($_SESSION['ma_nguoidung'], $_POST);
     if ($p) {
-        echo '<script>alert("Cập nhật thành công")</script>';
+        echo "Cập nhật thành công";
     } else {
-        echo '<script>alert("Lỗi cập nhật, vui lòng thử lại sau!")</script>';
+        echo "Lỗi cập nhật, vui lòng thử lại sau!";
     }
-    header("location:./../index.php?page=thongtin");
 }
 
 
 // change password
 
-
-// $user = new User();
-if (isset($_POST['action']) == 'changePassword') {
+if (isset($_POST['action']) && $_POST['action'] == 'changePassword') {
     $er = 0;
     $new_password = $_POST['newPassword'];
     $password = $_POST['password'];
@@ -32,8 +29,6 @@ if (isset($_POST['action']) == 'changePassword') {
     $checkpass = $user->checkPassword($ma_nguoidung, $password);
     if ($checkpass == true) {
         $changepass = $user->changePassword($ma_nguoidung, $new_password);
-        // var_dump($checkpass, "password");
-
         if ($changepass) {
             echo 'Đã đổi password';
         } else {

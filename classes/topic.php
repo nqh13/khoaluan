@@ -106,4 +106,7 @@ class Topic
         $result->execute();
         return $result;
     }
+
+    // Get topic to student
+
 }

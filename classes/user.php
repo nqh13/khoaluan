@@ -87,9 +87,9 @@ class User
 
 
     // Add new user
-    public function     addUser($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro,)
+    public function  addUser($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro,)
     {
-
+        // var_dump($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro);
         $hashed_password = md5($password);
         $sql = "INSERT INTO tbl_users (ma_nguoidung,hoten, email, sodienthoai, diachi, hinhanh, matkhau, khoavien, ma_nganh, vaitro) 
         VALUES (:manguoidung,:hoten, :email, :sodienthoai, :diachi, :hinhanh,:password, :khoavien, :chuyennganh, :vaitro)";
@@ -106,6 +106,7 @@ class User
         $stmt->bindParam(':chuyennganh', $chuyennganh);
         $stmt->bindParam(':vaitro', $vaitro);
         $stmt->execute();
+        echo 'username: ' . $manguoidung . ' password: ' . $password;
     }
 
     //Update information user

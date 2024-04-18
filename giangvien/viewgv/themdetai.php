@@ -39,16 +39,38 @@
 
             <div class="form-group">
                 <label class="font-weight-bold" for="">Loại khóa Luận</label>
-                <select class="form-control" name="loai" id="">
+                <select class="form-control" name="loai" id="loaidt">
                     <option value="1" selected>KLTN-ĐH</option>
                     <option value="2">KLTN-CĐ</option>
 
                 </select>
             </div>
-            <button id="btnthemdetai" name="them" class="btn btn-primary btndetai">Lưu đề tài</button>
+            <button id="btnthemdetai" name="them" type="submit" class="btn btn-primary btndetai">Lưu đề tài</button>
+
 
         </form>
 
     </div>
 
 </div>
+<script src="../Assets/js/validate.js"></script>
+<script>
+    const validate = () => {
+        return Validator({
+            form: '#formthemdetai',
+            errorSelector: '.form-text',
+            rules: [
+                Validator.isRequired('#tendetai'),
+                Validator.isRequired('#mota'),
+                Validator.isRequired('#yeucau'),
+                Validator.isRequired('#kienthuc'),
+                Validator.isRequired('#soluong_SV'),
+                Validator.isNumber('#soluong_SV'),
+                Validator.isNumberQty('#soluong_SV'),
+            ]
+        }, () => handelAddTopic(<?php echo $_SESSION['ma_nguoidung'] . ',' . $_SESSION['ma_nganh']; ?>));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        validate();
+    })
+</script>

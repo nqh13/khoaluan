@@ -307,7 +307,7 @@ img {
 }
 
 .form-group.invalid .form-text {
-  color: #f33a58;
+  color: #f33a58 !important;
 }
 
 .form-control:hover {

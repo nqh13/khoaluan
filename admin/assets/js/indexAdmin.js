@@ -1,5 +1,4 @@
 //
-
 //Xử lý lấy dữ liệu ngành học theo khoa.
 
 $(document).ready(function () {
@@ -35,7 +34,7 @@ $("#btnXoaAnh").click(function () {
   $("#hinhanh").removeClass("d-none");
 });
 // Thêm user
-$("#btnThemUser").click(function () {
+function themUser() {
   var manguoidung = $("#manguoidung").val();
   var hoten = $("#hoten").val();
   var email = $("#email").val();
@@ -64,22 +63,27 @@ $("#btnThemUser").click(function () {
     data: fd,
     processData: false, // không xử lý dữ liệu
     contentType: false, // không đặt header Content-Type
-    success: function (data) {
+    success: async function (data) {
       console.log(data);
+      // reset form
+      $("#formAddUser")[0].reset();
+      $("#divAnh").addClass("d-none");
+      $("#imgPreview").attr("src", "");
+      $("#hinhanh").removeClass("d-none");
+      alert("Thêm user thành công");
+
+      await axios
+        .post("http://localhost:3000/send-mail", {
+          from: "nguyenquangha130901@gmail.com",
+          to: email,
+          subject: "Thông báo cấp tài khoản đăng nhập",
+          text: "Mã đăng nhập: 19508461 ",
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+      window.location.href = "index.php?pages=quanlyUsers";
     },
   });
-});
-
-// Hàm validator
-
-function Validator(options) {
-  var formElement = document.querySelector(options.form);
-  if (formElement) {
-    console.log(formElement);
-  }
 }
-
-// Định nghĩa rules
-Validator.isRequired = function () {};
-
-Validator.isEmail = function () {};

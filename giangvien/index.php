@@ -8,15 +8,15 @@
     require_once('./../classes/topic.php');
     $topic = new Topic();
 
-    if (isset($_POST['them'])) {
-        $_POST['ma_GV'] = $_SESSION['ma_nguoidung'];
-        $_POST['ma_nganh'] = $_SESSION['ma_nganh'];
+    // if (isset($_POST['them'])) {
+    //     $_POST['ma_GV'] = $_SESSION['ma_nguoidung'];
+    //     $_POST['ma_nganh'] = $_SESSION['ma_nganh'];
 
-        $topic->insertTopic($_POST);
-        echo '<div>Đề tài đã được thêm</div>';
-        header('location: index.php?page=danhsach');
-        exit();
-    }
+    //     $topic->insertTopic($_POST);
+    //     echo '<div>Đề tài đã được thêm</div>';
+    //     header('location: index.php?page=danhsach');
+    //     exit();
+    // }
 
     if (isset($_POST['update']) && isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -67,6 +67,15 @@
                     break;
                 case 'thembai':
                     echo ("Nộp bài");
+                    break;
+                case 'baocao':
+                    echo ("Báo cáo");
+                    break;
+                case 'danhgia':
+                    echo ("Đánh giá");
+                    break;
+                case 'chitiet':
+                    echo ("Đề tài");
                     break;
 
                 default:
@@ -141,8 +150,14 @@
                                         case 'thongtin':
                                             echo ("Thông tin");
                                             break;
-                                        case 'thembai':
-                                            echo ("Nộp bài");
+                                        case 'baocao':
+                                            echo ("Báo cáo");
+                                            break;
+                                        case 'danhgia':
+                                            echo ("Đánh giá ");
+                                            break;
+                                        case 'chitiet':
+                                            echo ("Đề tài");
                                             break;
 
                                         default:
@@ -190,6 +205,15 @@
                             break;
                         case 'thongtin':
                             include("./../pages/user.php");
+                            break;
+                        case 'danhgia':
+                            include("./Viewgv/danhgia.php");
+                            break;
+                        case 'baocao':
+                            include("./Viewgv/baocao.php");
+                            break;
+                        case 'chitiet':
+                            include("./Viewgv/chitietdetai.php");
                             break;
 
 

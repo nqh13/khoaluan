@@ -30,8 +30,39 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+//Thêm đề tài GV
 
-//Xóa đề tài.
+function handelAddTopic(ma_nguoidung, ma_nganh) {
+  var tendetai = $("#tendetai").val();
+  var mota = $("#mota").val();
+  var yeucau = $("#yeucau").val();
+  var kienthuc = $("#kienthuc").val();
+  var soluong_SV = $("#soluong_SV").val();
+  var loaidt = $("#loaidt").val();
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      ma_GV: ma_nguoidung,
+      ma_nganh: ma_nganh,
+      action: "addTopic",
+      tendetai: tendetai,
+      mota: mota,
+      yeucau: yeucau,
+      kienthuc: kienthuc,
+      soluong_SV: soluong_SV,
+      loai: loaidt,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.href = "index.php?page=danhsach";
+    },
+  });
+}
+
+//Sửa đề tài GV.
+
+//Xóa đề tài GV.
 
 function handelDeleteTopic(id) {
   var option = confirm("Bạn có muốn xoá đề tài này không?");
@@ -58,19 +89,23 @@ function handelDeleteTopic(id) {
 
 // Đăng ký đề tài
 function signUpTopic(id, ma_SV) {
-  $.ajax({
-    type: "POST",
-    url: "./../sinhvien/handle/SignUpTopic.php",
-    data: {
-      action: "signUpTopic",
-      ma_detai: id,
-      ma_SV: ma_SV,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.href = "index.php?page=detai";
-    },
-  });
+  $confirm = confirm("Bạn chắc chắn muốn chọn đặt ký đề tài này?");
+  if ($confirm === true) {
+    $.ajax({
+      type: "POST",
+      url: "./../sinhvien/handle/SignUpTopic.php",
+      data: {
+        action: "signUpTopic",
+        ma_detai: id,
+        ma_SV: ma_SV,
+      },
+      success: function (response) {
+        alert();
+        window.location.href = "index.php?page=detai";
+      },
+    });
+  }
+ 
 }
 
 // Hủy đề tài đã đăng ký.
@@ -172,4 +207,43 @@ function addGroup(id_nhom, ma_SV) {
       },
     });
   }
+}
+
+//Cập nhậtthông tin
+function updateInfo() {
+  var id = document.getElementById("ma_nguoidung").value;
+  var email = document.getElementById("email").value;
+  var sdt = document.getElementById("sdt").value;
+  var diachi = document.getElementById("diachi").value;
+
+  $.ajax({
+    type: "POST",
+    url: "./../sinhvien/handle/UserHandle.php",
+    data: {
+      action: "updateInfo",
+      sdt: sdt,
+      email: email,
+      diachi: diachi,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.href = "index.php?page=thongtin";
+    },
+  });
+}
+
+// Lấy thông tin sinh viên đăng ký đề tài.
+function getDataStudentSignUp(id_topic) {
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "getDataStudentSignUp",
+      id_topic: id_topic,
+    },
+    success: function (response) {
+      $("#dataStudentSignUp").html(response);
+      console.log(response);
+    },
+  });
 }

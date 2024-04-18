@@ -51,13 +51,15 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                                     <button class="btn btn-info form-control" name="search">Tìm kiếm</button>
                                 </div>
                             </div>
-                            <form action="" method="post">
+                            <form action="" method="POST" class="input-group">
                                 <input type="text" class="form-control" name="searchMaNguoiDung" value="<?php if (isset($_POST['searchMaNguoiDung'])) echo ($_POST['searchMaNguoiDung']) ?>" placeholder="Mã người dùng">
 
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-info  addon-btn" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+
+
                             </form>
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-info  addon-btn" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
 
 
                             <!-- <div class="input-group-btn">
@@ -144,8 +146,8 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                                         <td>' . $value['tenvaitro'] . '</td>
                                         <td class="text-center">
 
-                                            <a style="margin: 3px;" class="btn btn-sm btn-inverse-warning " href="pages/editUser.php?ma_nguoidung=' . $value['ma_nguoidung'] . '"  >Cập nhật</a>
-                                            <a style="margin: 3px;" class=" btn btn-sm btn-inverse-danger " href="pages/deleteUser.php?ma_nguoidung=' . $value['ma_nguoidung'] . '"> </i>Xóa</a>
+                                            <a style="margin: 3px;" class="btn btn-sm btn-inverse-warning " href="?pages=updateUser&ma_nguoidung=' . $value['ma_nguoidung'] . '"  >Cập nhật</a>
+                                            <a style="margin: 3px;" class=" btn btn-sm btn-inverse-danger " href="?pages=deleteUser&ma_nguoidung=' . $value['ma_nguoidung'] . '"> </i>Xóa</a>
 
 
                                         </td>

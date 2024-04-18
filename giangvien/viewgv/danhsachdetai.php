@@ -1,5 +1,8 @@
 <?php
 
+require_once('../classes/signuptopic.php');
+$check = new SignUpTopic();
+
 
 $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
 
@@ -20,13 +23,19 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                     <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
 
 
-                    <th scope="col" style="width: 5%">CHỨC NĂNG</th>
+                    <th scope="col" style="width: 5%"></th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $stt = 1;
                 while ($row = $detaiList->fetch(PDO::FETCH_ASSOC)) {
+
+                    $checkDK = $check->getCountSignUpTopic($row['ma_detai']);
+                    $sldk = $checkDK->fetch(PDO::FETCH_ASSOC);
+
+
+
 
                     echo '
                             <tr>
@@ -39,8 +48,23 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                                 <td style="width: 15%">
                                 ' . $row['yeucau'] . '
                                 </td>
-                                <td class="text-center" style="width: 10%">' . $row['kienthuc'] . '</td>
-                              
+                                <td class="text-center" style="width: 10%">' . $row['kienthuc'] . '</td>';
+
+                    if (isset($sldk['Soluongdk']) && $sldk['Soluongdk'] > 0) {
+                        echo '
+                                   
+                                    <td class="text-center" style="width: 10%">
+                                    <a type="button" class="btn btn-outline-primary btn-sm" href="?page=danhsachdk">
+                                    <i class="fa-solid fa-list"></i>
+                                    Danh sách
+        
+                                </a>
+                                    
+                                    </td>
+                                   
+                                   ';
+                    } else {
+                        echo '
                                 <td style="width: 10%">
                                 <a type="button" class="btn btn-outline-primary btn-sm" href="?page=capnhat&&id=' . $row['ma_detai'] . '">
                                     <i class="fas fa-edit"></i>
@@ -57,6 +81,7 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                             </td>
                             </tr>
                             ';
+                    }
                 }
                 ?>
 
