@@ -75,13 +75,8 @@ function handelDeleteTopic(id) {
         action: "delete",
       },
       success: function (response) {
-        Toast.fire({
-          icon: "success",
-          title: "xóa đề tài thành công!",
-        });
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000);
+        alert(response);
+        window.location.href = "index.php?page=danhsach";
       },
     });
   }
@@ -105,7 +100,6 @@ function signUpTopic(id, ma_SV) {
       },
     });
   }
- 
 }
 
 // Hủy đề tài đã đăng ký.
@@ -246,4 +240,86 @@ function getDataStudentSignUp(id_topic) {
       console.log(response);
     },
   });
+}
+//Lấy thời gian hiện tại
+
+var now = new Date();
+// Chuyển múi giờ của ngày hiện tại sang múi giờ của máy tính cá nhân của người dùng
+var localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+
+document.getElementById("ngaytao").value = localTime.toISOString().slice(0, 16);
+
+// Tạo báo cáo:
+
+function createReport(id_topic) {
+  var tieude = document.getElementById("tieudebaocao").value;
+  var ngaytao = document.getElementById("ngaytao").value;
+  var ngayhethan = document.getElementById("ngayhethan").value;
+  var ghichu = document.getElementById("ghichubaocao").value;
+
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "createReport",
+      detai: id_topic,
+      tieude: tieude,
+      ngaytao: ngaytao,
+      ngayhethan: ngayhethan,
+      ghichu: ghichu,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.href = "index.php?page=chitiet&id=" + id_topic;
+    },
+  });
+}
+
+// Cập nhật thông tin báo cáo GV:
+function updateInforReport(id) {
+  var tieude = document.getElementById("tieude").value;
+  var ngaytao = document.getElementById("ngaytao").value;
+  var ngayhethan = document.getElementById("ngayhethan").value;
+  var ghichu = document.getElementById("ghichu").value;
+
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "updateInforReport",
+      ma_baocao: id,
+      tieude: tieude,
+      ngaytao: ngaytao,
+      ngayhethan: ngayhethan,
+      ghichu: ghichu,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.href = "index.php?page=ctbaocao&id=" + id;
+    },
+  });
+}
+
+function deleteReport(idReport) {
+  var table = document.getElementById("table-report-detail");
+  // Lấy ô cụ thể trong bảng, ví dụ: hàng 1, cột 0 (đếm từ 0)
+  var cell = table.rows[1].cells[1];
+  // Lấy giá trị của ô
+  var valueIDTopic = cell.innerHTML;
+
+  var option = confirm("Bạn có muốn xoá báo cáo này không?");
+  if (option === true) {
+    $.ajax({
+      url: "./../handle/xuly.php",
+      method: "Post",
+      data: {
+        ma_baocao: idReport,
+        action: "deleteReport",
+      },
+      success: function (response) {
+        alert(response);
+        window.location.href = "index.php?page=chitiet&id=" + valueIDTopic;
+      },
+    });
+  }
 }

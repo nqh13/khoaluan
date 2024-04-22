@@ -95,52 +95,49 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
 
 
         <h3 class="text-primary">NỘP BÁO CÁO</h3>
-        <div id="coursecontentcollapse4" class="content 
-                                    course-content-item-content collapse show
-                                ">
-            <div class=" my-3" data-for="sectioninfo">
-                <div class="section_availability course-description-item">
-                </div>
-            </div>
-            <ul class="section m-0 p-3 img-text  d-block " style="list-style: none" data-for="cmlist">
-                <li class="  " id="" data-id="262518">
-                    <div class="">
+        <div id="" class=" ">
 
-                        <div class="activity-basis d-flex align-items-center">
-                            <div class="d-flex flex-column flex-md-row w-100 align-self-start">
-                                <div class=" d-flex flex-column">
-                                    <div class=" media  modtype_assign position-relative align-self-start">
-                                        <div class="activityiconcontainer assessment align-self-start mr-3">
-                                            <a href="?page=nopbaocao">
-                                                <i class="fa-solid fa-file-arrow-up"
-                                                    style="color: #ffffff; font-size: 25px"></i>
-                                            </a>
+
+            <ul class="section m-0 p-3 d-block " style="list-style: none" data-for="cmlist">
+                <li class="itemBaoCao p-3" id="" style="width:80%;">
+                    <div class="activity-basis d-flex ">
+                        <div class="d-flex flex-column flex-md-row w-100 align-self-start">
+                            <div class=" d-flex flex-column">
+                                <div class=" media  modtype_assign position-relative align-self-start">
+                                    <div class="activityiconcontainer assessment align-self-start mr-3">
+                                        <a href="?page=nopbaocao">
+                                            <i class="fa-solid fa-file-arrow-up" style="color: #ffffff; font-size: 25px"></i>
+                                        </a>
+                                    </div>
+                                    <div class="media-body align-self-center">
+                                        <div class="text-uppercase small">
+                                            <h6>BÁO CÁO</h6>
                                         </div>
-                                        <div class="media-body align-self-center">
-                                            <div class="text-uppercase small">
-                                                <h6>BÁO CÁO</h6>
-                                            </div>
-                                            <div class="">
-                                                <a href="?page=nopbaocao" class="" onclick=""> <span class="">NỘP BÁO
-                                                        CÁO TUẦN 1
-                                                    </span> </a>
+                                        <div class="">
+                                            <a href="?page=nopbaocao" class="" onclick=""> <span class="">NỘP BÁO
+                                                    CÁO TUẦN 1
+                                                </span> </a>
 
-                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
 
-                                <div class="activity-info mt-1 mt-md-0">
-                                    <div data-region="activity-information" data-activityname="NỘP BÀI TẬP NHÓM TUẦN 1"
-                                        class="activity-information">
-                                    </div>
-                                </div>
                             </div>
+
+                            <div class="d-flex  align-self-start ml-auto">
+                                <span class="text-muted font-italic">Đến hạn 23:59 30 thg 4</span>
+
+                            </div>
+
+
 
                         </div>
 
-
                     </div>
+
+
+
                 </li>
 
             </ul>

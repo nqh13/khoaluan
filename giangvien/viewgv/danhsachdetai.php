@@ -16,11 +16,12 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
             <thead>
                 <tr class="text-center">
                     <th scope="col" style="width: 5%">STT</th>
-                    <th scope="col" style="width: 10%">TÊN ĐỀ TÀI</th>
+                    <th scope="col" style="width: 15%">TÊN ĐỀ TÀI</th>
                     <th scope="col" style="width: 5%">LOẠI</th>
                     <th scope="col" style="width: 20%">MÔ TẢ</th>
                     <th scope="col" style="width: 20%">YÊU CẦU</th>
                     <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
+                    <th scope="col" style="width: 10%">SỐ LƯỢNG SINH VIÊN</th>
 
 
                     <th scope="col" style="width: 5%"></th>
@@ -32,25 +33,32 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                 while ($row = $detaiList->fetch(PDO::FETCH_ASSOC)) {
 
                     $checkDK = $check->getCountSignUpTopic($row['ma_detai']);
-                    $sldk = $checkDK->fetch(PDO::FETCH_ASSOC);
+                    $sldk = $checkDK->fetchAll(PDO::FETCH_ASSOC);
 
+                    $counts = $sldk[0]['Soluongdk'];
+                    echo $counts;
 
 
 
                     echo '
                             <tr>
                                 <th class="text-center" scope="row">' . $stt++ . '</th>
-                                <td class="text-center" style="width: 5%">' . $row['tendetai'] . '</td>
-                                <td class="text-center" style="width: 15%">' . $row['tenloai'] . '</td>
+                                <td class="text-center" style="width: 15%">' . $row['tendetai'] . '</td>
+                                <td class="text-center" style="width: 5%">' . $row['tenloai'] . '</td>
                                 <td style="width: 10%">
                                 ' . $row['mota'] . '
                                 </td>
                                 <td style="width: 15%">
                                 ' . $row['yeucau'] . '
                                 </td>
-                                <td class="text-center" style="width: 10%">' . $row['kienthuc'] . '</td>';
+                                <td class="text-center" style="width: 10%">' . $row['kienthuc'] . '</td>
+                                <td class="text-center" style="width: 10%">' . $counts . '/' . $row['soluong_SV'] . '</td>
+                                
+                                ';
 
-                    if (isset($sldk['Soluongdk']) && $sldk['Soluongdk'] > 0) {
+
+
+                    if ($counts > 0) {
                         echo '
                                    
                                     <td class="text-center" style="width: 10%">

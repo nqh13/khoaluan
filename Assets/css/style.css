@@ -337,3 +337,13 @@ img {
 .article-content__title {
   font-weight: bold;
 }
+
+.itemBaoCao {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
+  border: #eeeeee solid 1px;
+  /* background-color: #e5f5fa; */
+}
+.itemBaoCao:hover {
+  background-color: #d4e4f6;
+}

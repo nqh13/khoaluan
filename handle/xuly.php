@@ -1,5 +1,8 @@
 <?php
 require_once('../classes/topic.php');
+require_once('../classes/report.php');
+
+$report = new Report();
 $topic = new Topic();
 
 if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
@@ -68,4 +71,47 @@ if (isset($_POST["action"]) && $_POST["action"] == "getDataStudentSignUp") {
     }
 
     echo $students;
+}
+
+// Tạo báo cáo.
+
+if (isset($_POST['action'])  && $_POST['action'] == 'createReport') {
+
+    $addReport = $report->createReport($_POST);
+
+    if ($addReport) {
+
+        echo "Tạo báo cáo thành công!";
+    } else {
+
+        echo "Vui lòng thử lại lai sau!";
+    }
+}
+
+// Cập nhật thông tin báo cáo.
+if (isset($_POST['action'])  && $_POST['action'] == 'updateInforReport') {
+    // var_dump($_POST);
+    $updateReport = $report->updateReport($_POST);
+
+    if ($updateReport) {
+
+        echo "Cập nhật thành công!";
+    } else {
+
+        echo "Vui lòng thử lại lai sau!";
+    }
+}
+
+// Xóa báo cáo.
+if (isset($_POST['action'])  && $_POST['action'] == 'deleteReport') {
+    // var_dump($_POST);
+    $id = $_POST['ma_baocao'];
+    $deleteReport = $report->deleteReport($id);
+
+    if ($deleteReport) {
+        echo "Xóa thành công!";
+    } else {
+
+        echo "Vui lòng thử lại lai sau!";
+    }
 }
