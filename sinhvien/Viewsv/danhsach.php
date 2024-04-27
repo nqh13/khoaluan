@@ -9,7 +9,6 @@ $result = $topic->getTopicByStudent($_SESSION['ma_nganh'])->fetchAll(PDO::FETCH_
 
 $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 
-
 ?>
 
 <div class="content mt-2">
@@ -19,6 +18,7 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
       <thead>
         <tr class="text-center">
           <th scope="col" style="width: 5%">STT</th>
+          <th scope="col" style="width: 5%">MÃ ĐỀ TÀI</th>
           <th scope="col" style="width: 10%">TÊN ĐỀ TÀI</th>
           <th scope="col" style="width: 5%">LOẠI</th>
           <th scope="col" style="width: 20%">MÔ TẢ</th>
@@ -41,6 +41,7 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
 
           echo '<tr>
               <th class="text-center" scope="row">' . ($key + 1) . '</th>
+              <td class="text-center" style="width: 5%">' . $value['ma_detai'] . '</td>
               <td class="text-center" style="width: 5%">' . $value['tendetai'] . '</td>
               <td class="text-center" style="width: 15%">' . $value['tenloai'] . '</td>
               <td style="width: 10%">

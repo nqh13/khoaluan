@@ -51,11 +51,56 @@ class Utility
             return true;
         }
     }
+
+    // Check File Upload
+    public function checkFileUpload($file)
+    {
+        $allowedExtensions = array("doc", "docx", "pdf");
+        $allowedMimeTypes = array(
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/pdf"
+        );
+
+        // Kiểm tra xem có lỗi nào xảy ra khi tải lên không
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            return "Không có file được tải lên!";
+        }
+
+        // Lấy phần mở rộng của tệp
+        $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        // Kiểm tra phần mở rộng và kiểu MIME của tệp
+        if (!in_array($extension, $allowedExtensions) || !in_array($file["type"], $allowedMimeTypes)) {
+            return "File tải lên không hợp lệ!";
+        }
+
+        // Kiểm tra kích thước của tệp
+        if ($file["size"] > 10000000) { // Giới hạn kích thước 1MB
+            return "Kích thước file không quá 10MB.";
+        }
+
+        // Nếu tất cả các kiểm tra đều đúng, trả về true (không có lỗi)
+        return true;
+    }
+
+
     // Anti XSS;
 
-    public function checkXSS($data)
+    public static function checkAtackXSS($input)
     {
+        // Kiểm tra xem đầu vào có phải là một mảng hay không
+        if (is_array($input)) {
 
-        return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+            foreach ($input as $key => $value) {
+
+
+                $input[$key] = self::checkAtackXSS($value);
+            }
+        } else {
+            $input = trim($input);
+            $input = htmlspecialchars(strip_tags($input), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+        return $input;
     }
 }

@@ -7,7 +7,7 @@ $user = new User();
 
 
 $info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($info);
+
 
 
 
@@ -61,6 +61,11 @@ $info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC
             <div class="form-group">
                 <div class="control-label"> <span>Chuyên ngành: <b><?php echo $info[0]['ten_nganh']; ?></b> </span>
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label"> <span>Chức vụ:
+                        <b><?php echo $info[0]['vaitro'] == 2 ? 'Giảng viên' : 'Sinh viên'; ?>
+                        </b> </span> </div>
             </div>
             <div>
                 <a type="button" class="btn btn-success" href="?page=doithongtin">

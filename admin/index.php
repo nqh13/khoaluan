@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['vaitro']) && ($_SESSION['vaitro'] != 3)) {
+if (($_SESSION['vaitro'] != 3)) {
     header('Location: login.php');
 }
 $pages = "dashboard";
@@ -41,9 +41,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <!-- iconfont -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- simple line icon -->
     <link rel="stylesheet" type="text/css" href="assets/icon/simple-line-icons/css/simple-line-icons.css" />
@@ -109,6 +107,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                 </div>
 
                 <?php
+                echo $_SESSION['vaitro'];
 
 
                 switch ($pages) {
@@ -190,15 +189,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <script type="text/javascript" src="assets/js/indexAdmin.js"></script>
 
     <script>
-    var $window = $(window);
-    var nav = $(".fixed-button");
-    $window.scroll(function() {
-        if ($window.scrollTop() >= 200) {
-            nav.addClass("active");
-        } else {
-            nav.removeClass("active");
-        }
-    });
+        var $window = $(window);
+        var nav = $(".fixed-button");
+        $window.scroll(function() {
+            if ($window.scrollTop() >= 200) {
+                nav.addClass("active");
+            } else {
+                nav.removeClass("active");
+            }
+        });
     </script>
 
 

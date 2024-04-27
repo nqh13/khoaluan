@@ -36,7 +36,7 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                     $sldk = $checkDK->fetchAll(PDO::FETCH_ASSOC);
 
                     $counts = $sldk[0]['Soluongdk'];
-                    echo $counts;
+                    // echo $counts;
 
 
 

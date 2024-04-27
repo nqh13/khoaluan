@@ -15,12 +15,14 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
                 <thead>
                     <tr class="text-center">
                         <th style="width: 1%">STT</th>
+                        <th style="width: 10%">MÃ ĐỀ TÀI</th>
                         <th style="width: 10%">TÊN ĐỀ TÀI</th>
                         <th style="width: 5%">LOẠI</th>
                         <th style="width: 20%">MÔ TẢ</th>
                         <th style="width: 20%">YÊU CẦU</th>
                         <th style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
                         <th style="width: 15%">GVHD</th>
+                        <th style="width: 10%">NGÀNH</th>
                         <th style="width: 10%">TRẠNG THÁI</th>
                     </tr>
                 </thead>
@@ -29,6 +31,7 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
           foreach ($result as $key => $value) {
             echo '<tr>
           <th class="text-center" scope="row">' . ($key + 1) . '</th>
+          <td class="text-center" style="width: 10%">' . $value['ma_detai'] . '</td>
           <td class="text-center" style="width: 5%">' . $value['tendetai'] . '</td>
           <td class="text-center" style="width: 15%">' . $value['tenloai'] . '</td>
           <td style="width: 10%">
@@ -41,6 +44,8 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
           
           <td class="text-center" style="width: 15%">
             ' . $value['hoten'] . '
+          </td>
+          <td class="text-center" style="width: 10%"> ' . $value['ten_nganh'] . '
           </td>
           <td class="text-center" style="width: 10%">
             ' . $value['tentrangthai'] . '

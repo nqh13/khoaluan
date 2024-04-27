@@ -6,6 +6,8 @@ $topic = new Topic();
 $report = new Report();
 $id = $_GET['id'];
 $detai = $topic->getTopicById($id);
+$curentDate = date('Y-m-d\TH:i');
+
 
 
 
@@ -74,8 +76,7 @@ $detai = $topic->getTopicById($id);
     <div class="contentbaocao border-top p-2">
         <div class=" p-1 d-flex flex-row">
             <h5 class="text-left text-primary p-3 font-weight-bold">BÁO CÁO </h5>
-            <button class="btn btn-primary align-self-center ml-auto" data-toggle="modal" data-target="#ModalBaoCao"
-                data-whatever="@mdo">Tạo báo cáo</button>
+            <button class="btn btn-primary align-self-center ml-auto" data-toggle="modal" data-target="#ModalBaoCao" data-whatever="@mdo">Tạo báo cáo</button>
         </div>
 
         <div id="" class="m-0 p-0">
@@ -133,8 +134,7 @@ $detai = $topic->getTopicById($id);
 </div>
 
 
-<div class="modal fade" id="ModalBaoCao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="ModalBaoCao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -151,11 +151,11 @@ $detai = $topic->getTopicById($id);
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label font-weight-bold">Ngày tạo:</label>
-                        <input type="datetime-local" class="form-control" id="ngaytao" value="">
+                        <input type="datetime-local" class="form-control" id="ngaytao" min="<?php echo $curentDate; ?>" value="" readonly>
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label font-weight-bold">Ngày hết hạn:</label>
-                        <input class="form-control" type="datetime-local" value="" id="ngayhethan">
+                        <input class="form-control" type="datetime-local" value="" min="<?php echo $curentDate; ?>" id="ngayhethan">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Ghi chú:</label>
@@ -165,8 +165,7 @@ $detai = $topic->getTopicById($id);
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-primary" id="btnTaoBaoCao"
-                    onclick="createReport(<?php echo $id ?>)">Lưu
+                <button type="button" class="btn btn-primary" id="btnTaoBaoCao" onclick="createReport(<?php echo $id ?>)">Lưu
                 </button>
             </div>
         </div>

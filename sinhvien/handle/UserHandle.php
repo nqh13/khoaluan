@@ -2,15 +2,22 @@
 
 session_start();
 require_once("../../classes/user.php");
+require_once("../../classes/report.php");
+require_once("../../utils/utility.php");
 
 
 $user = new User();
+$utils = new Utility();
+$report = new Report();
 
 
 if (isset($_POST['action']) && $_POST['action'] == 'updateInfo') {
 
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    // var_dump($checkXSS);
+
     // $id  = $_POST['id'];
-    $p = $user->updateUser($_SESSION['ma_nguoidung'], $_POST);
+    $p = $user->updateUser($_SESSION['ma_nguoidung'], $checkXSS);
     if ($p) {
         echo "Cập nhật thành công";
     } else {
@@ -39,5 +46,36 @@ if (isset($_POST['action']) && $_POST['action'] == 'changePassword') {
     } else {
         $er = -1;
         return $er;
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport") {
+    // Kiểm tra xem có dữ liệu tệp được gửi không
+    if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
+
+        $checkFile = $utils->checkFileUpload($_FILES["file"]);
+
+        if ($checkFile == true) {
+
+            $upload_dir = "../../file_Upload";
+            $file_tmp = $_FILES['file']['tmp_name'];
+            $fileName = $_FILES['file']['name'];
+            $urlFile = $upload_dir . '/' . $_FILES['file']['name'];
+
+            if (move_uploaded_file($file_tmp, $urlFile)) {
+                $addDetailReport = $report->addDetailReport($_POST, $urlFile, $fileName);
+                if ($addDetailReport) {
+                    echo "Đã nộp bào cáo!";
+                } else {
+                    echo "Nộp thất bại, vui lòng thử lại sau!";
+                }
+            } else {
+                echo "Upload thất bại";
+            }
+        } else {
+            echo $checkFile;
+        }
+    } else {
+        echo "Lỗi tải file";
     }
 }

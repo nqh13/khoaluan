@@ -95,7 +95,7 @@ function signUpTopic(id, ma_SV) {
         ma_SV: ma_SV,
       },
       success: function (response) {
-        alert();
+        alert(response);
         window.location.href = "index.php?page=detai";
       },
     });
@@ -323,3 +323,21 @@ function deleteReport(idReport) {
     });
   }
 }
+
+// Hiển thị + Ân Password
+
+function showPassword() {
+  var x = document.getElementById("password");
+  var icon = document.getElementById("showpass");
+  if (x.type === "password") {
+    x.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    x.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
+
+//File upload

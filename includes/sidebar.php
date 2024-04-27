@@ -1,4 +1,12 @@
 <?php
+
+require_once('../classes/signUpTopic.php');
+$sign = new SignUpTopic();
+$check = $sign->checkSignUpTopic($_SESSION['ma_nguoidung']);
+
+
+
+
 if (isset($_GET['page'])) {
     $active = $_GET['page'];
 } else {
@@ -27,12 +35,16 @@ if (isset($_GET['page'])) {
                                         href="?page=detai" data-parent="#item-2">
                                         Đề tài đăng ký</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link pl-5 accordion-toggle collapsed <?php echo ($active == "baocao" ? "active" : "") ?>"
-                                        href="?page=baocao" data-parent="#item-2">Báo
+                                <?php
+                                if ($check->rowCount() > 0) {
+                                    echo ' 
+                                    <li class="nav-item">
+                                        <a class="nav-link pl-5 accordion-toggle collapsed ' . ($active == "baocao" ? "active" : "") . '" href="?page=baocao" data-parent="#item-2">Báo
                                         cáo đề tài</a>
+                                    </li>';
+                                }
+                                ?>
 
-                                </li>
 
                             </ul>
                         </div>

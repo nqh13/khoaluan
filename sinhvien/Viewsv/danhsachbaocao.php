@@ -1,8 +1,14 @@
 <?php
 require_once(__DIR__ . './../../classes/signUpTopic.php');
+require_once(__DIR__ . './../../classes/report.php');
 $sign  = new SignUptopic();
+$report = new Report();
 $result = $sign->getTopicSignUp($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 $ma_nguoidung = $_SESSION['ma_nguoidung'];
+
+
+$ma_detai = $result[0]['ma_detai'];
+
 
 
 ?>
@@ -99,7 +105,17 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
 
 
             <ul class="section m-0 p-3 d-block " style="list-style: none" data-for="cmlist">
-                <li class="itemBaoCao p-3" id="" style="width:80%;">
+                <?php
+                $itemResport = $report->getReportByIdTopic($ma_detai)->fetchAll(PDO::FETCH_ASSOC);
+
+
+                foreach ($itemResport as $key => $value) {
+                    $timestampEnd = strtotime($value['ngayhethan']);
+                    $formattedEndDate = date("l, j F Y, g:i A", $timestampEnd);
+                    //Mã hóa id:
+                    $encoded_id = base64_encode($value['ma_baocao']);
+                    echo '
+                    <li class="itemBaoCao p-3 mt-3" id="" style="width:80%;">
                     <div class="activity-basis d-flex ">
                         <div class="d-flex flex-column flex-md-row w-100 align-self-start">
                             <div class=" d-flex flex-column">
@@ -107,6 +123,56 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
                                     <div class="activityiconcontainer assessment align-self-start mr-3">
                                         <a href="?page=nopbaocao">
                                             <i class="fa-solid fa-file-arrow-up" style="color: #ffffff; font-size: 25px"></i>
+                                        </a>
+                                    </div>
+                                    <div class="media-body align-self-center">
+                                        <div class="text-uppercase small">
+                                            <h6>BÁO CÁO</h6>
+                                        </div>
+                                        <div class="">
+                                            <a href="?page=nopbaocao&idbaocao=' . urlencode($encoded_id) . '" class="" onclick=""> 
+                                            <span class="text-uppercase">' . strtoupper($value['tieude']) . '</span> </a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex  align-self-start ml-auto">
+                                <span class="text-muted font-italic">Đến hạn: ' . $formattedEndDate . '</span>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+                </li>
+
+                    
+                    
+                    
+                    
+                    ';
+                }
+
+
+                ?>
+                <!-- <li class="itemBaoCao p-3" id="" style="width:80%;">
+                    <div class="activity-basis d-flex ">
+                        <div class="d-flex flex-column flex-md-row w-100 align-self-start">
+                            <div class=" d-flex flex-column">
+                                <div class=" media  modtype_assign position-relative align-self-start">
+                                    <div class="activityiconcontainer assessment align-self-start mr-3">
+                                        <a href="?page=nopbaocao">
+                                            <i class="fa-solid fa-file-arrow-up"
+                                                style="color: #ffffff; font-size: 25px"></i>
                                         </a>
                                     </div>
                                     <div class="media-body align-self-center">
@@ -138,7 +204,7 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
 
 
 
-                </li>
+                </li> -->
 
             </ul>
 

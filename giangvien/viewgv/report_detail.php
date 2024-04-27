@@ -12,6 +12,11 @@ if (isset($_GET['id'])) {
     // format hạn nộp:
     $timestampEnd = strtotime($result['ngayhethan']);
     $formattedEndDate = date("l, j F Y, g:i A", $timestampEnd);
+
+
+    //Lấy danh sách sinh viên nộp bài:
+    $dataList = $report->getListDetailByReportID($id)->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($dataList);
 }
 ?>
 <div class="content p-3 mt-3">
@@ -90,5 +95,59 @@ if (isset($_GET['id'])) {
 
             </section>
         </div>
+
     </div>
+</div>
+<div class="content p-3 mt-3">
+    <h6 class="text-primary font-weight-bold"> QUẢN LÝ BÀI NỘP</h6>
+
+    <table class="table   table-bordered mt-3">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th>STT</th>
+                <th>Tên sinh viên</th>
+                <th>Thời gian nộp</th>
+                <th>File</th>
+                <th>Trạng Thái</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <?php
+        if (!$dataList) {
+            echo '
+                <td colspan="7" class="text-center font-weight-bold">Chưa có bài nộp nào!</td>
+                ';
+        } else {
+            $stt = 1;
+            foreach ($dataList as $key => $value) {
+                $timestamp = strtotime($value['thoigiannop']);
+                $formattedDate = date("d/m/Y H:i:s", $timestamp);
+                echo '
+                <tbody>
+                        <tr class="text-center">
+                            <td>' . $stt++ . '</td>
+                            <td>' . $value['hoten'] . '</td>
+                            <td>' . $formattedDate . '</td>
+                            <td>' . $value['tenFile'] . '</td>
+                            <td></td>
+                            <td> <a class="btn btn-success" href ="./../file_Upload/' . $value['tenFile'] . '"  download target="_blank"><i class="fa-solid fa-download"></i></a></td>
+
+
+
+                        </tr>
+                </tbody>
+            
+            
+            ';
+            }
+        }
+
+
+        ?>
+
+    </table>
+
+
 </div>

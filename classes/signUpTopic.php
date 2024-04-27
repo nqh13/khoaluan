@@ -44,7 +44,9 @@ class SignUpTopic
     {
         $sql = "SELECT * FROM tbl_dangkydetai 
         JOIN tbl_detai ON tbl_dangkydetai.ma_detai = tbl_detai.ma_detai
-        JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung 
+        JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien
+        JOIN tbl_chuyennganh ON tbl_khoavien.ma_khoavien = tbl_chuyennganh.ma_nganh 
         JOIN tbl_loaidetai ON tbl_detai.loaidetai = tbl_loaidetai.id_loai 
         JOIN tbl_trangthaidangky ON tbl_dangkydetai.trangthaidangky = tbl_trangthaidangky.ma_TTDK
         WHERE tbl_dangkydetai.ma_SV = :ma_SV";
