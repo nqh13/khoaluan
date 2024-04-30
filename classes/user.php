@@ -142,9 +142,9 @@ class User
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':password', $hashed_password);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-        if ($result) {
-            return $result['matkhau'] == md5($password);
+        $result = $stmt->rowCount();
+        if ($result == 1) {
+            return true;
         }
         return false;
     }

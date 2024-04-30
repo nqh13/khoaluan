@@ -137,3 +137,25 @@ Validator.isNumberQty = function (selector, message) {
     },
   };
 };
+
+//Check XSS
+Validator.checkXSS = function (selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var regex = /<("[^"]*"|'[^']*'|[^'">])*>/;
+      return regex.test(value) ? "Vui lòng nhập các tag HTML!" : undefined;
+    },
+  };
+};
+// Check Password Confirm
+Validator.isConfirmed = function (selector, getConfirmValue, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value === getConfirmValue()
+        ? undefined
+        : message || "Giá trị nhập vào không chính xác";
+    },
+  };
+};

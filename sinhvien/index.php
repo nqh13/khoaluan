@@ -1,4 +1,5 @@
  <?php
+    require_once('../utils/utility.php');
     session_start();
     if (!isset($_SESSION['ma_nguoidung']) || $_SESSION['vaitro'] != '1') {
         header('location: ../index.php');
@@ -8,6 +9,9 @@
     $checkSignUp = $sign->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 
 
+    $utility = new Utility();
+    $tokenUser = $utility->generateSessionToken();
+    // var_dump($_SESSION);
     ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -89,6 +93,7 @@
  </head>
 
  <body>
+
      <?php
 
         include('./../includes/header.php');

@@ -33,18 +33,21 @@ const Toast = Swal.mixin({
 //Thêm đề tài GV
 
 function handelAddTopic(ma_nguoidung, ma_nganh) {
+  var tokenUser = $("#tokenUser").val();
   var tendetai = $("#tendetai").val();
   var mota = $("#mota").val();
   var yeucau = $("#yeucau").val();
   var kienthuc = $("#kienthuc").val();
   var soluong_SV = $("#soluong_SV").val();
   var loaidt = $("#loaidt").val();
+  var hocki = $("#hocki").val();
   $.ajax({
     type: "POST",
     url: "./../handle/xuly.php",
     data: {
       ma_GV: ma_nguoidung,
       ma_nganh: ma_nganh,
+      tokenUser: tokenUser,
       action: "addTopic",
       tendetai: tendetai,
       mota: mota,
@@ -52,6 +55,7 @@ function handelAddTopic(ma_nguoidung, ma_nganh) {
       kienthuc: kienthuc,
       soluong_SV: soluong_SV,
       loai: loaidt,
+      hocki: hocki,
     },
     success: function (response) {
       alert(response);
@@ -61,6 +65,36 @@ function handelAddTopic(ma_nguoidung, ma_nganh) {
 }
 
 //Sửa đề tài GV.
+function handelUpdateTopic(idTopic) {
+  var tokenUser = $("#tokenUser").val();
+  var tendetai = $("#tendetai").val();
+  var mota = $("#mota").val();
+  var yeucau = $("#yeucau").val();
+  var kienthuc = $("#kienthuc").val();
+  var soluong = $("#soluong").val();
+  var loai = $("#loai").val();
+  var hocki = $("#hocki").val();
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      idTopic: idTopic,
+      action: "updateTopic",
+      tendetai: tendetai,
+      tokenUser: tokenUser,
+      mota: mota,
+      yeucau: yeucau,
+      kienthuc: kienthuc,
+      soluong: soluong,
+      loai: loai,
+      hocki: hocki,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.href = "index.php?page=danhsach";
+    },
+  });
+}
 
 //Xóa đề tài GV.
 
@@ -122,62 +156,25 @@ function cancelTopic(id) {
 }
 
 // Đổi mật khẩu.
-function validateForm() {
+
+function changePassword() {
   var password = document.getElementById("password").value;
   var newPassword = document.getElementById("newpassword").value;
-  var confirmPassword = document.getElementById("confirmpass").value;
-  var errorElement = document.getElementById("er_pass");
-  var errorNewPassword = document.getElementById("er_newpass");
-  var errorConfirmPassword = document.getElementById("er_confirmpass");
-
-  // Regex pattern để kiểm tra tính hợp lệ của mật khẩu
-  var passwordPattern =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?\/><,.\[\]\\\-]).{8,}$/;
-
-  // Kiểm tra tính hợp lệ của mật khẩu cũ
-  if (password.trim() === "") {
-    errorElement.innerText = "Vui lòng nhập mật khẩu cũ!";
-    return false;
-  } else {
-    errorElement.innerText = "";
-  }
-
-  // Kiểm tra tính hợp lệ của mật khẩu mới
-  if (!passwordPattern.test(newPassword)) {
-    errorNewPassword.innerText =
-      "Mật khẩu mới không hợp lệ! Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm ít nhất một chữ số, một chữ thường, một chữ hoa và một ký tự đặc biệt.";
-    return false;
-  } else {
-    errorNewPassword.innerText = "";
-  }
-
-  // Kiểm tra xác nhận mật khẩu
-  if (newPassword !== confirmPassword) {
-    errorConfirmPassword.innerText =
-      "Mật khẩu mới và xác nhận mật khẩu không khớp!";
-    return false;
-  } else {
-    errorConfirmPassword.innerText = "";
-  }
-
-  return true;
-}
-function changePassword(id) {
-  if (!validateForm()) return alert("Điền đầy đủ thông tin!");
-  var password = document.getElementById("password").value;
-  var newPassword = document.getElementById("newpassword").value;
+  var token = document.getElementById("tokenUser").value;
+  var id = document.getElementById("ma_nguoidung").value;
   $.ajax({
     type: "POST",
     url: "./../sinhvien/handle/UserHandle.php",
     data: {
       action: "changePassword",
       id_user: id,
+      tokenUser: token,
       password: password,
       newPassword: newPassword,
     },
     success: function (response) {
       alert(response);
-      console.log(response);
+      window.location.reload();
     },
   });
 }
@@ -205,6 +202,7 @@ function addGroup(id_nhom, ma_SV) {
 
 //Cập nhậtthông tin
 function updateInfo() {
+  var sessionUser = document.getElementById("sessionUser").value;
   var id = document.getElementById("ma_nguoidung").value;
   var email = document.getElementById("email").value;
   var sdt = document.getElementById("sdt").value;
@@ -215,6 +213,7 @@ function updateInfo() {
     url: "./../sinhvien/handle/UserHandle.php",
     data: {
       action: "updateInfo",
+      sessionUser: sessionUser,
       sdt: sdt,
       email: email,
       diachi: diachi,

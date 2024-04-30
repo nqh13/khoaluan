@@ -33,7 +33,8 @@ $info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC
         <div class="col-lg-4">
             <div class="card">
                 <div class="user-block-2">
-                    <img class="img-fluid" src="./../Uploads/<?php echo $info[0]['hinhanh']; ?>" style="height: 180px; width:180px" alt="user-header">
+                    <img class="img-fluid" src="./../Uploads/<?php echo $info[0]['hinhanh']; ?>"
+                        style="height: 180px; width:180px" alt="user-header">
                     <h5><?php echo  mb_strtoupper($info[0]['hoten'], 'UTF-8'); ?></h5>
                     <h6><?php echo $info[0]['ma_nguoidung']; ?></h6>
                 </div>
@@ -43,7 +44,7 @@ $info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC
 
         <div class="col-lg-8 col-md-8 col-sm-12 prf-right">
             <div class="border-bottom">
-                <h4 class="text-primary bold ">THÔNG TIN CÁ NHÂN</h4>
+                <h4 class="text-primary bold text-center ">THÔNG TIN CÁ NHÂN</h4>
             </div>
             <div class="form-group">
                 <div class="control-label"> <span>Số điện thoại: <b> <?php echo $info[0]['sodienthoai']; ?> </b> </span>

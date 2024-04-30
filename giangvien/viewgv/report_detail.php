@@ -16,7 +16,6 @@ if (isset($_GET['id'])) {
 
     //Lấy danh sách sinh viên nộp bài:
     $dataList = $report->getListDetailByReportID($id)->fetchAll(PDO::FETCH_ASSOC);
-    // var_dump($dataList);
 }
 ?>
 <div class="content p-3 mt-3">
@@ -40,11 +39,20 @@ if (isset($_GET['id'])) {
                     <a class="btn btn-primary" title="Chỉnh sửa" href="?page=updatebaocao&idbaocao=<?php echo $id ?>"><i class="fa-solid fa-pen-to-square"></i> Cập nhật</a>
 
                 </div>
-                <div class="d-flex  align-self-start ml-2">
+                <?php
+                if (!$dataList) {
+                    echo '
+                        <div class="d-flex  align-self-start ml-2">
 
-                    <a class="btn btn-danger text-white" title="Xóa" onclick="deleteReport(<?php echo $id ?>)"><i class="fa-solid fa-cancel"></i> Xóa</a>
+                            <a class="btn btn-danger text-white" title="Xóa" onclick="deleteReport(' . $id . ')"><i class="fa-solid fa-cancel"></i> Xóa</a>
+    
+                        </div>
+                        
+                        ';
+                }
 
-                </div>
+                ?>
+
 
 
             </div>

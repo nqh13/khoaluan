@@ -6,6 +6,9 @@
     }
 
     require_once('./../classes/topic.php');
+    require_once('../utils/utility.php');
+    $utility = new Utility();
+    $tokenUser = $utility->generateSessionToken();
     $topic = new Topic();
 
     // if (isset($_POST['them'])) {
@@ -18,13 +21,7 @@
     //     exit();
     // }
 
-    if (isset($_POST['update']) && isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $topic->updateTopic($_POST, $id);
-        echo '<div>Đề tài đã được cập nhật</div>';
-        header('location: index.php?page=danhsach');
-        exit();
-    }
+
 
     ?>
 

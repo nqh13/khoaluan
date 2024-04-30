@@ -11,44 +11,53 @@ $utils = new Utility();
 $report = new Report();
 
 
+// Handle update information user
 if (isset($_POST['action']) && $_POST['action'] == 'updateInfo') {
 
     $checkXSS = $utils->checkAtackXSS($_POST);
-    // var_dump($checkXSS);
+    $checktoken = $utils->checkToken($_POST['sessionUser'], $_SESSION['session_token']);
 
-    // $id  = $_POST['id'];
-    $p = $user->updateUser($_SESSION['ma_nguoidung'], $checkXSS);
-    if ($p) {
-        echo "Cập nhật thành công";
+    if ($checktoken == true) {
+        $p = $user->updateUser($_SESSION['ma_nguoidung'], $checkXSS);
+        if ($p) {
+            echo "Cập nhật thành công";
+        } else {
+            echo "Lỗi cập nhật, vui lòng thử lại sau!";
+        }
     } else {
-        echo "Lỗi cập nhật, vui lòng thử lại sau!";
+        echo "Vui lòng xác thực lại!";
     }
 }
 
 
-// change password
+
+
+// Xử lý đổi mật khẩu.
 
 if (isset($_POST['action']) && $_POST['action'] == 'changePassword') {
-    $er = 0;
     $new_password = $_POST['newPassword'];
     $password = $_POST['password'];
     $ma_nguoidung = $_POST['id_user'];
-    $checkpass = $user->checkPassword($ma_nguoidung, $password);
-    if ($checkpass == true) {
-        $changepass = $user->changePassword($ma_nguoidung, $new_password);
-        if ($changepass) {
-            echo 'Đã đổi password';
+    $checktoken = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    if ($checktoken == true) {
+        $checkpass = $user->checkPassword($ma_nguoidung, $password);
+        if ($checkpass == true) {
+            $changepass = $user->changePassword($ma_nguoidung, $new_password);
+            if ($changepass) {
+                echo 'Đã đổi mật khẩu';
+            } else {
+                echo 'lỗi, vui lòng thử lại';
+            }
         } else {
-            echo 'lỗi, vui lòng thử lại';
-            $er = 1;
+            echo "Mật khẩu cũ không đúng!";
         }
-        return $er;
     } else {
-        $er = -1;
-        return $er;
+        echo "Vui lòng xác thực lại!";
     }
 }
 
+
+//Thêm bài nộp cho báo cáo.
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport") {
     // Kiểm tra xem có dữ liệu tệp được gửi không
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {

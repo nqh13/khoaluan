@@ -103,4 +103,34 @@ class Utility
         }
         return $input;
     }
+
+
+
+    //Anti CSRF
+
+    //Check Anti CSRF
+    public function checkToken($user_token, $session_token)
+    {
+        if ($user_token !== $session_token || !isset($session_token)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // Destroy session token
+    public function destroySessionToken()
+    {
+        unset($_SESSION['session_token']);
+    }
+
+    // Generate session token
+    public function generateSessionToken()
+    {
+        if (isset($_SESSION['session_token'])) {
+            $this->destroySessionToken();
+        }
+        $_SESSION['session_token'] = md5(uniqid());
+        return $_SESSION['session_token'];
+    }
 }

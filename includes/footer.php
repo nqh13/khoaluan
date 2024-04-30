@@ -8,9 +8,7 @@
                     <div class="col-md-5 ">
                         <div class="infoarea">
                             <div class="footer-logo">
-                                <a href="#"><img
-                                        src="//lms.iuh.edu.vn/pluginfile.php/1/theme_academi/logo/1697014882/Logo_IUH.png"
-                                        width="195px" height="85px" alt="Academi"></a>
+                                <a href="#"><img src="../Uploads/Logo_IUH.png" width="195px" height="85px" alt="Logo IUH"></a>
                             </div>
 
                             <p>Chào mừng các bạn đến với Hệ thống quản lý khóa luận trực tuyến của trường Đại học Công
@@ -38,8 +36,7 @@
 
                             <p>Trung tâm Quản trị Hệ thống - Trường Đại học Công nghiệp TP.HCM<br>
                                 <i class="fa fa-phone-square"></i> Phone : 0283.8940 390<br>
-                                <i class="fa fa-envelope"></i> E-mail : <a class="mail-link"
-                                    href="mailto:csm@iuh.edu.vn">csm@iuh.edu.vn</a><br>
+                                <i class="fa fa-envelope"></i> E-mail : <a class="mail-link" href="mailto:csm@iuh.edu.vn">csm@iuh.edu.vn</a><br>
                             </p>
 
                         </div>

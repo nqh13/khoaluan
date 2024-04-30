@@ -1,10 +1,14 @@
 <?php
+session_start();
 require_once('../classes/topic.php');
 require_once('../classes/report.php');
+require_once('../utils/utility.php');
 
 $report = new Report();
 $topic = new Topic();
+$utils = new Utility();
 
+// Delete Topic
 if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
     $id_topic = $_POST['id'];
     $delete = $topic->deleteTopic($id_topic);
@@ -17,15 +21,42 @@ if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
 }
 
 
-
+//Handel Add Topic
 if (isset($_POST['action']) && $_POST['action'] == 'addTopic') {
-    $add = $topic->insertTopic($_POST);
-    if (!$add) {
-        echo "Thêm thất bại";
+
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    if ($checkCSRF == true) {
+        $add = $topic->insertTopic($checkXSS);
+        if (!$add) {
+            echo "Thêm thất bại";
+        } else {
+            echo "Thêm thành công";
+        }
     } else {
-        echo "Thêm thành công";
+        echo "Lỗi xác thực!";
     }
 }
+
+//Handle Updates Topic
+if (isset($_POST['action']) && $_POST['action'] == 'updateTopic') {
+
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    $id = $_POST['idTopic'];
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    if ($checkCSRF == true) {
+        $update = $topic->updateTopic($checkXSS, $id);
+        if (!$update) {
+            echo "Cập nhật thất bại";
+        } else {
+            echo "Cập nhật thành công";
+        }
+    } else {
+        echo "Lỗi xác thực!";
+    }
+}
+
+
 
 //Change PassWord
 

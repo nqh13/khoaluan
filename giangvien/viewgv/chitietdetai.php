@@ -145,6 +145,7 @@ $curentDate = date('Y-m-d\TH:i');
             </div>
             <div class="modal-body">
                 <form class="" id="idbaocao">
+                    <input type="hidden" name="_token" id="csrf" value="<?php echo $tokenUser ?>">
                     <div class="form-group">
                         <label for="Title" class="col-form-label font-weight-bold">Tiêu đề báo cáo:</label>
                         <input type="text" class="form-control" id="tieudebaocao" value="">

@@ -20,8 +20,10 @@ $results = $topicItem->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($results as $row) {
             echo '
+            
+            <div class="col-md-4"> 
             <a href="?page=chitiet&id=' . $row['ma_detai'] . ' style="text-decoration: none;">
-                <div class="col-md-4">
+                
                     <div class="card mt-3 " style="min-height: 200px; box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
                         <div class="card-body">
                             <h4 class="card-title">' . $row['tendetai'] . '</h4>
@@ -29,8 +31,9 @@ $results = $topicItem->fetchAll(PDO::FETCH_ASSOC);
                             <a href="?page=chitiet&id=' . $row['ma_detai'] . '" class="btn btn-primary mt-2">Chi tiết</a>
                         </div>
                     </div>
-                </div>
+                
             </a>
+            </div>
             ';
         }
         ?>
