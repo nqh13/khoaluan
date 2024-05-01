@@ -28,14 +28,22 @@
 </style>
 
 <?php
+// Thiết lập múi giờ cho Việt Nam (Asia/Ho_Chi_Minh)
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 require_once(__DIR__ . './../../classes/report.php');
 $report = new Report();
 
-if (isset($_GET['idbaocao'])) {
-    $encoded_id_received = $_GET['idbaocao'];
-    $id_received = base64_decode($encoded_id_received);
+// $checkID = $report->getListID($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 
-    $reportItem = $report->getReportById($id_received)->fetch(PDO::FETCH_ASSOC);
+
+
+
+
+
+if (isset($_GET['idbaocao'])) {
+    $idbaocao = $_GET['idbaocao'];
+
+    $reportItem = $report->getReportById($idbaocao)->fetch(PDO::FETCH_ASSOC);
 
     $timestampStart = strtotime($reportItem['ngaytao']);
     $startDate = date("l, j F Y, g:i A", $timestampStart);
@@ -47,7 +55,7 @@ if (isset($_GET['idbaocao'])) {
 
     //Lấy ra thông tin nộp bài:
 
-    $detailRepot = $report->getDetailReportById($_SESSION['ma_nguoidung'], $id_received);
+    $detailRepot = $report->getDetailReportById($_SESSION['ma_nguoidung'], $idbaocao);
     $result = $detailRepot->fetch(PDO::FETCH_ASSOC);
 
     //Check thời gian nộp báo cáo:
@@ -62,6 +70,8 @@ if (isset($_GET['idbaocao'])) {
         $minutes_remaining = floor(($time_remaining % (60 * 60)) / 60);
         $seconds_remaining = $time_remaining % 60;
     }
+} else {
+    echo "Không tìm thấy báo cáo!";
 }
 
 
@@ -145,31 +155,39 @@ if (isset($_GET['idbaocao'])) {
 
                                         <tr class="">
                                             <th class="cell c0" scope="row">Thời gian còn lại</th>
-                                            <td class="">
+                                            <td class=" font-weight-bold <?php echo $time_remaining > 0 ? "text-success" . "" : "text-danger" ?>">
+
                                                 <?php
                                                 if ($result) {
+                                                    // Nếu $result là true, tức là đã có kết quả
                                                     echo $status = $time_remaining > 0 ? "Nộp Sớm: " : "Nộp trễ: ";
-                                                    echo $days_remaining . " ngày " . $hours_remaining . " giờ " . $minutes_remaining . " phút " . $seconds_remaining . " giây";
+                                                    // In ra thời gian còn lại
+                                                    if ($time_remaining > 0) {
+                                                        echo $days_remaining . " ngày " . $hours_remaining . " giờ " . $minutes_remaining . " phút " . $seconds_remaining . " giây";
+                                                    } else {
+                                                        echo $days_remaining * (-1) . " ngày " . $hours_remaining * (-1) . " giờ " . $minutes_remaining * (-1) . " phút " . $seconds_remaining * (-1) . " giây";
+                                                    }
                                                 } else {
-                                                    $now = date('Y-m-d H:i:s');
-                                                    $timestamp = strtotime($now);
+                                                    // Nếu chưa có kết quả, tính toán thời gian còn lại
+                                                    $now = time(); // Thời gian hiện tại
+                                                    $time_remaining = $timestampEnd - $now; // Số giây còn lại
 
-                                                    $time_remaining = $timestampEnd - $timestamp;
+                                                    // Chuyển đổi thời gian còn lại thành dạng ngày, giờ, phút, giây
+                                                    $days_remaining = floor(abs($time_remaining) / (60 * 60 * 24));
+                                                    $hours_remaining = floor((abs($time_remaining) % (60 * 60 * 24)) / (60 * 60));
+                                                    $minutes_remaining = floor((abs($time_remaining) % (60 * 60)) / 60);
+                                                    $seconds_remaining = abs($time_remaining) % 60;
 
-                                                    // Chuyển đổi thời gian còn lại thành dạng phút và giây
-                                                    $days_remaining = floor($time_remaining / (60 * 60 * 24));
-
-                                                    $hours_remaining = floor(($time_remaining % (60 * 60 * 24)) / (60 * 60));
-
-                                                    $minutes_remaining = floor(($time_remaining % (60 * 60)) / 60);
-
-                                                    $seconds_remaining = $time_remaining % 60;
-
-                                                    echo $days_remaining . " ngày " . $hours_remaining . " giờ " . $minutes_remaining . " phút " . $seconds_remaining . " giây";
+                                                    // Kiểm tra nếu thời gian còn lại âm (quá hạn)
+                                                    if ($time_remaining < 0) {
+                                                        echo "Thời gian quá hạn: " . $days_remaining . " ngày " . $hours_remaining . " giờ " . $minutes_remaining . " phút " . $seconds_remaining . " giây";
+                                                    } else {
+                                                        // In ra thời gian còn lại
+                                                        echo "Thời gian còn lại: " . $days_remaining . " ngày " . $hours_remaining . " giờ " . $minutes_remaining . " phút " . $seconds_remaining . " giây";
+                                                    }
                                                 }
-
-
                                                 ?>
+
                                             </td>
                                         </tr>
                                         <tr class="">
@@ -195,7 +213,7 @@ if (isset($_GET['idbaocao'])) {
                                             </td>
                                         </tr>
                                         <tr class="">
-                                            <th class="cell c0" scope="row">Nộp tập tin</th>
+                                            <th class="cell c0" scope="row">Tập tin</th>
                                             <td class="cell c1 lastcol">
                                                 <div class="box py-3">
                                                     <div id="">
@@ -203,7 +221,8 @@ if (isset($_GET['idbaocao'])) {
                                                             <li style="list-style: none;">
                                                                 <div>
                                                                     <div class=""><img class="icon" alt="" title="" src="" />
-                                                                        <a target="_blank" href="">
+
+                                                                        <a target="_blank" href="./../file_Upload/<?php echo $result['tenFile'] ?>" ?>
                                                                             <?php
                                                                             if ($result) {
                                                                                 echo $result['tenFile'];
@@ -231,11 +250,7 @@ if (isset($_GET['idbaocao'])) {
                                 echo '
                                     <div class="col-xs-6 mr-3">
                                         <div class="">
-                                            <form method="get" action="?page=thembai">
-                                                <input type="hidden" name="id" value="">
-                                                <input type="hidden" name="action" value="">
-                                                <button type="submit" class="btn btn-warning" id="">Sửa bài nộp</button>
-                                            </form>
+                                                <a href="?page=thembai&idbaocao=' . $idbaocao . '&mactbaocao=' . $result['ma_ctbaocao'] . '" class="btn btn-warning" id="">Sửa bài nộp</a>
                                         </div>
                                     </div>          
                                     ';
@@ -244,7 +259,7 @@ if (isset($_GET['idbaocao'])) {
                                     <div class="col-xs-6">
                                         <div class="ml-3">
         
-                                            <a href="?page=thembai&idbaocao= ' . $id_received . ' " class="btn btn-success">Thêm bài nộp</a>
+                                            <a href="?page=thembai&idbaocao=' . $idbaocao . '" class="btn btn-success">Thêm bài nộp</a>
         
                                         </div>
                                     </div>

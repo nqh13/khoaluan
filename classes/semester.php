@@ -43,20 +43,28 @@ class Semester
     // Add a new semester
     public function addSemester($data)
     {
-        $sql = "INSERT INTO tbl_hocki (ten_hocki) VALUES (:name_semester)";
+        $tenhocki = $data['tenhocki'];
+        $trangthai = $data['trangthai'];
+        $sql = "INSERT INTO tbl_hocki (tenhocki, trangthai) VALUES (:name_semester, :trangthai)";
         $result = $this->db->prepare($sql);
-        $result->bindParam(':name_semester', $data);
+        $result->bindParam(':name_semester', $tenhocki);
+        $result->bindParam(':trangthai', $trangthai);
         $result->execute();
         return $result;
     }
 
     // Update a semester
-    public function updateSemester($data, $id)
+    public function updateSemester($data)
     {
-        $sql = "UPDATE tbl_hocki SET ten_hocki = :name_semester WHERE ma_hocki = :id";
+        $ma_hk = $data['ma_hk'];
+        $tenhocki = $data['tenhocki'];
+        $trangthia = $data['trangthai'];
+
+        $sql = "UPDATE tbl_hocki SET tenhocki = :name_semester, trangthai = :trangthai  WHERE ma_hk = :id";
         $result = $this->db->prepare($sql);
-        $result->bindParam(':name_semester', $data);
-        $result->bindParam(':id', $id);
+        $result->bindParam(':name_semester', $tenhocki);
+        $result->bindParam(':trangthai', $trangthia);
+        $result->bindParam(':id', $ma_hk);
         $result->execute();
         return $result;
     }

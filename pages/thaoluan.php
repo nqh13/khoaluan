@@ -1,9 +1,21 @@
 <?php
 require_once './../classes/comment.php';
+require_once './../classes/signUpTopic.php';
 
 $comment = new Comment();
+$signUpTopic = new SignUpTopic();
 
-$comments = $comment->getAllDiscussion();
+//Get Discussion by Topic
+$idTopic = $signUpTopic->getTopicSignUp($_SESSION['ma_nguoidung'])->fetch(PDO::FETCH_ASSOC)['ma_detai'];
+
+
+
+$comments = $comment->getDiscussionByTopicId($idTopic);
+
+
+// var_dump($comments);
+
+
 
 function convertTime($time)
 {
@@ -13,8 +25,19 @@ function convertTime($time)
 ?>
 <div class="content-component p-3">
     <?php
-    foreach ($comments as $comment) {
+    if (empty($comments)) {
         echo '
+       
+
+                <h5 class="text-center font-weight-bold">
+                   Chưa có cuộc thảo luận nào được tạo!
+                </h5>
+           
+        
+        ';
+    } else {
+        foreach ($comments as $comment) {
+            echo '
         <div class="post-body__main post-content">
         <article class="post-content">
             <header class="mb-05 border-bottom pb-2">
@@ -25,38 +48,18 @@ function convertTime($time)
                 <div title="" class="text-muted">
                     Đã đăng vào thg ' . convertTime($comment['ngaytao']) . '
                 </div>
+                <div title="" class="text-muted">
+                Đăng bởi: <i class="font-weight-bold">' . $comment['hoten'] . '</i>
+            </div>
             </header>
         </article>
     </div>
         ';
+        }
     }
+
     ?>
-    <!-- <div class="post-body__main post-content">
-        <article class="post-content">
-            <header class="mb-05 border-bottom pb-2">
 
-                <h3 class="article-content__title">
-                    <a href="?page=chitietthaoluan">Khắc phục lỗi SQL Injection</a>
-                </h3>
-                <div title="" class="text-muted">
-                    Đã đăng vào thg 03 19, 2024 11:15 CH
-                </div>
-            </header>
-
-
-
-        
-
-        </article>
-    </div> -->
-
-
-    <!-- <div class="post-comments">
-        <h3 class="mb-2"><strong>Bình luận</strong></h3>
-        <div class="comment-threads">
-
-        </div>
-    </div> -->
 
 
 

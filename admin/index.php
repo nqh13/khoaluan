@@ -1,4 +1,8 @@
 <?php
+require_once('../utils/utility.php');
+
+$utility = new Utility();
+
 session_start();
 if (($_SESSION['vaitro'] != 3)) {
     header('Location: login.php');
@@ -15,6 +19,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     session_destroy();
     header('Location: login.php');
 }
+$tokenUser = $utility->generateSessionToken();
+
 
 ?>
 
@@ -47,6 +53,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <link rel="stylesheet" type="text/css" href="assets/icon/simple-line-icons/css/simple-line-icons.css" />
 
     <!-- Required Fremwork -->
+
     <link rel="stylesheet" type="text/css" href="assets/plugins/bootstrap/css/bootstrap.min.css" />
 
     <!-- Chartlist chart css -->
@@ -88,7 +95,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
             <div class="container-fluid">
                 <div class="row">
                     <div class="main-header">
-                        <h4><?php
+                        <h5><?php
                             switch ($pages) {
                                 case "dashboard":
                                     echo "Dashboard";
@@ -99,16 +106,21 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                                 case "addUser":
                                     echo "Thêm tài khoản";
                                     break;
+                                case "hocky":
+                                    echo "Học kỳ";
+                                    break;
+                                default:
+                                    echo "404 NOT FOUND! ";
+                                    break;
                             }
 
 
-                            ?></h4>
+                            ?></h5>
                     </div>
+
                 </div>
 
                 <?php
-                echo $_SESSION['vaitro'];
-
 
                 switch ($pages) {
                     case "dashboard":
@@ -122,6 +134,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                         break;
                     case "updateUser":
                         include("./pages/updateUser.php");
+                        break;
+                    case "hocky":
+                        include("./pages/semester.php");
+                        break;
+                    case "updateSemester":
+                        include("./pages/updateSemester.php");
+                        break;
+                    case "addSemester":
+                        include("./pages/addSemester.php");
                         break;
 
                     default:

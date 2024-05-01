@@ -30,6 +30,41 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+
+var logoutTimer;
+var logoutTimeLimit = 1 * 60 * 1000; // 30 phút
+var userActive = false; // Biến để kiểm tra người dùng có đang tương tác không
+
+// Hàm bắt đầu đếm thời gian đăng xuất
+function startLogoutTimer() {
+  logoutTimer = setTimeout(logout, logoutTimeLimit);
+}
+
+// Hàm reset đếm thời gian đăng xuất
+function resetLogoutTimer() {
+  clearTimeout(logoutTimer);
+  startLogoutTimer();
+}
+
+// Hàm đăng xuất
+function logout() {
+  console.log("Thời gian đăng nhập đã hết. Đã thực hiện đăng xuất.");
+  // Thực hiện hành động đăng xuất ở đây
+}
+
+// Lắng nghe sự kiện khi người dùng chuyển tab hoặc cửa sổ mới
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") {
+    userActive = true;
+    resetLogoutTimer();
+  } else {
+    userActive = false;
+  }
+});
+
+// Bắt đầu đếm thời gian đăng xuất khi trang được tải
+startLogoutTimer();
+
 //Thêm đề tài GV
 
 function handelAddTopic(ma_nguoidung, ma_nganh) {
@@ -157,11 +192,10 @@ function cancelTopic(id) {
 
 // Đổi mật khẩu.
 
-function changePassword() {
+function changePassword(id) {
   var password = document.getElementById("password").value;
   var newPassword = document.getElementById("newpassword").value;
   var token = document.getElementById("tokenUser").value;
-  var id = document.getElementById("ma_nguoidung").value;
   $.ajax({
     type: "POST",
     url: "./../sinhvien/handle/UserHandle.php",
@@ -339,4 +373,51 @@ function showPassword() {
   }
 }
 
-//File upload
+//Tạo cuộc thảo luận SV.
+
+function createDiscussion(idUser) {
+  var tieude = document.getElementById("tieude").value;
+  var noidung = document.getElementById("noidung").value;
+  var madetai = document.getElementById("madetai").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "createDiscussion",
+      tieude: tieude,
+      noidung: noidung,
+      madetai: madetai,
+      tokenUser: tokenUser,
+      ma_nguoidung: idUser,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+}
+
+// Update thảo luận.
+
+function updateDiscussion(idDiscussion) {
+  var tieude = document.getElementById("titleUpdate").value;
+  var noidung = document.getElementById("contentUpdate").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "updateDiscussion",
+      tieude: tieude,
+      noidung: noidung,
+      tokenUser: tokenUser,
+      mathaoluan: idDiscussion,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+}

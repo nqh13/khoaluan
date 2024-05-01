@@ -87,3 +87,54 @@ function themUser() {
     },
   });
 }
+
+// Function Xử lý Semester
+
+// Thêm học kì mới:
+
+function addSemester() {
+  var tenhocki = document.getElementById("addtenhocki").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  var trangthai = document.getElementById("addtrangthai").value;
+
+  // console.log(mahk, tenhocki, tokenUser, trangthai);
+  $.ajax({
+    type: "POST",
+    url: "./adminHandle/handle.php",
+    data: {
+      action: "addSemester",
+      tenhocki: tenhocki,
+      tokenUser: tokenUser,
+      trangthai: trangthai,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+}
+
+// Cập nhật thông tin học kì:
+function updateSemester() {
+  var ma_hk = document.getElementById("ma_hk").value;
+  var tenhocki = document.getElementById("tenhocki").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  var trangthai = document.getElementById("trangthai").value;
+
+  // console.log(mahk, tenhocki, tokenUser, trangthai);
+  $.ajax({
+    type: "POST",
+    url: "./adminHandle/handle.php",
+    data: {
+      action: "updateSemester",
+      ma_hk: ma_hk,
+      tenhocki: tenhocki,
+      tokenUser: tokenUser,
+      trangthai: trangthai,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+}

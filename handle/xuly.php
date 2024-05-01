@@ -3,10 +3,12 @@ session_start();
 require_once('../classes/topic.php');
 require_once('../classes/report.php');
 require_once('../utils/utility.php');
+require_once('../classes/comment.php');
 
 $report = new Report();
 $topic = new Topic();
 $utils = new Utility();
+$comment = new Comment();
 
 // Delete Topic
 if (isset($_POST['action']) == 'delete' && isset($_POST['id'])) {
@@ -153,5 +155,42 @@ if (isset($_POST['action'])  && $_POST['action'] == 'deleteReport') {
     } else {
 
         echo "Vui lòng thử lại lai sau!";
+    }
+}
+
+
+// Tạo cuộc thảo luận mới.
+
+if (isset($_POST['action']) && $_POST['action'] == 'createDiscussion') {
+
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    if ($checkCSRF == true) {
+        $createDiscussion = $comment->createDiscussion($checkXSS);
+        if ($createDiscussion) {
+            echo "Tạo thành công!";
+        } else {
+            echo "Lỗi, vui lòng thủ lại sau!";
+        }
+    } else {
+        echo "Lỗi xác thực!";
+    }
+}
+// Xử ly cập nhật cuộc thảo luận.
+
+if (isset($_POST['action']) && $_POST['action'] == 'updateDiscussion') {
+
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    var_dump($checkXSS);
+    if ($checkCSRF == true) {
+        $updateDiscussion = $comment->updateDiscussion($checkXSS);
+        if ($updateDiscussion) {
+            echo "Cập nhật thành công!";
+        } else {
+            echo "Lỗi, vui bạn thủ lài sau!";
+        }
+    } else {
+        echo "Lỗi xác thực!";
     }
 }

@@ -62,34 +62,6 @@ $ma_detai = $result[0]['ma_detai'];
         </tr>';
                     }
                     ?>
-                    <!-- <tr>
-                    <th class="text-center" scope="row">1</th>
-                    <td class="text-center" style="width: 5%">ĐỀ TÀI 1</td>
-                    <td class="text-center" style="width: 5%">KLTN - ĐH</td>
-                    <td style="width: 10%">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nam
-                        fugiat accusamus quam beatae provident laudantium nobis, mollitia
-                        sapiente in veritatis totam, hic vitae amet ipsam quia asperiores
-                        minima qui.
-                    </td>
-                    <td style="width: 15%">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum rem
-                        commodi tenetur dicta, libero quisquam ipsum quod totam amet
-                        similique quasi quis excepturi delectus id alias velit debitis
-                        asperiores. Quae?L
-                    </td>
-                    <td class="text-center" style="width: 10%">PHP, MySQL</td>
-                    <td style="width: 15%">
-                        Hệ thống website xử lý công việc có độ bảo mật caoL
-                    </td>
-                    <td class="text-center" style="width: 15%">GVHD 1</td>
-                    <td style="width: 10%">
-
-                        <i class="fas fa-lock"></i>
-                        <span>Đã khóa</span>
-
-                    </td>
-                </tr> -->
 
                 </tbody>
             </table>
@@ -112,8 +84,7 @@ $ma_detai = $result[0]['ma_detai'];
                 foreach ($itemResport as $key => $value) {
                     $timestampEnd = strtotime($value['ngayhethan']);
                     $formattedEndDate = date("l, j F Y, g:i A", $timestampEnd);
-                    //Mã hóa id:
-                    $encoded_id = base64_encode($value['ma_baocao']);
+
                     echo '
                     <li class="itemBaoCao p-3 mt-3" id="" style="width:80%;">
                     <div class="activity-basis d-flex ">
@@ -130,7 +101,7 @@ $ma_detai = $result[0]['ma_detai'];
                                             <h6>BÁO CÁO</h6>
                                         </div>
                                         <div class="">
-                                            <a href="?page=nopbaocao&idbaocao=' . urlencode($encoded_id) . '" class="" onclick=""> 
+                                            <a href="?page=nopbaocao&idbaocao=' . $value['ma_baocao'] . '" class="" onclick=""> 
                                             <span class="text-uppercase">' . strtoupper($value['tieude']) . '</span> </a>
 
                                         </div>

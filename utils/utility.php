@@ -53,36 +53,49 @@ class Utility
     }
 
     // Check File Upload
-    public function checkFileUpload($file)
+    function checkFileUpload($file)
     {
-        $allowedExtensions = array("doc", "docx", "pdf");
+        // Kiểm tra xem có lỗi nào xảy ra khi tải lên không
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            echo "Không có file được tải lên!";
+            return false;
+        }
+
+        // Lấy phần mở rộng của tệp
+        $fileExtension = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+
+        // Kiểm tra phần mở rộng của tệp
+        $allowedExtensions = array("doc", "docx", "pdf", "xls", "xlsx", "ppt", "pptx");
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            echo "Phần mở rộng của tệp không hợp lệ!";
+            return false;
+        }
+
+        // Kiểm tra kiểu MIME của tệp
         $allowedMimeTypes = array(
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "application/pdf"
         );
-
-        // Kiểm tra xem có lỗi nào xảy ra khi tải lên không
-        if ($file["error"] !== UPLOAD_ERR_OK) {
-            return "Không có file được tải lên!";
-        }
-
-        // Lấy phần mở rộng của tệp
-        $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
-
-        // Kiểm tra phần mở rộng và kiểu MIME của tệp
-        if (!in_array($extension, $allowedExtensions) || !in_array($file["type"], $allowedMimeTypes)) {
-            return "File tải lên không hợp lệ!";
+        $fileMimeType = mime_content_type($file["tmp_name"]);
+        if (!in_array($fileMimeType, $allowedMimeTypes)) {
+            echo "Kiểu MIME của tệp không hợp lệ!";
+            return false;
         }
 
         // Kiểm tra kích thước của tệp
-        if ($file["size"] > 10000000) { // Giới hạn kích thước 1MB
-            return "Kích thước file không quá 10MB.";
+        $maxFileSize = 10000000; // 10MB
+        if ($file["size"] > $maxFileSize) {
+            echo "Kích thước file không quá 10MB.";
+            return false;
         }
 
         // Nếu tất cả các kiểm tra đều đúng, trả về true (không có lỗi)
         return true;
     }
+
+
+
 
 
     // Anti XSS;

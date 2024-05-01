@@ -6,6 +6,7 @@ function Validator(option, callback) {
     var errorElement = inputElement.parentElement.querySelector(
       option.errorSelector
     );
+    console.log(inputElement.parentElement);
     var errorMessage = rule.test(inputElement.value);
 
     var rules = selectorRules[rule.selector];

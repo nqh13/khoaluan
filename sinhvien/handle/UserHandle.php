@@ -88,3 +88,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport
         echo "Lỗi tải file";
     }
 }
+
+// Sửa bài nộp báo cáo.

@@ -6,33 +6,34 @@ $user = new User();
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  if ($username == "" || $password == "") {
-    $flag = -1;
-    return $flag;
-  }
-
-  $admin = $user->loginAdmin($username, $password);
-  if ($admin) {
-
-    $_SESSION['vaitro'] = $admin['vaitro'];
-
-
-    if ($_SESSION['vaitro'] == '3') {
-
-      $_SESSION['username'] = $admin['hoten'];
-
-      header('Location: index.php');
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    if ($username == "" || $password == "") {
+        $flag = -1;
+        return $flag;
     }
-  } else {
-    $flag = 0;
-  }
+
+    $admin = $user->loginAdmin($username, $password);
+    if ($admin) {
+
+        $_SESSION['vaitro'] = $admin['vaitro'];
+
+
+        if ($_SESSION['vaitro'] == '3') {
+
+            $_SESSION['username'] = $admin['hoten'];
+            $_SESSION['session_token'] = md5(uniqid());
+
+            header('Location: index.php');
+        }
+    } else {
+        $flag = 0;
+    }
 }
 if (isset(($_SESSION['vaitro'])) && $_SESSION['vaitro'] == '3') {
 
 
-  header('Location: index.php');
+    header('Location: index.php');
 }
 
 
@@ -57,8 +58,7 @@ if (isset(($_SESSION['vaitro'])) && $_SESSION['vaitro'] == '3') {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="codedthemes" />
-    <meta name="keywords"
-        content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app" />
+    <meta name="keywords" content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app" />
     <meta name="author" content="codedthemes" />
 
     <!-- Favicon icon -->
@@ -107,15 +107,13 @@ if (isset(($_SESSION['vaitro'])) && $_SESSION['vaitro'] == '3') {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="md-input-wrapper">
-                                        <input type="text" class="md-form-control" name="username" required="required"
-                                            value="" />
+                                        <input type="text" class="md-form-control" name="username" required="required" value="" />
                                         <label>User Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="md-input-wrapper">
-                                        <input type="password" class="md-form-control" name="password"
-                                            required="required" value="" />
+                                        <input type="password" class="md-form-control" name="password" required="required" value="" />
                                         <label>Password</label>
                                     </div>
                                 </div>
@@ -134,19 +132,18 @@ if (isset(($_SESSION['vaitro'])) && $_SESSION['vaitro'] == '3') {
                             </div>
                             <div class="row">
                                 <?php
-                if ($flag == 0) {
-                  echo '<div class="col-md-12">
+                                if ($flag == 0) {
+                                    echo '<div class="col-md-12">
                           <div class="alert alert-danger alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                             <strong><i class="fa-solid fa-triangle-exclamation"></i></strong> Tài khoản hoặc mật khẩu không đúng.
                           </div>
                         </div>';
-                }
+                                }
 
-                ?>
+                                ?>
                                 <div class="col-xs-10 offset-xs-1">
-                                    <button type="submit"
-                                        class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">
+                                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">
                                         LOGIN
                                     </button>
                                 </div>

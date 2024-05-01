@@ -131,4 +131,16 @@ class Report
         $stmt->execute();
         return $stmt;
     }
+
+    // Get list id for ID User.
+
+    public function getListID($ma_nguoidung)
+    {
+
+        $sql = "SELECT ma_ctbaocao FROM `tbl_chitietbaocao` WHERE `ma_sinhvien` = :ma_sinhvien";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':ma_sinhvien', $ma_nguoidung);
+        $stmt->execute();
+        return $stmt;
+    }
 }

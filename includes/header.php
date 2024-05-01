@@ -13,12 +13,12 @@ if (isset($_GET['action']) == "logout") {
 
 
 
-if (isset($_SESSION['login_time']) && $currentTime - $loginTime > 3600) {
-  session_destroy();
-  setcookie('ma_nguoidung', $uses['ma_nguoidung'], time() - 3600, "/");
-  header('location: ../index.php');
-  exit;
-}
+// if (isset($_SESSION['login_time']) && $currentTime - $loginTime > 3600) {
+//   session_destroy();
+//   setcookie('ma_nguoidung', $uses['ma_nguoidung'], time() - 3600, "/");
+//   header('location: ../index.php');
+//   exit;
+// }
 
 
 
@@ -29,10 +29,10 @@ if (isset($_SESSION['login_time']) && $currentTime - $loginTime > 3600) {
 ?>
 
 <header>
-  <div class="header">
-    <a href="index.php"><img id="logo-header" src="./../Uploads/Logo_IUH.png" alt="" style="height: 80px" /></a>
-    <div class="" id="info-sv">
-      <?php
+    <div class="header">
+        <a href="index.php"><img id="logo-header" src="./../Uploads/Logo_IUH.png" alt="" style="height: 80px" /></a>
+        <div class="" id="info-sv">
+            <?php
       if (!isset($_SESSION['ma_nguoidung'])) {
         echo ('<a class="" href="login.php"> <i class="fa-solid fa-power-off icon-dropdown"></i>Đăng nhập</a>');
       } else {
@@ -56,6 +56,6 @@ if (isset($_SESSION['login_time']) && $currentTime - $loginTime > 3600) {
       }
       ?>
 
+        </div>
     </div>
-  </div>
 </header>

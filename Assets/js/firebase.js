@@ -28,53 +28,68 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
-console.log({
-  database,
-  app,
-});
+// console.log({
+//   database,
+//   app,
+// });
 
 const btn_comment = document.getElementById("btn_comment");
 const content = document.getElementById("textAreaContent");
 
 const ma_cuocthaoluan = btn_comment.getAttribute("data-ma_cuocthaoluan");
 const ma_nguoidung = btn_comment.getAttribute("data-ma_nguoidung");
+const hoten = btn_comment.getAttribute("data-hoten");
 
-function writeUserData(id_post, content, ma_nguoidung) {
+function writeUserData(id_post, content, ma_nguoidung, hoten) {
   // set(ref(database, "comment-" + id_post + "/" + ma_nguoidung), {
   //   ma_nguoidung: ma_nguoidung,
   //   content: content,
   //   createdAt: Date.now(),
   // });
-  push(ref(database, "comment-" + ma_cuocthaoluan), {
+  push(ref(database, "comment-" + id_post), {
     ma_nguoidung: ma_nguoidung,
     content: content,
     createdAt: Date.now(),
+    hoten,
   });
 }
+
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 //  writeUserData(1, 'hello', 'content');
 const starCountRef = ref(database, "comment-" + ma_cuocthaoluan);
 const ElmComments = document.getElementById("comments");
 onValue(starCountRef, (snapshot) => {
   const data = snapshot.val();
+  console.log(data);
   let html = "";
   Object.keys(data).forEach((messageKey) => {
     const item = data[messageKey];
     html += `
-    <div class="d-flex flex-start">
-        <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65" height="65" />
-        <div class="flex-grow-1 flex-shrink-1">
+    <div class="d-flex flex-start border p-3 mt-2  bg-white">
+        <img class="rounded-circle shadow-1-strong me-3" src="https://ui-avatars.com/api/?name=${
+          item.hoten
+        }&background=random" alt="avatar" width="30px" height="30px" />
+        <div class="flex-grow-1 flex-shrink-1 ml-2">
             <div>
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="mb-1">
-                        ${item.ma_nguoidung}<span class="small">- ${new Date(
+                        ${item.hoten}<span class="small">- ${new Date(
       item.createdAt
-    ).toISOString()}</span>
+    ).toLocaleString()}</span>
                     </p>
                     <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small">
                             reply</span></a>
                 </div>
                 <p class="small mb-0">
-                    ${item?.content}
+                    ${escapeHtml(item.content)}
                 </p>
             </div>
   
@@ -87,5 +102,10 @@ onValue(starCountRef, (snapshot) => {
 });
 
 btn_comment.addEventListener("click", () => {
-  writeUserData(ma_cuocthaoluan, content.value, ma_nguoidung);
+  if (content.value === "") {
+    alert("Vui lòng nhập nội dung bình luận");
+  } else {
+    writeUserData(ma_cuocthaoluan, content.value, ma_nguoidung, hoten);
+    content.value = "";
+  }
 });

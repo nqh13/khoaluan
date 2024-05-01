@@ -100,6 +100,13 @@ require_once(__DIR__ . './../../classes/report.php');
 $sign  = new SignUptopic();
 $report = new Report();
 
+$checkID = $report->getListID($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+$valuesOnly = array_column($checkID, 'ma_ctbaocao');
+if (in_array($_GET['mactbaocao'], $valuesOnly)) {
+} else {
+}
+
+
 if (isset($_GET['idbaocao'])) {
     $idbaocao = $_GET['idbaocao'];
     $info = $sign->getTopicSignUp($_SESSION['ma_nguoidung']);
@@ -108,13 +115,14 @@ if (isset($_GET['idbaocao'])) {
     // echo $dataInfo['nhom'];
 
     $reportItem = $report->getReportById($idbaocao)->fetch(PDO::FETCH_ASSOC);
+    if ($reportItem) {
+        $timestampStart = strtotime($reportItem['ngaytao']);
+        $startDate = date("l, j F Y, g:i A", $timestampStart);
 
-    $timestampStart = strtotime($reportItem['ngaytao']);
-    $startDate = date("l, j F Y, g:i A", $timestampStart);
-
-    // format hạn nộp:
-    $timestampEnd = strtotime($reportItem['ngayhethan']);
-    $endDate = date("l, j F Y, g:i A", $timestampEnd);
+        // format hạn nộp:
+        $timestampEnd = strtotime($reportItem['ngayhethan']);
+        $endDate = date("l, j F Y, g:i A", $timestampEnd);
+    }
 }
 
 
@@ -174,28 +182,8 @@ if (isset($_GET['idbaocao'])) {
                     </div>
                 </div>
                 <div role="main">
-
-                    <!-- <div class="">
-                        <h3>THÊM BÀI NỘP</h3>
-                        <div class="box py-3 boxaligncenter submissionsummarytable">
-                            <div class="">
-                                <label for="formFile" class="form-label">Chọn tệp bài nộp</label>
-                                <input class="form-control " type="file" id="formFile">
-                                <br>
-                            </div>
-
-                        </div>
-                    </div> -->
                     <div class="row">
                         <div class="col-12">
-                            <!-- <div class="col-xs-6 mr-3">
-                                <div class="">
-                                    <form method="get" action="">
-
-                                        <button type="submit" class="btn btn-success" id="">Nộp báo cáo</button>
-                                    </form>
-                                </div>
-                            </div> -->
                             <form class="" id="form-nopbai" action="../handle/UserHandle.php" method="post"
                                 enctype="multipart/form-data">
                                 <div class="card">
@@ -277,7 +265,6 @@ document.getElementById("fileID").addEventListener('change', function(e) {
 
 //
 function uploadFile() {
-    alert("Please enter");
     var idbaocao = document.getElementById("mabaocao").value;
     const formData = new FormData($("#form-nopbai")[0]);
     // Thêm file vào FormData
@@ -295,7 +282,7 @@ function uploadFile() {
         success: function(response) {
             // Xử lý phản hồi từ máy chủ
             alert(response);
-            window.location.href = "index.php?page=nopbaocao&idbaocao=" + idbaocao;
+            window.location.href = `index.php?page=nopbaocao&idbaocao=${idbaocao}`
         },
         error: function(xhr, status, error) {
             // Xử lý lỗi
