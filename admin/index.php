@@ -104,10 +104,16 @@ $tokenUser = $utility->generateSessionToken();
                                     echo "Quản lý tài khoản";
                                     break;
                                 case "addUser":
-                                    echo "Thêm tài khoản";
+                                    echo "Thêm người dùng";
+                                    break;
+                                case "updateUser":
+                                    echo "Cập nhật người dùng";
                                     break;
                                 case "hocky":
                                     echo "Học kỳ";
+                                    break;
+                                case "quanlykhoa":
+                                    echo "Quản lý khoa viện";
                                     break;
                                 default:
                                     echo "404 NOT FOUND! ";
@@ -144,7 +150,9 @@ $tokenUser = $utility->generateSessionToken();
                     case "addSemester":
                         include("./pages/addSemester.php");
                         break;
-
+                    case "quanlykhoa":
+                        include("./pages/adminDepaterment.php");
+                        break;
                     default:
                         echo "404 NOT FOUND! ";
                         break;

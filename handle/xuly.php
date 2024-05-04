@@ -182,7 +182,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'updateDiscussion') {
 
     $checkXSS = $utils->checkAtackXSS($_POST);
     $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
-    var_dump($checkXSS);
+    // var_dump($checkXSS);
     if ($checkCSRF == true) {
         $updateDiscussion = $comment->updateDiscussion($checkXSS);
         if ($updateDiscussion) {

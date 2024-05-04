@@ -1,13 +1,50 @@
 <?php
+require_once('../classes/semester.php');
+$semester = new Semester();
 
+// $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
 
-$detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
+$listSemester = $semester->getAllSemesters()->fetchAll(PDO::FETCH_ASSOC);
 
+if (isset($_GET['hocki']) && $_GET['hocki'] != '') {
+    $detaiList = $topic->getTopicBySemesterAndGV($_GET['hocki'], $_SESSION['ma_nguoidung']);
+} else {
+    $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
+}
 
 ?>
 
 <div class="content">
     <h5 class="text-center text-primary p-3 font-weight-bold">ĐỀ TÀI KHÓA LUẬN</h5>
+    <form action="" method="get" class=" mr-3">
+        <input type="hidden" name="page" value="danhsachdk">
+        <div class="form-group" style="width: 33%; float: right;">
+            <label for="" class="form-control-label font-weight-bold" id="lablehocki">HỌC KÌ</label>
+            <div class="form-group d-flex ">
+                <select class="form-control" name="hocki" id="idhocki">
+
+                    <option value="" <?php echo isset($_GET['hocki']) ? '' : 'selected' ?>>Tất cả học kì</option>
+                    <?php
+                    $select = '';
+
+                    foreach ($listSemester as $key => $value) {
+                        if (isset($_GET['hocki']) && $_GET['hocki'] == $value['ma_hk']) {
+                            $select = "selected";
+                        } else {
+                            $select = "";
+                        }
+                        echo '<option value="' . $value['ma_hk'] . ' " ' . $select . '>' . $value['tenhocki'] . '</option>';
+                    }
+                    ?>
+
+                </select>
+                <button class="btn btn-primary ml-1" type="submit">Chọn</button>
+
+            </div>
+
+        </div>
+
+    </form>
     <div class=" p-3">
         <table class="table table-striped table-bordered">
             <thead>
@@ -25,10 +62,12 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
             </thead>
             <tbody>
                 <?php
+                if ($detaiList->rowCount() == 0) {
+                    echo '<tr><td colspan="8" class="text-center">Không có đề tài trong kì học</td></tr>';
+                } else {
+                    while ($row = $detaiList->fetch(PDO::FETCH_ASSOC)) {
 
-                while ($row = $detaiList->fetch(PDO::FETCH_ASSOC)) {
-
-                    echo '
+                        echo '
                             <tr>
                                 <th class="text-center" scope="row">' . $row['ma_detai'] . '</th>
                                 <td class="text-center" style="width: 5%">' . $row['tendetai'] . '</td>
@@ -53,7 +92,10 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                             </td>
                             </tr>
                             ';
+                    }
                 }
+
+
                 ?>
 
             </tbody>
@@ -75,7 +117,7 @@ $detaiList = $topic->getTopicByGV($_SESSION['ma_nguoidung']);
                     <th scope="col" style="width: 10%">SỐ ĐIỆN THOẠI</th>
                     <th scope="col" style="width: 10%">EMAIL</th>
                     <th scope="col" style="width: 5%">NHÓM</th>
-                    <th scope="col" style="width: 5%"></th>
+                    <th scope="col" style="width: 5%">LIÊN HỆ</th>
                 </tr>
             </thead>
             <tbody id="dataStudentSignUp">

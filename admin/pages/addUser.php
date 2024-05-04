@@ -19,36 +19,30 @@ if (isset($_POST['themUser'])) {
         </div>
 
         <div class="card-block">
-            <form method="POST" action="" class="" id="formAddUser" style="display: flex; flex-direction: column"
-                enctype="multipart/form-data">
+            <form method="POST" action="" class="" id="formAddUser" style="display: flex; flex-direction: column" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="form-control-label">Mã người dùng:</label>
-                    <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung"
-                        placeholder=" Nhập mã người dùng, nếu bỏ trống hệ thống sẽ tự tạo mã">
+                    <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung" placeholder=" Nhập mã người dùng, nếu bỏ trống hệ thống sẽ tự tạo mã">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Tên người dùng:</label>
-                    <input name="hoten" type="text" class="form-control form-control-success" id="hoten"
-                        placeholder="Nhập họ tên người dùng">
+                    <input name="hoten" type="text" class="form-control form-control-success" id="hoten" placeholder="Nhập họ tên người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Email:</label>
-                    <input name="email" type="text" class="form-control form-control-success" id="email"
-                        placeholder="Nhập họ tên người dùng" placeholder="Nhập email người dùng">
+                    <input name="email" type="text" class="form-control form-control-success" id="email" placeholder="Nhập họ tên người dùng" placeholder="Nhập email người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Số điện thoại:</label>
-                    <input name="sdt" type="text" class="form-control form-control-success" id="sdt"
-                        placeholder="Nhập số điện thoại người dùng">
+                    <input name="sdt" type="text" class="form-control form-control-success" id="sdt" placeholder="Nhập số điện thoại người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Địa chỉ:</label>
-                    <input name="diachi" type="text" class="form-control form-control-success" id="diachi"
-                        placeholder="Nhập địa chỉ người dùng">
+                    <input name="diachi" type="text" class="form-control form-control-success" id="diachi" placeholder="Nhập địa chỉ người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
@@ -106,15 +100,12 @@ if (isset($_POST['themUser'])) {
 
                 <div style="display:flex; justify-content:start; align-items:start">
                     <div class=" d-none" style="position:relative" id="divAnh">
-                        <span class=" "
-                            style="position:absolute;top:-10px; right:-10px ;font-size: 16px; border-radius: 50%; cursor:pointer; color:red ; font-weight: bold;  "
-                            id="btnXoaAnh">x</span>
+                        <span class=" " style="position:absolute;top:-10px; right:-10px ;font-size: 16px; border-radius: 50%; cursor:pointer; color:red ; font-weight: bold;  " id="btnXoaAnh">x</span>
                         <img src="" alt="" id="imgPreview" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="form-group text-center">
-                    <button class="btn btn-primary" style="margin-top: 10px" type="submit" id="btnThemUser"
-                        name="themUser">Thêm người dùng</button>
+                    <button class="btn btn-primary" style="margin-top: 10px" type="submit" id="btnThemUser" name="themUser">Thêm người dùng</button>
                 </div>
 
             </form>
@@ -124,80 +115,80 @@ if (isset($_POST['themUser'])) {
 </div>
 <script src="assets/js/validator.js"></script>
 <script type="module">
-import "https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js";
+    import "https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js";
 
-function themUser() {
-    var manguoidung = $("#manguoidung").val();
-    var hoten = $("#hoten").val();
-    var email = $("#email").val();
-    var sdt = $("#sdt").val();
-    var diachi = $("#diachi").val();
-    var khoa = $("#id_khoa").val();
-    var nganh = $("#id_nganh").val();
-    var vaitro = $("#vaitro").val();
-    var fileInput = $("#file")[0].files[0];
+    function themUser() {
+        var manguoidung = $("#manguoidung").val();
+        var hoten = $("#hoten").val();
+        var email = $("#email").val();
+        var sdt = $("#sdt").val();
+        var diachi = $("#diachi").val();
+        var khoa = $("#id_khoa").val();
+        var nganh = $("#id_nganh").val();
+        var vaitro = $("#vaitro").val();
+        var fileInput = $("#file")[0].files[0];
 
-    var fd = new FormData();
-    fd.append("action", "themUser");
-    fd.append("manguoidung", manguoidung);
-    fd.append("hoten", hoten);
-    fd.append("email", email);
-    fd.append("sdt", sdt);
-    fd.append("diachi", diachi);
-    fd.append("khoa", khoa);
-    fd.append("nganh", nganh);
-    fd.append("vaitro", vaitro);
-    fd.append("file", fileInput); // Thêm tệp vào FormData
+        var fd = new FormData();
+        fd.append("action", "themUser");
+        fd.append("manguoidung", manguoidung);
+        fd.append("hoten", hoten);
+        fd.append("email", email);
+        fd.append("sdt", sdt);
+        fd.append("diachi", diachi);
+        fd.append("khoa", khoa);
+        fd.append("nganh", nganh);
+        fd.append("vaitro", vaitro);
+        fd.append("file", fileInput); // Thêm tệp vào FormData
 
-    $.ajax({
-        type: "POST",
-        url: "./adminHandle/handleAddUser.php",
-        data: fd,
-        processData: false, // không xử lý dữ liệu
-        contentType: false, // không đặt header Content-Type
-        success: function(data) {
+        $.ajax({
+            type: "POST",
+            url: "./adminHandle/handleAddUser.php",
+            data: fd,
+            processData: false, // không xử lý dữ liệu
+            contentType: false, // không đặt header Content-Type
+            success: function(data) {
 
-            console.log(data);
-            async function sendMail() {
-                await axios
-                    .post("http://localhost:3000/send-email", {
-                        from: "nguyenquangha130901@gmail.com",
-                        to: email,
-                        subject: "Thông báo cấp tài khoản đăng nhập",
-                        text: `Mã đăng nhập:  ${data}`,
-                    })
-                    .then((res) => {
-                        console.log(res);
-                        alert("Gửi mail thành công");
-                    })
-                    .catch((err) => console.log(err));
-            }
+                console.log(data);
+                async function sendMail() {
+                    await axios
+                        .post("http://localhost:3000/send-email", {
+                            from: "nguyenquangha130901@gmail.com",
+                            to: email,
+                            subject: "Thông báo cấp tài khoản đăng nhập",
+                            text: `Mã đăng nhập:  ${data}`,
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            alert("Gửi mail thành công");
+                        })
+                        .catch((err) => console.log(err));
+                }
 
-            sendMail();
-            $("#formAddUser")[0].reset();
-            $("#divAnh").addClass("d-none");
-            $("#imgPreview").attr("src", "");
-            $("#hinhanh").removeClass("d-none");
-            alert("Thêm user thành công");
-            window.location.href = "index.php?pages=quanlyUsers";
-        },
-    });
-}
-const validate = () => {
-    return Validator({
-        form: '#formAddUser',
-        errorSelector: '.form-text',
-        rules: [
-            Validator.isRequired('#hoten'),
-            Validator.isRequired('#email'),
-            Validator.isRequired('#sdt'),
-            Validator.isRequired('#diachi'),
-            Validator.isEmail('#email'),
-            Validator.isNumberPhone('#sdt'),
-        ]
-    }, themUser);
-}
-document.addEventListener('DOMContentLoaded', () => {
-    validate();
-})
+                sendMail();
+                $("#formAddUser")[0].reset();
+                $("#divAnh").addClass("d-none");
+                $("#imgPreview").attr("src", "");
+                $("#hinhanh").removeClass("d-none");
+                alert("Thêm user thành công");
+                window.location.href = "index.php?pages=quanlyUsers";
+            },
+        });
+    }
+    const validate = () => {
+        return Validator({
+            form: '#formAddUser',
+            errorSelector: '.form-text',
+            rules: [
+                Validator.isRequired('#hoten'),
+                Validator.isRequired('#email'),
+                Validator.isRequired('#sdt'),
+                Validator.isRequired('#diachi'),
+                Validator.isEmail('#email'),
+                Validator.isNumberPhone('#sdt'),
+            ]
+        }, themUser);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        validate();
+    })
 </script>

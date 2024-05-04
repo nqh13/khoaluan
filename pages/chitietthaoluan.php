@@ -20,7 +20,7 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
                     <header class="mb-05 border-bottom pb-2">
 
                         <h3 class="article-content__title">
-                            <a href="?page=chitietthaoluan"><?php echo $data['tieude'] ?></a>
+                            <a href=""><?php echo $data['tieude'] ?></a>
                         </h3>
                         <div title="" class="text-muted">
                             <p>Đã đăng vào thg <?php echo $data['ngaytao'] ?></p>
@@ -62,9 +62,7 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
             <div class="card d-flex justify-content-center align-items-center p-2 ">
                 <div class=" d-flex flex-row p-1">
 
-                    <img class="img-fluid mt-2"
-                        src="https://ui-avatars.com/api/?name=<?php echo $data['hoten'] ?>&background=random"
-                        style="height: 50px; width:50px; border-radius: 50%" alt="user-header">
+                    <img class="img-fluid mt-2" src="https://ui-avatars.com/api/?name=<?php echo $data['hoten'] ?>&background=random" style="height: 50px; width:50px; border-radius: 50%" alt="user-header">
                     <div class="mt-3 ml-2">
                         <h6 class="text-uppercase"><?php echo strtoupper($data['hoten']); ?></h6>
                         <h6 class="text-center"><?php echo $data['ma_nguoidung']; ?></h6>
@@ -82,20 +80,14 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
             <div class="comment-threads">
                 <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                     <div class="d-flex flex-start w-100">
-                        <img class="rounded-circle shadow-1-strong me-3 mr-3"
-                            src="https://ui-avatars.com/api/?name=<?php echo $data['hoten'] ?>&background=random"
-                            alt="avatar" width="30px" height="30px" alt=" avatar" width="50" height="50" />
+                        <img class="rounded-circle shadow-1-strong me-3 mr-3" src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['hoten'] ?>&background=random" alt="avatar" width="30px" height="30px" alt=" avatar" width="50" height="50" />
                         <form class="form-outline w-100">
-                            <textarea class="form-control" id="textAreaContent" rows="4" style="background: #fff;"
-                                placeholder="Nhập nội dung bình luận..."></textarea>
+                            <textarea class="form-control" id="textAreaContent" rows="4" style="background: #fff;" placeholder="Nhập nội dung bình luận..."></textarea>
                             <label class="form-label" for="textAreaExample"></label>
                         </form>
                     </div>
                     <div class=" mt-2 pt-1 d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary  m-1" id="btn_comment"
-                            data-ma_cuocthaoluan="<?php echo $data['ma_cuocthaoluan'] ?>"
-                            data-ma_nguoidung="<?php echo $_SESSION['ma_nguoidung'] ?>"
-                            data-hoten="<?php echo $_SESSION['hoten'] ?>">
+                        <button type="button" class="btn btn-primary  m-1" id="btn_comment" data-ma_cuocthaoluan="<?php echo $data['ma_cuocthaoluan'] ?>" data-ma_nguoidung="<?php echo $_SESSION['ma_nguoidung'] ?>" data-hoten="<?php echo $_SESSION['hoten'] ?>">
                             Bình luận
                         </button>
                         <!-- <button type="button" class="btn btn-outline-primary btn-sm m-1">
@@ -116,23 +108,7 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
 
             </div>
         </div>
-        <!-- <div class="col-12 py-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-12 col-lg-10 col-xl-8 ">
-                    <div class="card">
-                        <div class="card-body p-4">
-                            <h4 class="text-center mb-4 pb-2">Danh sách bình luận</h4>
 
-                            <div class="row">
-                                <div class="col" id="comments">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
 
@@ -141,8 +117,7 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
 
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -166,8 +141,7 @@ $checkDiscussion = $comment->checkDiscussion($_GET['id'], $_SESSION['ma_nguoidun
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success"
-                    onclick="updateDiscussion(<?php echo $data['ma_cuocthaoluan'] ?>)">Cập nhật</button>
+                <button type="button" class="btn btn-success" onclick="updateDiscussion(<?php echo $data['ma_cuocthaoluan'] ?>)">Cập nhật</button>
             </div>
         </div>
     </div>

@@ -23,15 +23,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
-// console.log({
-//   database,
-//   app,
-// });
+
+// Write data to the database
 
 const btn_comment = document.getElementById("btn_comment");
 const content = document.getElementById("textAreaContent");
@@ -63,43 +60,8 @@ function escapeHtml(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-//  writeUserData(1, 'hello', 'content');
 const starCountRef = ref(database, "comment-" + ma_cuocthaoluan);
 const ElmComments = document.getElementById("comments");
-onValue(starCountRef, (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-  let html = "";
-  Object.keys(data).forEach((messageKey) => {
-    const item = data[messageKey];
-    html += `
-    <div class="d-flex flex-start border p-3 mt-2  bg-white">
-        <img class="rounded-circle shadow-1-strong me-3" src="https://ui-avatars.com/api/?name=${
-          item.hoten
-        }&background=random" alt="avatar" width="30px" height="30px" />
-        <div class="flex-grow-1 flex-shrink-1 ml-2">
-            <div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-1">
-                        ${item.hoten}<span class="small">- ${new Date(
-      item.createdAt
-    ).toLocaleString()}</span>
-                    </p>
-                    <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small">
-                            reply</span></a>
-                </div>
-                <p class="small mb-0">
-                    ${escapeHtml(item.content)}
-                </p>
-            </div>
-  
-            
-        </div>
-    </div>
-    `;
-  });
-  ElmComments.innerHTML = html;
-});
 
 btn_comment.addEventListener("click", () => {
   if (content.value === "") {
@@ -108,4 +70,48 @@ btn_comment.addEventListener("click", () => {
     writeUserData(ma_cuocthaoluan, content.value, ma_nguoidung, hoten);
     content.value = "";
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  function updateComment(id, content) {
+    const newContent = prompt("Nhập nội dung bình luận", content);
+    if (newContent) {
+      // Assuming set and ref are defined globally
+      set(ref(database, "comment-" + ma_cuocthaoluan + "/" + id), {
+        content: newContent,
+      });
+    }
+  }
+  onValue(starCountRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+    let html = "";
+
+    Object.keys(data).forEach((messageKey) => {
+      const item = data[messageKey];
+      html += `
+      <div class="d-flex flex-start border p-3 mt-2  bg-white">
+          <img class="rounded-circle shadow-1-strong me-3" src="https://ui-avatars.com/api/?name=${
+            item.hoten
+          }&background=random" alt="avatar" width="30px" height="30px" />
+          <div class="flex-grow-1 flex-shrink-1 ml-2">
+              <div>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <p class="mb-1">
+                          ${item.hoten}<span class="small">- ${new Date(item.createdAt).toLocaleString()}</span>
+                      </p>
+                  </div>
+                  
+                  <p class="small mb-0">
+                      ${escapeHtml(item.content)}
+                  </p>
+              </div>
+    
+              
+          </div>
+      </div>
+      `;
+    });
+    ElmComments.innerHTML = html;
+  });
 });

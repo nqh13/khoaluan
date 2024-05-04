@@ -25,7 +25,7 @@ if (isset($_POST['id_khoa'])) {
 }
 
 
-
+// Xử lý thêm người dùng mới
 if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
 
 
@@ -46,7 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
         $manguoidung =  $utils->randomIDUser();
     }
 
-    $checkXSS = $utils->checkXSS($hoten, $email, $sdt, $diachi, $vaitro, $id_nganh, $id_khoa);
+    $checkXSS = $utils->checkAtackXSS($hoten, $email, $sdt, $diachi, $vaitro, $id_nganh, $id_khoa);
     $checkimg = $utils->checkImageFile($file);
     if ($checkimg == true) {
         $upload_dir = "../../Uploads";
@@ -60,4 +60,45 @@ if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
     }
 
     $u->addUser($manguoidung, $hoten, $email, $sdt, $diachi, $file_name, $matkhau, $id_khoa, $id_nganh, $vaitro);
+}
+
+// Xử lý update thông tin người dùng
+if (isset($_POST['action']) && $_POST['action'] == 'updateUser') {
+    $file = array();
+    $file_name = '';
+
+    if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
+        $file = $_FILES['file'];
+    }
+    $idUser = $_POST['id'];
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    // var_dump($checkXSS);
+    // var_dump($file);
+
+    if (!empty($file)) {
+        $checkimg = $utils->checkImageFile($file);
+        if ($checkimg == true) {
+            $upload_dir = "../../Uploads";
+            $file_tmp = $_FILES['file']['tmp_name'];
+            if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
+                $updateUser = $u->updateUserInfoAdmin($idUser, $checkXSS, $file['name']);
+                if ($updateUser) {
+                    echo "Cập nhật thành công";
+                } else {
+                    echo "Cập nhật thất bại";
+                }
+            } else {
+                echo "Upload thất bại";
+            }
+        } else {
+            echo "Vui lòng chọn file ảnh!";
+        }
+    } else {
+        $updateUser = $u->updateUserInfoAdmin($idUser, $checkXSS, $file_name);
+        if ($updateUser) {
+            echo "Cập nhật thành công!";
+        } else {
+            echo "Cập nhật thất bại!";
+        }
+    }
 }

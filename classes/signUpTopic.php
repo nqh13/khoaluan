@@ -46,7 +46,7 @@ class SignUpTopic
         JOIN tbl_detai ON tbl_dangkydetai.ma_detai = tbl_detai.ma_detai
         JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung
         JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien
-        JOIN tbl_chuyennganh ON tbl_khoavien.ma_khoavien = tbl_chuyennganh.ma_nganh 
+        JOIN tbl_chuyennganh ON tbl_detai.nganh = tbl_chuyennganh.ma_nganh 
         JOIN tbl_loaidetai ON tbl_detai.loaidetai = tbl_loaidetai.id_loai 
         JOIN tbl_trangthaidangky ON tbl_dangkydetai.trangthaidangky = tbl_trangthaidangky.ma_TTDK
         WHERE tbl_dangkydetai.ma_SV = :ma_SV";
@@ -112,9 +112,6 @@ class SignUpTopic
         return $result['count'];
     }
 
-
-
-
     //update group
     public function updateGroup($ma_SV, $manhom)
     {
@@ -124,5 +121,42 @@ class SignUpTopic
         $stmt->bindParam(':manhom', $manhom);
         $success = $stmt->execute();
         return $success;
+    }
+
+    //Get group by student
+    public function getGroupByStudent($ma_SV)
+    {
+        $sql = "SELECT * FROM tbl_dangkydetai WHERE ma_SV = :ma_SV";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':ma_SV', $ma_SV);
+        $result->execute();
+        return $result;
+    }
+
+    //Cancel group 
+    public function cancelGroup($data){
+        $cancel = $this -> cancelTopicSignUp($data['ma_dangky']);
+        if($cancel){
+            $result = $this -> signUpTopic($data);
+
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+   
+    //get group by ID SV
+    public function getGroup($ma_SV){
+
+        $sql = "SELECT nhom FROM tbl_dangkydetai WHERE ma_SV = :ma_SV";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':ma_SV', $ma_SV);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 }

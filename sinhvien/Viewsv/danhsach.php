@@ -5,6 +5,7 @@ $topic = new Topic();
 $signUp = new SignUptopic();
 
 
+
 $result = $topic->getTopicByStudent($_SESSION['ma_nganh'])->fetchAll(PDO::FETCH_ASSOC);
 
 $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
@@ -18,13 +19,13 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
       <thead>
         <tr class="text-center">
           <th scope="col" style="width: 5%">STT</th>
-          <th scope="col" style="width: 5%">MÃ ĐỀ TÀI</th>
+          <!-- <th scope="col" style="width: 5%">MÃ ĐỀ TÀI</th> -->
           <th scope="col" style="width: 10%">TÊN ĐỀ TÀI</th>
           <th scope="col" style="width: 5%">LOẠI</th>
           <th scope="col" style="width: 20%">MÔ TẢ</th>
           <th scope="col" style="width: 20%">YÊU CẦU</th>
           <th scope="col" style="width: 10%">KIẾN THỨC & KỸ NĂNG</th>
-
+          <th scope="col" style="width: 10%">BỘ MÔN</th>
           <th scope="col" style="width: 15%">GVHD</th>
           <th scope="col" style="width: 5%">SINH VIÊN ĐĂNG KÝ</th>
 
@@ -41,7 +42,6 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
 
           echo '<tr>
               <th class="text-center" scope="row">' . ($key + 1) . '</th>
-              <td class="text-center" style="width: 5%">' . $value['ma_detai'] . '</td>
               <td class="text-center" style="width: 5%">' . $value['tendetai'] . '</td>
               <td class="text-center" style="width: 15%">' . $value['tenloai'] . '</td>
               <td style="width: 10%">
@@ -51,7 +51,7 @@ $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PD
                 ' . $value['yeucau'] . '
               </td>
               <td class="text-center" style="width: 10%">' . $value['kienthuc'] . '</td>
-              
+              <td class="text-center" style="width: 10%">' . $value['ten_nganh'] . '</td>
               <td class="text-center" style="width: 15%">
                 ' . $value['hoten'] . '
               </td>

@@ -55,6 +55,9 @@
                 case 'taothaoluan':
                     echo ('Tạo Thảo luận');
                     break;
+                case 'ctthaoluan':
+                    echo ('Chi tiết thảo luận');
+                    break;
                 case 'doipass':
                     echo ("Đổi mật khẩu");
                     break;
@@ -150,6 +153,9 @@
                                     case 'taothaoluan':
                                         echo ('Tạo Thảo luận mới');
                                         break;
+                                    case 'ctthaoluan':
+                                        echo ('Chi tiết thảo luận');
+                                        break;
                                     case 'danhsachdk':
                                         echo ('Danh sách');
                                         break;
@@ -184,9 +190,7 @@
                                         echo "404 NOT FOUND! ";
                                         break;
                                 }
-
                                 ?>
-
                              </a></li>
 
                      </ol>
@@ -217,6 +221,9 @@
                             break;
                         case 'thaoluan':
                             include("./../pages/thaoluan.php");
+                            break;
+                        case 'ctthaoluan':
+                            include("./../pages/chitietthaoluan.php");
                             break;
                         case 'danhsachdk':
                             include('./viewgv/danhsachdangki.php');
@@ -274,8 +281,11 @@
 
          <!-- Include jQuery library -->
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src='./../Assets/js/firebase.js' type="module"></script>
+         <script src="./../Assets/js/index.js" type=""></script>
 
-         <script src="./../Assets/js/index.js"></script>
+
+
 
      </div>
      <?php

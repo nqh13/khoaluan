@@ -102,6 +102,11 @@ if (isset($_GET['hocki']) && $_GET['hocki'] != '') {
                                     <i class="fa-solid fa-list"></i>
                                     Danh sách
         
+                                     </a>
+                                <a type="button" class="btn btn-outline-primary btn-sm mt-2" href="?page=capnhat&&id=' . $row['ma_detai'] . '">
+                                    <i class="fas fa-edit"></i>
+                                    Cập nhật
+        
                                 </a>
                                     
                                     </td>

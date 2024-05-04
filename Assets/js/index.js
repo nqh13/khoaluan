@@ -195,22 +195,31 @@ function cancelTopic(id) {
 function changePassword(id) {
   var password = document.getElementById("password").value;
   var newPassword = document.getElementById("newpassword").value;
+  var passwordConfirm = document.getElementById("confirmpass").value;
   var token = document.getElementById("tokenUser").value;
-  $.ajax({
-    type: "POST",
-    url: "./../sinhvien/handle/UserHandle.php",
-    data: {
-      action: "changePassword",
-      id_user: id,
-      tokenUser: token,
-      password: password,
-      newPassword: newPassword,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
+  if (password != "" && newPassword != "" && passwordConfirm != "") {
+    if (newPassword != passwordConfirm) {
+      alert("Mật khẩu nhập lại không đúng!");
+    } else {
+      $.ajax({
+        type: "POST",
+        url: "./../sinhvien/handle/UserHandle.php",
+        data: {
+          action: "changePassword",
+          id_user: id,
+          tokenUser: token,
+          password: password,
+          newPassword: newPassword,
+        },
+        success: function (response) {
+          alert(response);
+          window.location.reload();
+        },
+      });
+    }
+  } else {
+    alert("Vui lòng điền đầy đủ thông tin!");
+  }
 }
 
 //Chọn nhóm.
@@ -233,6 +242,33 @@ function addGroup(id_nhom, ma_SV) {
     });
   }
 }
+
+// Hủy nhóm đăng ký đề tài.
+function cancelGroup(id_dk, id_topic,ma_SV){
+
+  var cofirm = confirm("Bạn chắc chắn muốn hủy nhóm đăng ký đề tài này?");
+  if(cofirm === true){
+    $.ajax({
+      type: "POST",
+      url: "./../sinhvien/handle/SignUpTopic.php",
+      data: {
+        action: "cancelGroup",
+        ma_dangky: id_dk,
+        ma_detai: id_topic,
+        ma_SV: ma_SV,
+
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
+
+
+} 
+
+
 
 //Cập nhậtthông tin
 function updateInfo() {
@@ -289,8 +325,13 @@ function createReport(id_topic) {
   var ngaytao = document.getElementById("ngaytao").value;
   var ngayhethan = document.getElementById("ngayhethan").value;
   var ghichu = document.getElementById("ghichubaocao").value;
-
-  $.ajax({
+  
+  if(tieude == "" || ngaytao == "" || ngayhethan == ""){
+    alert("Vui lòng điền đầy đủ thông tin!");
+    
+  }
+  else{
+     $.ajax({
     type: "POST",
     url: "./../handle/xuly.php",
     data: {
@@ -306,6 +347,9 @@ function createReport(id_topic) {
       window.location.href = "index.php?page=chitiet&id=" + id_topic;
     },
   });
+  }
+
+ 
 }
 
 // Cập nhật thông tin báo cáo GV:
@@ -381,22 +425,26 @@ function createDiscussion(idUser) {
   var madetai = document.getElementById("madetai").value;
   var tokenUser = document.getElementById("tokenUser").value;
 
-  $.ajax({
-    type: "POST",
-    url: "./../handle/xuly.php",
-    data: {
-      action: "createDiscussion",
-      tieude: tieude,
-      noidung: noidung,
-      madetai: madetai,
-      tokenUser: tokenUser,
-      ma_nguoidung: idUser,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
+  if (tieude == "" || noidung == "") {
+    alert("Vui lòng điền đầy đủ thông tin");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./../handle/xuly.php",
+      data: {
+        action: "createDiscussion",
+        tieude: tieude,
+        noidung: noidung,
+        madetai: madetai,
+        tokenUser: tokenUser,
+        ma_nguoidung: idUser,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
 }
 
 // Update thảo luận.
@@ -421,3 +469,7 @@ function updateDiscussion(idDiscussion) {
     },
   });
 }
+
+// 
+
+

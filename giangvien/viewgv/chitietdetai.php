@@ -2,12 +2,23 @@
 
 require_once('../classes/topic.php');
 require_once('../classes/report.php');
+require_once('../classes/comment.php');
 $topic = new Topic();
 $report = new Report();
+$comment = new Comment();
 $id = $_GET['id'];
 $detai = $topic->getTopicById($id);
 $curentDate = date('Y-m-d\TH:i');
 
+//get comment by id topic
+$dataComment = $comment->getDiscussionByTopicId($id);
+
+// var_dump($dataComment);
+//Function format date
+function convertTime($time)
+{
+    return date('H:i d/m/Y', strtotime($time));
+}
 
 
 
@@ -76,7 +87,8 @@ $curentDate = date('Y-m-d\TH:i');
     <div class="contentbaocao border-top p-2">
         <div class=" p-1 d-flex flex-row">
             <h5 class="text-left text-primary p-3 font-weight-bold">BÁO CÁO </h5>
-            <button class="btn btn-primary align-self-center ml-auto" data-toggle="modal" data-target="#ModalBaoCao" data-whatever="@mdo">Tạo báo cáo</button>
+            <button class="btn btn-primary align-self-center ml-auto" data-toggle="modal" data-target="#ModalBaoCao"
+                data-whatever="@mdo">Tạo báo cáo</button>
         </div>
 
         <div id="" class="m-0 p-0">
@@ -128,13 +140,58 @@ $curentDate = date('Y-m-d\TH:i');
             </ul>
         </div>
     </div>
+    <div class=" border-top p-2 mt-3">
+        <div class=" p-1 d-flex flex-row">
+            <h5 class="text-left text-primary font-weight-bold"> DANH SÁCH CÁC CUỘC THẢO LUẬN </h5>
+        </div>
+        <div id="listDiscussion" class="mt-2 p-0">
+            <ul class="section m-0 d-block " style="list-style: none" data-for="cmlist">
+                <?php
+                if ($dataComment == null) {
+                    echo '';
+                } else {
+                    foreach ($dataComment as $item) {
+                        echo '
+                                <li class="itemBaoCao p-3 mt-2" id="" style="width:100%;">
+                                    <div class=" d-flex flex-column">
+                                        <div class=" media  modtype_assign position-relative align-self-start">
+                                            <div class="activityiconcontainer assessment align-self-start mr-3">
+                                                <a href="?page=ctthaoluan&id=' . $item['ma_cuocthaoluan'] . '">
+                                                    <i class="fa-solid fa-comment" style="color: #ffffff; font-size: 30px"></i>
+                                                </a>
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <a href="?page=ctthaoluan&id=' . $item['ma_cuocthaoluan'] . '" class=""> <h5 class="text-uppercase font-weight-bold">
+                                                    ' . strtoupper($item['tieude']) . '
+                                                    </h5> </a>
+                                                <div class="d-flex  align-self-start ml-auto">
+                                                    <span class="text-muted">Ngày đăng: <i class="font-weight-bold">' . convertTime($item['ngaytao']) . '</i></span>
+                                                </div>
+                                                <div class="d-flex  align-self-start ml-auto">
+                                                    <span class="text-muted">Người đăng: <i class="font-weight-bold">' . $item['hoten'] . '</i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            ';
+                    };
+                }
+
+                ?>
+            </ul>
+
+
+        </div>
+    </div>
 
 
 
 </div>
 
 
-<div class="modal fade" id="ModalBaoCao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalBaoCao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,11 +209,13 @@ $curentDate = date('Y-m-d\TH:i');
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label font-weight-bold">Ngày tạo:</label>
-                        <input type="datetime-local" class="form-control" id="ngaytao" min="<?php echo $curentDate; ?>" value="" readonly>
+                        <input type="datetime-local" class="form-control" id="ngaytao" min="<?php echo $curentDate; ?>"
+                            value="" readonly>
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label font-weight-bold">Ngày hết hạn:</label>
-                        <input class="form-control" type="datetime-local" value="" min="<?php echo $curentDate; ?>" id="ngayhethan">
+                        <input class="form-control" type="datetime-local" value="" min="<?php echo $curentDate; ?>"
+                            id="ngayhethan">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Ghi chú:</label>
@@ -166,7 +225,8 @@ $curentDate = date('Y-m-d\TH:i');
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-primary" id="btnTaoBaoCao" onclick="createReport(<?php echo $id ?>)">Lưu
+                <button type="button" class="btn btn-primary" id="btnTaoBaoCao"
+                    onclick="createReport(<?php echo $id ?>)">Lưu
                 </button>
             </div>
         </div>

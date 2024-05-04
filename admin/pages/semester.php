@@ -19,32 +19,32 @@ $dataSemester = $semester->getAllSemesters()->fetchAll(PDO::FETCH_ASSOC);
 </style>
 <div class="col-sm-12 bg-white">
     <div class="row ">
-        <div class="row">
-            <div class="col-sm-12 groupadd">
-                <div class="btnadd">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#addSemester" type="button">
-                        Thêm học kì
-                    </button>
-                </div>
+
+        <div class="col-sm-12 groupadd">
+            <div class="btnadd">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addSemester" type="button">
+                    Thêm học kì
+                </button>
             </div>
+        </div>
 
 
-            <div class="col-sm-12 table-responsive p-5">
+        <div class="col-sm-12 table-responsive p-5">
 
-                <h4 class="text-center text-primary " style="margin-top: 15px; margin-bottom: 15px">DANH SÁCH HỌC KỲ
-                </h4>
-                <table class="table  table-bordered mt-5">
-                    <thead>
-                        <tr class="text-center">
-                            <th class="text-center">#</th>
-                            <th class="text-center">Mã học kỳ</th>
-                            <th class="text-center">Tên học kỳ</th>
-                            <th class="text-center">Trạng thái</th>
-                            <th class="text-center">Chức năng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+            <h4 class="text-center text-primary " style="margin-top: 15px; margin-bottom: 15px">DANH SÁCH HỌC KỲ
+            </h4>
+            <table class="table  table-bordered mt-5">
+                <thead>
+                    <tr class="text-center">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Mã học kỳ</th>
+                        <th class="text-center">Tên học kỳ</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                         foreach ($dataSemester as $key => $value) {
                             echo '<tr class="text-center">
                                 <td>' . $key . '</td>
@@ -66,10 +66,10 @@ $dataSemester = $semester->getAllSemesters()->fetchAll(PDO::FETCH_ASSOC);
                         ?>
 
 
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
+
 
     </div>
     <!-- Modal -->

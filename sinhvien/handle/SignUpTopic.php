@@ -6,7 +6,8 @@ require_once("../../classes/signUpTopic.php");
 
 
 $signUp = new SignUpTopic();
-if (isset($_POST['ma_SV']) && $_POST['action'] == 'signUpTopic') {
+
+if (isset($_POST['ma_SV']) && $_POST['action'] && $_POST['action'] == 'signUpTopic') {
     $dangky = $signUp->signUpTopic($_POST);
 
     if (!$dangky) {
@@ -20,7 +21,7 @@ if (isset($_POST['ma_SV']) && $_POST['action'] == 'signUpTopic') {
 
 //Cancel topic
 
-if (isset($_POST['action']) == "cancelTopic" && isset($_POST['ma_dangky'])) {
+if (isset($_POST['action']) && $_POST['action'] == "cancelTopic" && isset($_POST['ma_dangky'])) {
     $madk = $_POST['ma_dangky'];
     $signUp->cancelTopicSignUp($madk);
     if ($signUp) {
@@ -32,7 +33,7 @@ if (isset($_POST['action']) == "cancelTopic" && isset($_POST['ma_dangky'])) {
 
 // Add Group
 
-if (isset($_POST['action']) == "addGroup" && isset($_POST['ma_SV']) && isset($_POST['nhom'])) {
+if (isset($_POST['action']) && $_POST['action'] == "addGroup" && isset($_POST['ma_SV']) && isset($_POST['nhom'])) {
     $ma_SV = $_POST['ma_SV'];
     $nhom = $_POST['nhom'];
 
@@ -49,4 +50,14 @@ if (isset($_POST['action']) == "addGroup" && isset($_POST['ma_SV']) && isset($_P
     }
 }
 
-// check member group
+// Cancel Group 
+
+if (isset($_POST['action']) && $_POST['action'] == "cancelGroup" && isset($_POST['ma_SV']) && isset($_POST['ma_detai'])) {
+    
+    $cancelGroup = $signUp->cancelGroup($_POST);
+    if ($cancelGroup) {
+        echo "Hủy nhóm thành công!";
+    } else {
+        echo "Lỗi, vui lòng thử lại sau!";
+    }
+}

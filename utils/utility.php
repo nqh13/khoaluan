@@ -40,17 +40,8 @@ class Utility
             return true;
         }
     }
-    // Check File
-    public function checkFile($file)
-    {
-        $allowed = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx');
-        $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        if (!in_array($file_extension, $allowed)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+
+
 
     // Check File Upload
     function checkFileUpload($file)
@@ -90,7 +81,7 @@ class Utility
             return false;
         }
 
-        // Nếu tất cả các kiểm tra đều đúng, trả về true (không có lỗi)
+        // Nếu tất cả các kiểm tra đều đúng, trả về true 
         return true;
     }
 
@@ -112,7 +103,7 @@ class Utility
             }
         } else {
             $input = trim($input);
-            $input = htmlspecialchars(strip_tags($input), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $input = htmlspecialchars($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         }
         return $input;
     }

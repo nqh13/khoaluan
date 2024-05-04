@@ -17,33 +17,28 @@ $listSemester = $semester->getSemesterByStatus($status);
 
             <div class="form-group">
                 <label class="font-weight-bold" for="">Tên đề tài:</label>
-                <input type="text" class="form-control" name="tendetai" id="tendetai" aria-describedby="helpId" value=""
-                    placeholder="Tên đề tài">
+                <input type="text" class="form-control" name="tendetai" id="tendetai" aria-describedby="helpId" value="" placeholder="Tên đề tài">
                 <small id="erTen" class="form-text "></small>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Mô tả đề tài</label>
-                <input type="text" class="form-control" name="mota" id="mota" aria-describedby="helpId"
-                    placeholder="Mô tả đề tài" value="">
+                <input type="text" class="form-control" name="mota" id="mota" aria-describedby="helpId" placeholder="Mô tả đề tài" value="">
                 <small id="erThanhPhan" class="form-text "></small>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Yêu cầu </label>
-                <input type="text" class="form-control" name="yeucau" id="yeucau" aria-describedby="helpId"
-                    placeholder="Yêu cầu đề tài" value="">
+                <input type="text" class="form-control" name="yeucau" id="yeucau" aria-describedby="helpId" placeholder="Yêu cầu đề tài" value="">
                 <small id="erMoTa" class="form-text "></small>
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="">Kiến thức & Kỹ Năng</label>
-                <input type="text" class="form-control" name="kienthuc" id="kienthuc" aria-describedby="helpId"
-                    placeholder="Kiến thức thực hiện đề tài" value="">
+                <input type="text" class="form-control" name="kienthuc" id="kienthuc" aria-describedby="helpId" placeholder="Kiến thức thực hiện đề tài" value="">
                 <small id="erGia" class="form-text "></small>
             </div>
 
             <div class="form-group">
                 <label class="font-weight-bold" for="">Số lượng</label>
-                <input type="number" class="form-control" name="soluong_SV" id="soluong_SV"
-                    placeholder="Số lượng sinh viên có thể đăng ký" aria-describedby="soluongHelpId">
+                <input type="number" class="form-control" name="soluong_SV" id="soluong_SV" placeholder="Số lượng sinh viên có thể đăng ký" aria-describedby="soluongHelpId">
                 <small id="erFile" class="form-text "></small>
             </div>
             <div class="form-group">
@@ -71,7 +66,10 @@ $listSemester = $semester->getSemesterByStatus($status);
 
                 </select>
             </div>
-            <button id="btnthemdetai" name="them" type="submit" class="btn btn-primary btndetai">Lưu đề tài</button>
+            <div class="d-flex justify-content-center">
+                <button id="btnthemdetai" name="them" type="submit" class="btn btn-primary btndetai">Lưu đề tài</button>
+
+            </div>
 
 
         </form>
@@ -81,26 +79,26 @@ $listSemester = $semester->getSemesterByStatus($status);
 </div>
 <script src="../Assets/js/validate.js"></script>
 <script>
-const validate = () => {
-    return Validator({
-        form: '#formthemdetai',
-        errorSelector: '.form-text',
-        rules: [
-            Validator.isRequired('#tendetai'),
-            Validator.isRequired('#mota'),
-            Validator.isRequired('#yeucau'),
-            Validator.isRequired('#kienthuc'),
-            Validator.isRequired('#soluong_SV'),
-            Validator.isNumber('#soluong_SV'),
-            Validator.isNumberQty('#soluong_SV'),
-            Validator.checkXSS('#mota'),
-            Validator.checkXSS('#yeucau'),
-            Validator.checkXSS('#kienthuc'),
-            Validator.checkXSS('#tendetai'),
-        ]
-    }, () => handelAddTopic(<?php echo $_SESSION['ma_nguoidung'] . ',' . $_SESSION['ma_nganh']; ?>));
-}
-document.addEventListener('DOMContentLoaded', () => {
-    validate();
-})
+    const validate = () => {
+        return Validator({
+            form: '#formthemdetai',
+            errorSelector: '.form-text',
+            rules: [
+                Validator.isRequired('#tendetai'),
+                Validator.isRequired('#mota'),
+                Validator.isRequired('#yeucau'),
+                Validator.isRequired('#kienthuc'),
+                Validator.isRequired('#soluong_SV'),
+                Validator.isNumber('#soluong_SV'),
+                Validator.isNumberQty('#soluong_SV'),
+                Validator.checkXSS('#mota'),
+                Validator.checkXSS('#yeucau'),
+                Validator.checkXSS('#kienthuc'),
+                Validator.checkXSS('#tendetai'),
+            ]
+        }, () => handelAddTopic(<?php echo $_SESSION['ma_nguoidung'] . ',' . $_SESSION['ma_nganh']; ?>));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        validate();
+    })
 </script>

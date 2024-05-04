@@ -133,6 +133,49 @@ class User
             return false;
         }
     }
+    //Updatete information user for Admin
+    public function updateUserInfoAdmin($id, $data, $filename)
+    {
+        $hoten = $data['hoten'];
+        $sdt = $data['sdt'];
+        $email = $data['email'];
+        $diachi = $data['diachi'];
+        $khoavien = $data['khoavien'];
+        $chuyennganh = $data['ma_nganh'];
+        $vaitro = $data['vaitro'];
+        $addStr = "";
+        if ($filename != "") {
+            $addStr = ", `hinhanh`=:hinhanh";
+        }
+        $sql = "UPDATE `tbl_users` SET  `hoten`=:hoten, `sodienthoai`=:sdt, `email`=:email, `diachi`=:diachi, 
+        `khoavien`=:khoavien, `ma_nganh`=:chuyennganh, `vaitro`=:vaitro $addStr  WHERE `tbl_users`.`ma_nguoidung` = $id ";
+
+        $stmt = $this->db->prepare($sql);
+
+        // Nếu có ảnh mới, bind tham số cho 'hinhanh'
+        if ($filename != "") {
+            $stmt->bindParam(':hinhanh', $filename);
+        }
+
+        $stmt->bindParam(':sdt', $sdt);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':diachi', $diachi);
+        $stmt->bindParam(':hoten', $hoten);
+        $stmt->bindParam(':khoavien', $khoavien);
+        $stmt->bindParam(':chuyennganh', $chuyennganh);
+        $stmt->bindParam(':vaitro', $vaitro);
+
+        $stmt->execute();
+
+        // Kiểm tra số dòng ảnh hưởng bởi câu lệnh SQL để xác định thành công
+        if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     // Check Password old
     public function checkPassword($id, $password)
     {
