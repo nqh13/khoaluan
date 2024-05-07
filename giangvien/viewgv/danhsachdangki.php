@@ -118,6 +118,7 @@ if (isset($_GET['hocki']) && $_GET['hocki'] != '') {
                     <th scope="col" style="width: 10%">EMAIL</th>
                     <th scope="col" style="width: 5%">NHÓM</th>
                     <th scope="col" style="width: 5%">LIÊN HỆ</th>
+                    <th scope="col" style="width: 8%"></th>
                 </tr>
             </thead>
             <tbody id="dataStudentSignUp">

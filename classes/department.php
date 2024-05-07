@@ -1,5 +1,5 @@
 <?php
-include('database.php');
+require_once('database.php');
 
 class Department
 {
@@ -22,15 +22,15 @@ class Department
         $sql = "SELECT * FROM tbl_khoavien WHERE ma_khoavien = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $result = $stmt->execute();
-        return $result;
+        $stmt->execute();
+        return $stmt;
     }
 
     // Add new department
     public function addDepartment($data)
     {
         $tenkhoavien = $data['tenkhoavien'];
-        $sql = "INSERT INTO tbl_khoavien(tenkhoavien) VALUES(:tenkhoavien)";
+        $sql = "INSERT INTO tbl_khoavien(ten_khoavien) VALUES(:tenkhoavien)";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':tenkhoavien', $tenkhoavien);
         $result = $stmt->execute();
@@ -46,7 +46,7 @@ class Department
     {
         $tenkhoavien = $data['tenkhoavien'];
         $id = $data['id'];
-        $sql = "UPDATE tbl_khoavien SET tenkhoavien = :tenkhoavien WHERE ma_khoavien = :id";
+        $sql = "UPDATE tbl_khoavien SET ten_khoavien = :tenkhoavien WHERE ma_khoavien = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':tenkhoavien', $tenkhoavien);
         $stmt->bindParam(':id', $id);

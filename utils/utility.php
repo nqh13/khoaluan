@@ -18,7 +18,7 @@ class Utility
     // Random password
     function randomPassword($length = 8)
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*?';
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#';
         $password = '';
         $charactersLength = strlen($characters);
         for ($i = 0; $i < $length; $i++) {
@@ -58,7 +58,7 @@ class Utility
         // Kiểm tra phần mở rộng của tệp
         $allowedExtensions = array("doc", "docx", "pdf", "xls", "xlsx", "ppt", "pptx");
         if (!in_array($fileExtension, $allowedExtensions)) {
-            echo "Phần mở rộng của tệp không hợp lệ!";
+            echo "File không hợp lệ!";
             return false;
         }
 

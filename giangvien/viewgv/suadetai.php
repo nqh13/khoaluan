@@ -78,7 +78,10 @@ if (isset($_GET['id'])) {
                 ?>
             </select>
         </div>
-        <button id="btnsuadetai" name="update" class="btn btn-primary btndetai" type="submit">Lưu cập nhật</button>
+        <div class="d-flex justify-content-center">
+            <button id="btnsuadetai" name="update" class="btn btn-primary btndetai" type="submit">Lưu cập nhật</button>
+
+        </div>
 
     </form>
 </div>

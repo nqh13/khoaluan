@@ -6,9 +6,12 @@ $signUp = new SignUptopic();
 
 
 
+
+
 $result = $topic->getTopicByStudent($_SESSION['ma_nganh'])->fetchAll(PDO::FETCH_ASSOC);
 
 $checkSignUp = $signUp->checkSignUpTopic($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 

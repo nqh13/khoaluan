@@ -16,15 +16,11 @@
                         <a class="waves-effect waves-dark" href="?pages=quanlykhoa"><i class="icon-arrow-right"></i>
                             Khoa viên</a>
                     </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="?pages=themkhoa"><i class="icon-arrow-right"></i>
-                            Thêm khoa mới</a>
-                    </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="?pages=themnganh"><i class="icon-arrow-right"></i>
-                            Thêm ngành Mới</a>
-                    </li>
-
+                    <!-- <li>
+                        <a class="waves-effect waves-dark" href="?pages=nganh"><i class="icon-arrow-right"></i>
+                            Ngành</a>
+                    </li> -->
+            
 
                 </ul>
             </li>
@@ -50,17 +46,17 @@
                         tài</span><i class="icon-arrow-down"></i></a>
                 <ul class="treeview-menu">
                     <li>
-                        <a class="waves-effect waves-dark" href="#"><i class="icon-arrow-right"></i> Đề tài</a>
+                        <a class="waves-effect waves-dark" href="?pages=quanlydetai"><i class="icon-arrow-right"></i> Đề tài</a>
                     </li>
 
                     <li>
-                        <a class="waves-effect waves-dark" href="#"><i class="icon-arrow-right"></i> Tạo đề tài</a>
+                        <a class="waves-effect waves-dark" href="?themdetai"><i class="icon-arrow-right"></i> Tạo đề tài</a>
                     </li>
                 </ul>
             </li>
             <li class="treeview">
                 <a class="waves-effect waves-dark" href="#!"><i class="fa-solid fa-calendar-days"></i>
-                    <span>Quản lý kì học</span><i class="icon-arrow-down"></i></a>
+                    <span>Quản lý kỳ học</span><i class="icon-arrow-down"></i></a>
                 <ul class="treeview-menu">
                     <li>
                         <a class="waves-effect waves-dark" href="?pages=hocky">

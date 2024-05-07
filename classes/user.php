@@ -87,27 +87,44 @@ class User
 
 
     // Add new user
-    public function  addUser($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro,)
+    public function  addUser($manguoidung,$data, $password )
     {
-        // var_dump($manguoidung, $hoten,  $email, $sodienthoai,  $diachi, $hinhanh, $password, $khoavien, $chuyennganh, $vaitro);
+        
+       
         $hashed_password = md5($password);
         $sql = "INSERT INTO tbl_users (ma_nguoidung,hoten, email, sodienthoai, diachi, hinhanh, matkhau, khoavien, ma_nganh, vaitro) 
         VALUES (:manguoidung,:hoten, :email, :sodienthoai, :diachi, :hinhanh,:password, :khoavien, :chuyennganh, :vaitro)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':manguoidung', $manguoidung);
-        $stmt->bindParam(':sodienthoai', $sodienthoai);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':diachi', $diachi);
-        $stmt->bindParam(':hinhanh', $hinhanh);
-        $stmt->bindParam(':hoten', $hoten);
+        $stmt->bindParam(':sodienthoai', $data['sodienthoai']);
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':diachi', $data['diachi']);
+        $stmt->bindParam(':hinhanh', $data['hinhanh']);
+        $stmt->bindParam(':hoten', $data['hoten']);
         $stmt->bindParam(':password', $hashed_password);
-        $stmt->bindParam(':khoavien', $khoavien);
-        $stmt->bindParam(':chuyennganh', $chuyennganh);
-        $stmt->bindParam(':vaitro', $vaitro);
+        $stmt->bindParam(':khoavien', $data['khoa']);
+        $stmt->bindParam(':chuyennganh', $data['nganh']);
+        $stmt->bindParam(':vaitro', $data['vaitro']);
         $stmt->execute();
-        echo 'username: ' . $manguoidung . ' password: ' . $password;
+        return $stmt;
+        
+        // echo 'username: ' . $manguoidung . ' password: ' . $password;
     }
+    // Change status user
+    public function changeStatusUser($id, $status){
+        $sql = "UPDATE tbl_users SET trangthai = :status WHERE ma_nguoidung = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     //Update information user
 
@@ -251,4 +268,12 @@ class User
     }
 
     /*End Filter */
+
+    // Get count user
+    public function countUsers()
+    {
+        $sql = "SELECT COUNT(ma_nguoidung) AS totalUser FROM tbl_users";
+        $result = $this->db->select($sql);
+        return $result ;
+    }
 }

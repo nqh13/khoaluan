@@ -17,15 +17,6 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
     $dataUser = $user->getAllUsers();
     $result =  $dataUser->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
-
-
-
-
-
-
-
 ?>
 <div class="col-sm-12">
     <!-- Basic Table starts -->
@@ -131,9 +122,9 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
 
                             $dem = 1;
                             foreach ($result as $key => $value) {
-
+                                $bg = ($value['trangthai'] == 1) ? '' : 'bg-default';
                                 echo ('
-                                    <tr>
+                                    <tr class="'.$bg.'">
                                 
                                         <td>' . $dem++ . '</td>
                                         <td>' . $value['ma_nguoidung'] . '</td>
@@ -147,10 +138,12 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                                         <td class="text-center">
 
                                             <a style="margin: 3px;" class="btn btn-sm btn-inverse-warning " href="?pages=updateUser&ma_nguoidung=' . $value['ma_nguoidung'] . '"  >Cập nhật</a>
-                                            <a style="margin: 3px;" class=" btn btn-sm btn-inverse-danger " href="?pages=deleteUser&ma_nguoidung=' . $value['ma_nguoidung'] . '"> </i>Xóa</a>
-
-
-                                        </td>
+                                            
+                                            <button type="button" class="btn btn-inverse-danger btn-sm" id="changeStatusButton" data-toggle="modal" data-target="#changeStatusUser"  
+                                            data-iduser="' . $value['ma_nguoidung'] . '" data-nameuser="' . $value['hoten'] . '" data-trangthai="' . $value['trangthai'] . '" title="Cập nhật trạng thái" style="margin-right: 5px"> Đổi trạng thái
+                                        </button>
+                                        
+                                            </td>
                                     </tr>
                                     
                                     ');
@@ -168,3 +161,56 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
     </div>
     <!-- Basic Table ends -->
 </div>
+
+<div class="modal fade" id="changeStatusUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title text-primary text-center" id="exampleModalLabel">ĐỔI TRẠNG THÁI NGƯỜI DÙNG
+                    </h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" name="_token" id="tokenUser" value="<?php echo $tokenUser ?>">
+                        <input type="hidden" class="form-control" id="iduser">
+                        <div class="form-group">
+                            <label for="hoten" class="col-form-label font-weight-bold ">Họ tên:</label>
+                            <input type="text" class="form-control" id="nameuser" >
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label font-weight-bold">Trạng thái:</label>
+                            <select class="form-control" name="" id="trangthai">
+                                <option value="1" <?php echo $value['trangthai'] == 1 ? 'selected' : '' ?>>Đang hoạt động
+                                </option>
+                                <option value="2" <?php echo $value['trangthai'] == 2 ? 'selected' : '' ?>>Đã khóa
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class=" btn btn-primary" style="margin-left: 10px;"
+                        onclick="changeStatusUser()">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="">
+   document.querySelectorAll('#changeStatusButton').forEach(button => {
+    button.addEventListener('click', function() {
+        var idUser = this.getAttribute('data-iduser');
+        var nameUser = this.getAttribute('data-nameuser');
+        var trangThai = this.getAttribute('data-trangthai');
+        
+        // console.log(idUser, nameUser, trangThai);
+        
+        document.getElementById('iduser').value = idUser;
+        document.getElementById('nameuser').value = nameUser;
+        document.getElementById('trangthai').value = trangThai;
+    });
+});
+
+</script>

@@ -79,14 +79,24 @@ if (isset($_POST["action"]) && $_POST["action"] == "getDataStudentSignUp") {
     $count = $data->rowCount();
     $stt = 1;
     $students = '';
+    $button ="";
 
     if ($count == 0) {
         $students = '<tr>
-            <td colspan="7" class="text-center "><b>Không có sinh viên đang đăng ký!</b></td>
+            <td colspan="8" class="text-center "><b>Không có sinh viên đang đăng ký!</b></td>
         </tr>';
     }
 
     foreach ($data as $data) {
+        if($data['trangthaidangky'] == 1){
+                
+            $button = ' <button class="btn btn-success btn-sm text-center" type="button" onclick="handleUpdateStatus(' . $data['ma_dangky'] . ',3)"> 
+            <i class="fa fa-check mr-1"></i>Chấp nhận </button>';
+        }
+        else{
+            $button = ' <button class="btn btn-danger btn-sm text-center" type="button" onclick="handleUpdateStatus(' . $data['ma_dangky'] . ',1)"> 
+            <i class="fa fa-cancel mr-1"></i>Hủy Hướng Dẫn</button>';
+        }
         $students .=
             '<tr>
                 <td class="text-center" style="width: 5%">' . $stt++ . '</td>
@@ -109,10 +119,23 @@ if (isset($_POST["action"]) && $_POST["action"] == "getDataStudentSignUp") {
                     </path></svg></span><div class="arcu-item-label"><div class="arcu-item-title">
                     Zalo</div></div></a>
                 </td>
+                <td class="text-center" style="width: 5%">'.$button.'</td>
     </tr>';
     }
 
     echo $students;
+}
+
+//Xử lý trạng thái đăng ký.
+if(isset($_POST['action']) && $_POST['action'] == 'updateStatusbyGV'){
+    $changeStatus = $signUp->updateStatusSignUp($_POST);
+    if($changeStatus){
+        echo "Cập nhật thành công!";
+    }
+    else{
+        echo "Lỗi, vui lòng thử lại sau!";
+    }
+    
 }
 
 // Tạo báo cáo.

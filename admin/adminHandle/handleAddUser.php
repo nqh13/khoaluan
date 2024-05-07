@@ -1,7 +1,9 @@
 <?php
+session_start();
 include('../../classes/user.php');
 include('../../classes/majors.php');
 include('../../utils/utility.php');
+
 
 
 $u = new User();
@@ -26,42 +28,100 @@ if (isset($_POST['id_khoa'])) {
 
 
 // Xử lý thêm người dùng mới
+// if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
+
+
+    
+//     $file = $_FILES['file'];
+//     $file_name = $_FILES['file']['name'];
+//     $matkhau = $utils->randomPassword();
+
+//     if ($_POST['manguoidung'] == "") {
+
+//         $_POST['manguoidung'] =  $utils->randomIDUser();
+//     }
+//     var_dump($_POST);
+
+//     $checkXSS = $utils->checkAtackXSS($_POST);
+//     $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+
+//     $checkimg = $utils->checkImageFile($file);
+
+    
+//     if($checkCSRF == true){
+//          if ($checkimg == true) {
+//             $upload_dir = "../../Uploads";
+//             $file_tmp = $_FILES['file']['tmp_name'];
+//             if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
+//             // $adduser = $u->addUser($checkXSS, $matkhau);
+//             } 
+//             else {
+//                 echo "Lỗi, vui lòng thử lại sau!";
+//             }
+//         }
+//         else{
+//             echo $checkimg;
+//         }
+//     }
+//     else{
+//         echo "Lỗi xác thực!";
+//     }
+   
+
+// }
+
 if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
-
-
     $manguoidung = $_POST['manguoidung'];
-    $hoten = $_POST['hoten'];
-    $email = $_POST['email'];
-    $sdt = $_POST['sdt'];
-    $diachi = $_POST['diachi'];
-    $vaitro = $_POST['vaitro'];
-    $id_nganh = $_POST['nganh'];
-    $id_khoa = $_POST['khoa'];
-    $file = $_FILES['file'];
-    $file_name = $_FILES['file']['name'];
-    $matkhau = $utils->randomPassword();
-
     if ($manguoidung == "") {
-
         $manguoidung =  $utils->randomIDUser();
     }
+    $matkhau = $utils->randomPassword();
+    // Kiểm tra XSS và CSRF trước khi xử lý
+    $checkXSS = $utils->checkAtackXSS($_POST);
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
 
-    $checkXSS = $utils->checkAtackXSS($hoten, $email, $sdt, $diachi, $vaitro, $id_nganh, $id_khoa);
-    $checkimg = $utils->checkImageFile($file);
-    if ($checkimg == true) {
-        $upload_dir = "../../Uploads";
-
-        $file_tmp = $_FILES['file']['tmp_name'];
-        if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
-            // echo "Upload thành công-";
+    if ($checkCSRF == true) {
+        // Kiểm tra hình ảnh
+        $file = $_FILES['file'];
+        $checkimg = $utils->checkImageFile($file);
+        if ($checkimg == true) {
+            // Tải tệp lên nếu hợp lệ
+            $upload_dir = "../../Uploads";
+            $file_tmp = $_FILES['file']['tmp_name'];
+            if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
+                // Thêm người dùng
+                
+                $adduser = $u->addUser($manguoidung, $checkXSS, $matkhau);
+                if ($adduser) {
+                    echo "Tài khoản đăng nhập hệ thống.<br> Mã người dùng: " . $manguoidung . " - Mật khẩu: " . $matkhau;
+                }
+                else {
+                    echo "Thêm tài khoản thất bại";
+                }
+                
+            } else {
+                // echo "upload ảnh thất bại!";
+            }
         } else {
-            // echo "Upload thất bại";
+            echo $checkimg;
         }
+    } else {
+        echo "Lỗi xác thực!";
     }
-
-    $u->addUser($manguoidung, $hoten, $email, $sdt, $diachi, $file_name, $matkhau, $id_khoa, $id_nganh, $vaitro);
 }
 
+// Đổi trạng thái người dùng:
+if (isset($_POST['action']) && $_POST['action'] == 'changeStatusUser') {
+    $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
+    if($checkCSRF == true){
+        $changeStatusUser = $u->changeStatusUser($_POST['ma_nguoidung'], $_POST['trangthai']);
+        if ($changeStatusUser) {
+            echo "Đã đổi trạng thái người dùng!";
+        } else {
+            echo "Lỗi, vui lòng thử lại sau!";
+    }
+    }
+}
 // Xử lý update thông tin người dùng
 if (isset($_POST['action']) && $_POST['action'] == 'updateUser') {
     $file = array();

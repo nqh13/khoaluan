@@ -306,7 +306,7 @@ function getDataStudentSignUp(id_topic) {
     },
     success: function (response) {
       $("#dataStudentSignUp").html(response);
-      console.log(response);
+      // console.log(response);
     },
   });
 }
@@ -359,7 +359,10 @@ function updateInforReport(id) {
   var ngayhethan = document.getElementById("ngayhethan").value;
   var ghichu = document.getElementById("ghichu").value;
 
-  $.ajax({
+  if(tieude == "" || ngaytao == "" || ngayhethan == ""){
+    alert("Vui lòng điền đầy đủ thông tin");
+  }else{
+     $.ajax({
     type: "POST",
     url: "./../handle/xuly.php",
     data: {
@@ -375,6 +378,8 @@ function updateInforReport(id) {
       window.location.href = "index.php?page=ctbaocao&id=" + id;
     },
   });
+  }
+ 
 }
 
 function deleteReport(idReport) {
@@ -453,6 +458,10 @@ function updateDiscussion(idDiscussion) {
   var tieude = document.getElementById("titleUpdate").value;
   var noidung = document.getElementById("contentUpdate").value;
   var tokenUser = document.getElementById("tokenUser").value;
+  if(tieude == "" || noidung == "") {
+    alert("Vui lòng điền đầy đủ thông tin");
+  }
+  else{
   $.ajax({
     type: "POST",
     url: "./../handle/xuly.php",
@@ -468,8 +477,36 @@ function updateDiscussion(idDiscussion) {
       window.location.reload();
     },
   });
+  }
 }
 
-// 
+// Xử lý trạng thái đăng ký (GV).
+function handleUpdateStatus(id, status) {
+  if(status == 3) {
+  var check = confirm("Bạn chắc chắn muốn hướng dẫn sinh viên này?");
+  } else {
+  var check = confirm("Bạn chắc chắn muốn hủy hướng dẫn sinh viên này?");
+  }
+  if(check === true) {
+     $.ajax({
+    type: "POST",
+    url: "./../handle/xuly.php",
+    data: {
+      action: "updateStatusbyGV",
+      ma_dangky: id,
+      trangthai: status,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+  }
+  
+ 
+}
+
+
+
 
 

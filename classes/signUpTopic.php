@@ -159,4 +159,14 @@ class SignUpTopic
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC);
     }
+    //Update status sign up
+    public function updateStatusSignUp($data){
+        $sql = "UPDATE tbl_dangkydetai SET trangthaidangky = :trangthaidangky WHERE ma_dangky = :ma_dangky";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':trangthaidangky', $data['trangthai']);
+        $stmt->bindParam(':ma_dangky', $data['ma_dangky']);
+        $stmt->execute();
+        return $stmt;
+
+    }
 }

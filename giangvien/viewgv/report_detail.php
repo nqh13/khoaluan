@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
     // format hạn nộp:
     $timestampEnd = strtotime($result['ngayhethan']);
     $formattedEndDate = date("l, j F Y, g:i A", $timestampEnd);
-
+    $hannop = $result['ngayhethan'];
 
     //Lấy danh sách sinh viên nộp bài:
     $dataList = $report->getListDetailByReportID($id)->fetchAll(PDO::FETCH_ASSOC);
@@ -132,6 +132,8 @@ if (isset($_GET['id'])) {
             foreach ($dataList as $key => $value) {
                 $timestamp = strtotime($value['thoigiannop']);
                 $formattedDate = date("d/m/Y H:i:s", $timestamp);
+                $status =$value['thoigiannop'] < $hannop ? "Nộp sớm" : "Nộp muộn";
+               
                 echo '
                 <tbody>
                         <tr class="text-center">
@@ -139,11 +141,8 @@ if (isset($_GET['id'])) {
                             <td>' . $value['hoten'] . '</td>
                             <td>' . $formattedDate . '</td>
                             <td>' . $value['tenFile'] . '</td>
-                            <td></td>
+                            <td>'.$status.'</td>
                             <td> <a class="btn btn-success" href ="./../file_Upload/' . $value['tenFile'] . '"  download target="_blank"><i class="fa-solid fa-download"></i></a></td>
-
-
-
                         </tr>
                 </tbody>
             
@@ -151,8 +150,6 @@ if (isset($_GET['id'])) {
             ';
             }
         }
-
-
         ?>
 
     </table>

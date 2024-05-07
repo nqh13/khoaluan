@@ -171,4 +171,22 @@ class Topic
         $result->execute();
         return $result;
     }
+    // Get count of topics by  semester
+    public function countTopicBySemester($id_semester)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM tbl_detai WHERE tbl_detai.hocki = :id_semester;";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':id_semester', $id_semester);
+        $result->execute();
+        return $result;
+    }
+
+    // Get count of topics
+    public function countTopics(){
+        $sql = "SELECT COUNT(*) AS total FROM tbl_detai;";
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        return $result;
+    }
+
 }

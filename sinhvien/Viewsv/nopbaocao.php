@@ -101,10 +101,7 @@ $sign  = new SignUptopic();
 $report = new Report();
 
 $checkID = $report->getListID($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
-$valuesOnly = array_column($checkID, 'ma_ctbaocao');
-if (in_array($_GET['mactbaocao'], $valuesOnly)) {
-} else {
-}
+
 
 
 if (isset($_GET['idbaocao'])) {

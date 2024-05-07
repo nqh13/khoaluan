@@ -4,12 +4,8 @@ $sign  = new SignUptopic();
 $result = $sign->getTopicSignUp($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 $ma_nguoidung = $_SESSION['ma_nguoidung'];
 
-
-
-
-
-
-
+// var_dump($result);
+$status = $result[0]['trangthaidangky'];
 
 ?>
 <div class="content">
@@ -35,6 +31,18 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
         <tbody>
           <?php
           foreach ($result as $key => $value) {
+            $buttonCancel ="";
+            if($value['trangthaidangky'] == '1'){
+              $buttonCancel = '<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              onclick="cancelTopic(' . $value['ma_dangky'] . ');"
+            >
+              <i class="fas fa-cancel"></i>
+              Hủy đăng ký
+            </button>';
+            }
+            else{
+              $buttonCancel = "-";
+            }
             echo '<tr>
           <th class="text-center" scope="row">' . ($key + 1) . '</th>
           <td class="text-center" style="width: 10%">' . $value['ma_detai'] . '</td>
@@ -57,12 +65,7 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
             ' . $value['tentrangthai'] . '
           </td>
           <td style="width: 10%">
-            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
-              onclick="cancelTopic(' . $value['ma_dangky'] . ');"
-            >
-              <i class="fas fa-cancel"></i>
-              Hủy đăng ký
-            </button>
+            '.$buttonCancel.'
           </td>
         </tr>';
           }
@@ -109,19 +112,22 @@ $ma_nguoidung = $_SESSION['ma_nguoidung'];
           //Check  quantity member on group
           $quantity = $sign->checkQualityStudent($students['nhom']);
 
+          //Check is User 
           $check = $_SESSION['ma_nguoidung'] == $students['ma_nguoidung'] ? 0 : 1;
           $valueUI = $check == 1 ? '<td><button class="btn btn-outline-primary btn-sm" id="' . $students['nhom'] . '"  onclick ="addGroup(' . $students['nhom'] . ',' . $ma_nguoidung . ' )"> Chọn nhóm</button></td>' : "";
-          // $valueUI ="";
-          // $btnChooseGroup = '<button class="btn btn-outline-primary btn-sm" id="' . $students['nhom'] . '"  onclick ="addGroup(' . $students['nhom'] . ',' . $ma_nguoidung . ' )"> Chọn nhóm</button>';
-          // $btnCancelGroup = '<button class="btn btn-outline-danger btn-sm" id="' . $students['nhom'] . '"  onclick ="cancelGroup(' . $students['nhom'] . ',' . $ma_nguoidung . ' )"> Hủy nhóm</button>';
-          if($check == 1 && $students['nhom'] == $idGroup['nhom']){
-            $valueUI="";
-          }
-          if( $check ==0 && $students['nhom'] == $idGroup['nhom'] && $quantity == 2){
-            $valueUI = '<td><button class="btn btn-outline-danger btn-sm"   onclick ="cancelGroup('.$students['ma_dangky'].','.$ma_detai.','.$ma_nguoidung.' )"> Hủy nhóm</button></td>';
-            
+          
+          $btnCancelGroup = '<button class="btn btn-outline-danger btn-sm" id="' . $students['nhom'] . '"  onclick ="cancelGroup(' . $students['nhom'] . ',' . $ma_nguoidung . ' )"> Hủy nhóm</button>';
+          if($students['trangthaidangky'] == 3|| $check == 1 && $students['nhom'] == $idGroup['nhom']  ){
+            $valueUI="-";
           }
           
+          if( $check ==0 && $students['nhom'] == $idGroup['nhom'] && $quantity == 2){
+            $valueUI = '<td><button class="btn btn-outline-danger btn-sm"  onclick ="cancelGroup('.$students['ma_dangky'].','.$ma_detai.','.$ma_nguoidung.' )"> Hủy nhóm</button></td>';
+            
+          }
+          if($status == 3){
+            $valueUI = "-";
+          }
 
           echo ('
                     <tr class="text-center">

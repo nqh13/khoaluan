@@ -87,6 +87,7 @@ function themUser() {
     },
   });
 }
+// Thay đổi trạng thái Users
 
 // Function Xử lý Semester
 
@@ -137,4 +138,132 @@ function updateSemester() {
       window.location.reload();
     },
   });
+}
+// Thêm khoa viện admin.
+
+function addDepartment() {
+  var tenkhoavien = document.getElementById("tenkhoavien").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+
+  if (tenkhoavien == "") {
+    alert("Vui lòng nhập đầy đủ thông tin");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "addDepartment",
+        tenkhoavien: tenkhoavien,
+        tokenUser: tokenUser,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
+}
+// Cập nhật thông tin khoa viện.
+
+function updateDepartment() {
+  var tenKhoaVien = document.getElementById('tenKhoaUpdate').value;
+  var tokenUser = document.getElementById('tokenUser').value;
+  var maKhoa = document.getElementById('idKhoaUpdate').value;
+
+  if(tenKhoaVien == ""){
+    alert("Vui lòng nhập đầy đủ thông tin");
+  }
+  else{
+      $.ajax({
+    type: "POST",
+    url: "./adminHandle/handle.php",
+    data: { action: "updateDepartment", 
+    tenkhoavien: tenKhoaVien, 
+    tokenUser: tokenUser, 
+    id: maKhoa 
+  },
+  success: function (response) {
+    alert(response);
+    window.location.reload();
+  },
+})
+  }
+}
+//Thêm ngành học mới.
+function addMajor(idkhoa) {
+  var ten_nganh = document.getElementById("tenNganhMoi").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+
+  if(ten_nganh ==""){
+    alert("Vui lòng nhập tên ngành học!");
+  }
+  else{
+  $.ajax({
+    type: "POST",
+    url: "./adminHandle/handle.php",
+    data: {
+      action: "addMajor",
+      ten_nganh: ten_nganh,
+      tokenUser: tokenUser,
+      khoavien : idkhoa
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+  }
+
+}
+//Cập nhật thông tin ngành học.
+
+function updateMajor() {
+  var idNganhUpdate = document.getElementById("idNganhUpdate").value;
+  var tenNganhUpdate = document.getElementById("tenNganhUpdate").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  
+  if(tenNganhUpdate == ""){
+    alert("Vui lòng nhập tên ngành!");
+  }
+  else{
+  $.ajax({
+    type: "POST",
+    url: "./adminHandle/handle.php",
+    data: {
+      action: "updateMajor",
+      id: idNganhUpdate,
+      ten_nganh: tenNganhUpdate,
+      tokenUser: tokenUser,
+    },
+    success: function (response) {
+      alert(response);
+      window.location.reload();
+    },
+  });
+  }
+}
+
+
+// Thay đổi trạng thái Users
+function changeStatusUser() {
+  var manguoidung = document.getElementById("iduser").value;
+  var trangthai = document.getElementById("trangthai").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  var checkconfirm = confirm("Bạn có muốn thay đổi trang thái này?");
+  if (checkconfirm == true) {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handleAddUser.php",
+      data: {
+        action: "changeStatusUser",
+        ma_nguoidung: manguoidung,
+        trangthai: trangthai,
+        tokenUser: tokenUser,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
 }

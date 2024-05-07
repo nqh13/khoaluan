@@ -112,9 +112,16 @@ $tokenUser = $utility->generateSessionToken();
                                 case "hocky":
                                     echo "Học kỳ";
                                     break;
+                                case "nganh":
+                                    echo "Ngành";
+                                    break;
                                 case "quanlykhoa":
                                     echo "Quản lý khoa viện";
                                     break;
+                                case "quanlydetai":
+                                    echo "Quản lý đề tài";
+                                    break;
+
                                 default:
                                     echo "404 NOT FOUND! ";
                                     break;
@@ -152,6 +159,12 @@ $tokenUser = $utility->generateSessionToken();
                         break;
                     case "quanlykhoa":
                         include("./pages/adminDepaterment.php");
+                        break;
+                    case "nganh":
+                        include("./pages/majors.php");
+                        break;
+                    case "quanlydetai":
+                        include("./pages/adminTopic.php");
                         break;
                     default:
                         echo "404 NOT FOUND! ";

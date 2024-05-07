@@ -20,6 +20,7 @@ if (isset($_POST['themUser'])) {
 
         <div class="card-block">
             <form method="POST" action="" class="" id="formAddUser" style="display: flex; flex-direction: column" enctype="multipart/form-data">
+                <input type="hidden" name="token" id="tokenUser" value="<?php echo $tokenUser ?>">
                 <div class="form-group">
                     <label class="form-control-label">Mã người dùng:</label>
                     <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung" placeholder=" Nhập mã người dùng, nếu bỏ trống hệ thống sẽ tự tạo mã">
@@ -60,11 +61,13 @@ if (isset($_POST['themUser'])) {
 
 
                     </select>
+                    <small class="form-text text-muted"></small>
+
                 </div>
 
                 <div class="form-group">
                     <label for="exampleSelect1" class="form-control-label">Ngành:</label>
-                    <select class="form-control" id="id_nganh" name="nganh">
+                    <select class="form-control" id="id_nganh" name="nganh" >
 
                     </select>
                 </div>
@@ -73,18 +76,15 @@ if (isset($_POST['themUser'])) {
                     <select class="form-control" id="vaitro" name="vaitro">
                         <option selected value=""></option>
                         <?php
-
                         $vaitro = $d->getRoles();
-
                         foreach ($vaitro as $roles) {
 
                             echo '<option value="' . $roles['ma_vaitro'] . '"  >' . $roles['tenvaitro'] . '</option>';
                         }
-
-
                         ?>
-
                     </select>
+                    <small class="form-text text-muted"></small>
+
                 </div>
                 <div class="form-group row" id="">
                     <label for="file" class="col-md-2 col-form-label form-control-label">Ảnh:</label>
@@ -118,6 +118,7 @@ if (isset($_POST['themUser'])) {
     import "https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js";
 
     function themUser() {
+        var token = $("#tokenUser").val();
         var manguoidung = $("#manguoidung").val();
         var hoten = $("#hoten").val();
         var email = $("#email").val();
@@ -129,23 +130,28 @@ if (isset($_POST['themUser'])) {
         var fileInput = $("#file")[0].files[0];
 
         var fd = new FormData();
+        fd.append("tokenUser", token);
         fd.append("action", "themUser");
         fd.append("manguoidung", manguoidung);
         fd.append("hoten", hoten);
         fd.append("email", email);
-        fd.append("sdt", sdt);
+        fd.append("sodienthoai", sdt);
         fd.append("diachi", diachi);
         fd.append("khoa", khoa);
         fd.append("nganh", nganh);
         fd.append("vaitro", vaitro);
         fd.append("file", fileInput); // Thêm tệp vào FormData
 
-        $.ajax({
+        if (fileInput == undefined) {
+            alert("Vui lý chọn hình ảnh");
+        }
+        else{
+            $.ajax({
             type: "POST",
             url: "./adminHandle/handleAddUser.php",
             data: fd,
-            processData: false, // không xử lý dữ liệu
-            contentType: false, // không đặt header Content-Type
+            processData: false, 
+            contentType: false, 
             success: function(data) {
 
                 console.log(data);
@@ -155,7 +161,7 @@ if (isset($_POST['themUser'])) {
                             from: "nguyenquangha130901@gmail.com",
                             to: email,
                             subject: "Thông báo cấp tài khoản đăng nhập",
-                            text: `Mã đăng nhập:  ${data}`,
+                            text: `${data}`,
                         })
                         .then((res) => {
                             console.log(res);
@@ -164,15 +170,20 @@ if (isset($_POST['themUser'])) {
                         .catch((err) => console.log(err));
                 }
 
-                sendMail();
+                if(data != "Thêm tài khoản thất bại" || data != ""){
+                    sendMail();
+                }
                 $("#formAddUser")[0].reset();
                 $("#divAnh").addClass("d-none");
                 $("#imgPreview").attr("src", "");
                 $("#hinhanh").removeClass("d-none");
-                alert("Thêm user thành công");
-                window.location.href = "index.php?pages=quanlyUsers";
+                alert(data);
+                window.location.href = "inde6666666666666666666666666666666666666666666666x.php?pages=quanlyUsers";
             },
         });
+        }
+        
+        
     }
     const validate = () => {
         return Validator({
@@ -183,6 +194,8 @@ if (isset($_POST['themUser'])) {
                 Validator.isRequired('#email'),
                 Validator.isRequired('#sdt'),
                 Validator.isRequired('#diachi'),
+                Validator.isRequired('#id_khoa'),
+                Validator.isRequired('#vaitro'),
                 Validator.isEmail('#email'),
                 Validator.isNumberPhone('#sdt'),
             ]
