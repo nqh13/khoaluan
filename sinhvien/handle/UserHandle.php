@@ -57,13 +57,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'changePassword') {
 }
 
 
-//Thêm bài nộp cho báo cáo.
+//Thêm bài nộp cho báo cáo. Check File
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport") {
-    // Kiểm tra xem có dữ liệu tệp được gửi không
+ 
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
-
+        //Kiểm tra file upload
         $checkFile = $utils->checkFileUpload($_FILES["file"]);
-
+        //Thực hiện upload khi file hợp lệ.
         if ($checkFile == true) {
 
             $upload_dir = "../../file_Upload";
@@ -81,7 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport
             } else {
                 echo "Upload thất bại";
             }
-        } else {
+        }
+        //Xuất thông báo lỗi khi file không hợp lệ 
+        else {
             echo $checkFile;
         }
     } else {
@@ -90,3 +92,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport
 }
 
 // Sửa bài nộp báo cáo.
+
+//Thêm bài nộp cho báo cáo . k thực hiện kiểm tra file.
+// if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "addDetailReport") {
+//     // Kiểm tra xem có dữ liệu tệp được gửi không
+//     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
+//             $upload_dir = "../../file_Upload";
+//             $file_tmp = $_FILES['file']['tmp_name'];
+//             $fileName = $_FILES['file']['name'];
+//             $urlFile = $upload_dir . '/' . $_FILES['file']['name'];
+
+//             if (move_uploaded_file($file_tmp, $urlFile)) {
+//                 $addDetailReport = $report->addDetailReport($_POST, $urlFile, $fileName);
+//                 if ($addDetailReport) {
+//                     echo "Đã nộp bào cáo!";
+//                 } else {
+//                     echo "Nộp thất bại, vui lòng thử lại sau!";
+//                 }
+//             } else {
+//                 echo "Upload thất bại";
+//             }
+//         }
+//      else {
+//         echo "Lỗi tải file";
+//     }
+// }

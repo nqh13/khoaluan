@@ -195,17 +195,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'createDiscussion') {
         } else {
             echo "Lỗi, vui lòng thủ lại sau!";
         }
-    } else {
+    } 
+    else {
         echo "Lỗi xác thực!";
     }
 }
-// Xử ly cập nhật cuộc thảo luận.
+//Tạo thảo luận không check CSRF
+// if (isset($_POST['action']) && $_POST['action'] == 'createDiscussion') {
+
+//     $checkXSS = $utils->checkAtackXSS($_POST); 
+//         $createDiscussion = $comment->createDiscussion($checkXSS);
+//         if ($createDiscussion) {
+//             echo "Tạo thành công!";
+//         } else {
+//             echo "Lỗi, vui lòng thủ lại sau!";
+//         }
+// }
+// Xử lý cập nhật cuộc thảo luận.
 
 if (isset($_POST['action']) && $_POST['action'] == 'updateDiscussion') {
-
     $checkXSS = $utils->checkAtackXSS($_POST);
     $checkCSRF = $utils->checkToken($_POST['tokenUser'], $_SESSION['session_token']);
-    // var_dump($checkXSS);
     if ($checkCSRF == true) {
         $updateDiscussion = $comment->updateDiscussion($checkXSS);
         if ($updateDiscussion) {

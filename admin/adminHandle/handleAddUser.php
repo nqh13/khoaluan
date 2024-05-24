@@ -91,9 +91,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'themUser') {
             if (move_uploaded_file($file_tmp, $upload_dir . '/' . $file['name'])) {
                 // Thêm người dùng
                 
-                $adduser = $u->addUser($manguoidung, $checkXSS, $matkhau);
+                $adduser = $u->addUser($manguoidung, $checkXSS, $matkhau, $file['name']);
                 if ($adduser) {
-                    echo "Tài khoản đăng nhập hệ thống.<br> Mã người dùng: " . $manguoidung . " - Mật khẩu: " . $matkhau;
+                    echo "Tài khoản đăng nhập hệ thống. Mã người dùng: " . $manguoidung . " - Mật khẩu: " . $matkhau;
                 }
                 else {
                     echo "Thêm tài khoản thất bại";

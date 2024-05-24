@@ -11,7 +11,7 @@
 
     $utility = new Utility();
     $tokenUser = $utility->generateSessionToken();
-    // var_dump($_SESSION);
+    
     ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -27,6 +27,7 @@
 
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
+                
             }
             switch ($page) {
                 case 'danhsach':
@@ -116,7 +117,8 @@
                              <a href="index.php">Home</a>
                          </li>
                          <li class="breadcrumb-item font-weight-bold text-primary">
-                             <?php
+                             
+                            <?php
                                 switch ($page) {
                                     case 'danhsach':
                                         echo ('');
@@ -167,7 +169,7 @@
                                 }
 
 
-                                ?>
+                            ?>
 
                              </a></li>
                          <!-- <li class="breadcrumb-item active" aria-current="page">Data</li> -->
@@ -229,7 +231,7 @@
                             break;
 
                         default:
-                            echo "<h3> 404 NOT FOUND! </h3> ";
+                            echo '<h3 class="text-center mt-5"> 404 NOT FOUND! </h3> ';
                             break;
                     }
 

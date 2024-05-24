@@ -11,13 +11,15 @@ if (isset($_POST['themUser'])) {
 
 ?>
 
-<div class="row m-5 ">
+<div class="row m-5 " id="formAddUser">
     <div class="col-md-3"></div>
     <div class="card col-md-6  ">
         <div class="card-header border-bottom">
             <h5 class=" text-center">THÊM NGƯỜI DÙNG MỚI</h5>
+            <div class="">
+                <button class="btn btn-primary btn-sm" style="float: right;" type="button" id="import" data-toggle="modal" data-target="#modalImport"><i class="fa-solid fa-file-import"></i> Import File</button>
+            </div>
         </div>
-
         <div class="card-block">
             <form method="POST" action="" class="" id="formAddUser" style="display: flex; flex-direction: column" enctype="multipart/form-data">
                 <input type="hidden" name="token" id="tokenUser" value="<?php echo $tokenUser ?>">
@@ -67,7 +69,7 @@ if (isset($_POST['themUser'])) {
 
                 <div class="form-group">
                     <label for="exampleSelect1" class="form-control-label">Ngành:</label>
-                    <select class="form-control" id="id_nganh" name="nganh" >
+                    <select class="form-control" id="id_nganh" name="nganh">
 
                     </select>
                 </div>
@@ -113,7 +115,48 @@ if (isset($_POST['themUser'])) {
     </div>
     <div class="col-md-3"></div>
 </div>
+<div class="row d-none" id="dataTable" style="padding: 20px;">
+   
+    <table class="table  table-bordered" style="margin-top: 10px;" id="data-table">
+        <thead class="thead-dark">
+
+        </thead>
+        <tbody id="dataBody">
+
+        </tbody>
+    </table>
+    <div class="">
+        <button class="btn btn-primary btn-sm"  id="btnImport">Thêm người dùng</button>
+    </div>
+</div>
+
+<!-- Modal Import -->
+
+<div class="modal fade" id="modalImport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Import danh sách người dùng</h5>
+            </div>
+            <div class="modal-body">
+                <h6>Tải File mẫu</h6>
+                <p>File nhập liệu mẫu. <a href="../file_Upload/importUserSample.xlsx" role="button" class="btn btn-secondary popover-test" title="File mẫu" data-content=""><i class="fa fa-download" aria-hidden="true"></i></a></p>
+                <hr>
+                <h6>Chọn file import</h6>
+                <input class="form-control" type="file" name="file" id="fileImport" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="getData">Improt Data</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
 <script src="assets/js/validator.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+<script src="excel.js"></script>
 <script type="module">
     import "https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js";
 
@@ -144,46 +187,45 @@ if (isset($_POST['themUser'])) {
 
         if (fileInput == undefined) {
             alert("Vui lý chọn hình ảnh");
-        }
-        else{
+        } else {
             $.ajax({
-            type: "POST",
-            url: "./adminHandle/handleAddUser.php",
-            data: fd,
-            processData: false, 
-            contentType: false, 
-            success: function(data) {
+                type: "POST",
+                url: "./adminHandle/handleAddUser.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(data) {
 
-                console.log(data);
-                async function sendMail() {
-                    await axios
-                        .post("http://localhost:3000/send-email", {
-                            from: "nguyenquangha130901@gmail.com",
-                            to: email,
-                            subject: "Thông báo cấp tài khoản đăng nhập",
-                            text: `${data}`,
-                        })
-                        .then((res) => {
-                            console.log(res);
-                            alert("Gửi mail thành công");
-                        })
-                        .catch((err) => console.log(err));
-                }
+                    console.log(data);
+                    async function sendMail() {
+                        await axios
+                            .post("http://localhost:3000/send-email", {
+                                from: "nguyenquangha130901@gmail.com",
+                                to: email,
+                                subject: "Thông báo cấp tài khoản đăng nhập",
+                                text: `${data}`,
+                            })
+                            .then((res) => {
+                                console.log(res);
+                                alert("Gửi mail thành công");
+                            })
+                            .catch((err) => console.log(err));
+                    }
 
-                if(data != "Thêm tài khoản thất bại" || data != ""){
-                    sendMail();
-                }
-                $("#formAddUser")[0].reset();
-                $("#divAnh").addClass("d-none");
-                $("#imgPreview").attr("src", "");
-                $("#hinhanh").removeClass("d-none");
-                alert(data);
-                window.location.href = "inde6666666666666666666666666666666666666666666666x.php?pages=quanlyUsers";
-            },
-        });
+                    if (data != "Thêm tài khoản thất bại" || data != "") {
+                        sendMail();
+                    }
+                    $("#formAddUser")[0].reset();
+                    $("#divAnh").addClass("d-none");
+                    $("#imgPreview").attr("src", "");
+                    $("#hinhanh").removeClass("d-none");
+                    alert(data);
+                    window.location.href = "index.php?pages=quanlyUsers";
+                },
+            });
         }
-        
-        
+
+
     }
     const validate = () => {
         return Validator({
@@ -204,4 +246,112 @@ if (isset($_POST['themUser'])) {
     document.addEventListener('DOMContentLoaded', () => {
         validate();
     })
+
+    const checkedData = []; // Array to store checked data
+
+function handleCheck(rowData, event) {
+    const checkbox = event.target;
+
+    if (checkbox.checked) {
+        checkedData.push(rowData);
+    } else {
+        const index = checkedData.findIndex(row => row === rowData);
+        if (index !== -1) {
+            checkedData.splice(index, 1);
+        }
+    }
+
+    console.log('Checked data:', checkedData); // Display checked data in console
+}
+
+function handleCheckAll(XL_row_object, $table, event) {
+    const checkbox = event.target;
+    const isChecked = checkbox.checked;
+    const checkboxes = $table.find('tbody input:checkbox');
+    checkboxes.prop('checked', isChecked);
+
+    if (isChecked) {
+        checkboxes.each(function(index, checkbox) {
+            handleCheck(XL_row_object[index], {
+                target: checkbox
+            });
+        });
+    } else {
+        checkedData.length = 0; // Clear checked data array when "Check All" is unchecked
+    }
+}
+
+    $(document).ready(function() {
+        $("#getData").click(function() {
+        var selectedFile = $("#fileImport")[0].files[0];
+        // close modal
+        $("#modalImport").modal("hide");
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var data = event.target.result;
+            var workbook = XLSX.read(data, {
+                type: "binary",
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                var XL_row_object = XLSX.utils.sheet_to_row_object_array(
+                    workbook.Sheets[sheetName]
+                );
+                var json_object = JSON.stringify(XL_row_object);
+                console.log(XL_row_object);
+                // if the file is not empty then hide formAddUser and show table
+                $("#formAddUser").addClass("d-none");
+                $("#dataTable").removeClass("d-none");
+
+                // Convert XL_row_object to a table structure using jQuery
+                const $table = $("#data-table");
+                const $headerRow = $("<tr></tr>").appendTo($table.find("thead"));
+                const $body = $table.find("tbody");
+
+                // Generate header row with Check All checkbox
+                const $selectAllCheckbox = $("<input type='checkbox' id='selectAllCheckbox'>").appendTo($headerRow);
+                $selectAllCheckbox.change(handleCheckAll.bind(null, XL_row_object, $table));
+
+                // Generate header row for remaining columns
+                $.each(XL_row_object[0], function(key, value) {
+                    $("<th>" + key + "</th>").appendTo($headerRow);
+                });
+
+                // Generate table rows with checkboxes
+                $.each(XL_row_object, function(index, row) {
+                    const $row = $("<tr></tr>").appendTo($body);
+
+                    // Add checkbox to the beginning of the row
+                    const $checkbox = $("<input type='checkbox'>").appendTo($row);
+                    $checkbox.change(handleCheck.bind(null, row));
+
+                    // Add remaining table cells
+                    $.each(row, function(key, value) {
+                        $("<td>" + value + "</td>").appendTo($row);
+                    });
+                });
+            });
+        };
+        reader.onerror = function(event) {
+            console.error("File could not be read! Code " + event.target.error.code);
+        };
+        reader.readAsBinaryString(selectedFile);
+    });
+    $("#btnImport").click(function() {
+        console.log(checkedData);
+        $.ajax({
+            type: "POST",
+            url: "adminHandle/importUser.php",
+            data: {
+                checkedData: JSON.stringify(checkedData)
+            },
+            success: function(response) {
+                console.log(response);
+                alert(response);
+            }
+        });
+    });
+
+});
+
+
 </script>

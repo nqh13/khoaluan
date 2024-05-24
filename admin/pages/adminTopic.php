@@ -1,3 +1,43 @@
+<?php
+require_once('../classes/topic.php');
+require_once('../classes/semester.php');
+$semster = new  Semester();
+$topic = new Topic();
+// Phân trang.
+$pre_page = 4;
+if (isset($_GET['trang'])) {
+    $trang  = $_GET['trang'];
+} else {
+    $trang = 1;
+}
+
+if ($trang == "" || $trang == 1) {
+    $star = 0;
+} else {
+    $star = ($trang * $pre_page) - $pre_page;
+}
+$getTopic = $topic->getAllTopic()->fetchAll(PDO::FETCH_ASSOC);
+$total_record = count($getTopic);
+$maxpage = ceil($total_record / $pre_page);
+//
+
+$listSemester = $semster->getAllSemesters()->fetchAll(PDO::FETCH_ASSOC);
+
+if (!isset($_GET['hocki'])  || $_GET['hocki'] == "") {
+    $listTopic = $topic->getTopicForAdmin($star, $pre_page)->fetchAll(PDO::FETCH_ASSOC);
+    
+}else{
+    $count = $topic->countTopicForAdminBySemester($_GET['hocki'])->fetch(PDO::FETCH_ASSOC);
+    
+    $maxpage = ceil($count['total'] / $pre_page);
+    $listTopic = $topic->getTopicForAdminBySemester($_GET['hocki'], $star, $pre_page)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+
+?>
+
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
@@ -8,7 +48,7 @@
             <div class="form-group row">
                 <div class="col-md-3"><label class="sr-only"></label></div>
                 <div class="col-md-5 ">
-                    <form action="" method="post" class="" style="margin-top: 12px ;">
+                    <form action="" method="post" class="" style="margin-top: 12px ;" id = "formSearchTopic">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <div class="dropdown">
@@ -23,9 +63,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <input id="keyword" type="text" class="form-control" placeholder="Nhập từ khóa" aria-describedby="btn-addon2">
+                            <input id="keyword" type="text" class="form-control" name="" placeholder="Nhập từ khóa" aria-describedby="btn-addon2">
                             <span class="input-group-btn" id="btn-addon2">
-                                <button type="button" class="btn btn-info shadow-none addon-btn waves-effect waves-light" id="searchBtn" onclick="searchTopic()">
+                                <button type="submit" class="btn btn-info shadow-none addon-btn waves-effect waves-light" id="searchBtn" onclick="searchTopic()">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                             </span>
@@ -34,18 +74,26 @@
                 </div>
 
                 <div class="col-md-4">
-                    <form action="" method="post">
+                    <form action="" method="Get">
                         <div class="form-group row d-flex">
                             <span class="col-sm-1  col-form-label ">
                                 Học kì:</span>
                             <div class="col-sm-8">
+                                <input type="hidden" name="pages" value="quanlydetai">
 
-                                <select class="form-control " id="vaitro" name="vaitro">
+                                <select class="form-control " id="hocki" name="hocki">
                                     <option value="">All</option>
+                                    <?php
+                                    foreach ($listSemester as $key => $value) {
+                                        $selected = ($value['ma_hk'] == $_GET['hocki']) ? 'selected' : '';
+
+                                        echo '<option value="' . $value['ma_hk'] . '" ' . $selected . ' >' . $value['tenhocki'] . '</option>';
+                                    }
+                                    ?>
                                 </select>
 
                             </div>
-                            <button type="button" class="btn btn-info col-sm-2" name="filterRole" style="width: 45px; height: 38px;"><i class="fa-solid fa-filter"></i></button>
+                            <button type="submit" class="btn btn-info col-sm-2" name="" style="width: 45px; height: 38px;"><i class="fa-solid fa-filter"></i></button>
 
                         </div>
                     </form>
@@ -63,37 +111,61 @@
                                 <th class="text-center">#</th>
                                 <th class="text-center">Mã đề tài</th>
                                 <th class="text-center">Tên đề tài</th>
-                                <th class="text-center">Mô tả </th>
-                                <th class="text-center">Yêu cầu</th>
                                 <th class="text-center">Giảng viên</th>
                                 <th class="text-center">Khoa</th>
                                 <th class="text-center">Ngành</th>
                                 <th class="text-center">Loại</th>
                                 <th class="text-center">Học kì</th>
+                                <th class="text-center">Thao tác</th>
 
                             </tr>
                         </thead>
                         <tbody id="tbody">
+                            <?php
+                            
+                            foreach ($listTopic as $key => $value) {
+                                echo '
+                                    <tr class="">
+                                        <td class="text-center">' . ($key + 1) . '</td>
+                                        <td class="text-center">' . $value['ma_detai'] . '</td>
+                                        <td class="text-center">' . $value['tendetai'] . '</td>
+                                        <td class="text-center">' . $value['hoten'] . '</td>
+                                        <td class="text-center">' . $value['ten_khoavien'] . '</td>
+                                        <td class="text-center">' . $value['ten_nganh'] . '</td>
+                                        <td class="text-center">' . $value['tenloai'] . '</td>
+                                        <td class="text-center">' . $value['tenhocki'] . '</td>
+                                        <td class="text-center"> 
+                                            <a href="?pages=chitietdetaic&ma_detai=' . $value['ma_detai'] . '" class="btn btn-info btn-sm"><i class="fa-solid fa-list" title="Xem chi tiết"></i></a>
+                                        </td>
+                                    </tr>
+                                    
+                                    ';
+                            }
 
-
-
+                            ?>
 
                         </tbody>
                     </table>
                 </div>
+
             </div>
+            <div class="pagination d-flex justify-content-center align-items-center">
+            <a href="<?php echo '?pages=quanlydetai&trang=' . $trang - 1 ?>">&laquo;</a>
+            <?php for ($i = 1; $i <= $maxpage; $i++) {
+                echo '<a' . ($i == $trang ? ' class="active"' : '') . ' href="?pages=quanlydetai&trang=' . $i . '">' . $i . '</a>';
+            } ?>
+
+            <a href="<?php echo '?pages=quanlydetai&trang=' . $trang + 1 ?>">&raquo;</a>
         </div>
+        </div>
+
+       
+
     </div>
+
 
 </div>
 <script>
-    function searchTopic() {
-        var action = document.getElementById("dropdownMenuButton").getAttribute("data-search");
-        var keyword = document.getElementById("keyword").value;
-        // Do something with action and keyword
-        console.log("Action:", action);
-        console.log("Keyword:", keyword);
-    }
 
     document.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', event => {

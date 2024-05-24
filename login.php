@@ -1,5 +1,7 @@
 <?php
 
+
+
 session_start();
 if (isset($_SESSION['vaitro']) && isset($_SESSION['ma_nguoidung'])) {
     if ($_SESSION['vaitro'] == 1) {
@@ -12,11 +14,17 @@ if (isset($_SESSION['vaitro']) && isset($_SESSION['ma_nguoidung'])) {
 require_once("classes/user.php");
 $user = new User();
 $flag = 1;
-
+   
 if (isset($_POST['madangnhap']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-    $madangnhap = addslashes($_POST['madangnhap']);
-    $password = addslashes($_POST['matkhau']);
-    $data = $user->login($madangnhap, $password);
+    /* Code phòng chống SQL Injection */
+        $madangnhap = addslashes($_POST['madangnhap']);
+        $password = addslashes($_POST['matkhau']);
+        $data = $user->login($madangnhap, $password);
+
+    /** Code khồng phòng chống SQL Injection */
+
+    // $data = $user->attackLoginSQL($_POST['madangnhap'], $_POST['matkhau']);
+    
     if ($data && $data['ma_nguoidung'] != null) {
 
         $user = $data;

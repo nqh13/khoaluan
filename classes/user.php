@@ -27,6 +27,15 @@ class User
         // Trả về kết quả
         return $result;
     }
+    //Demo Login SQL Injection
+    public function attackLoginSQL($username, $password)
+    {
+        $sql = "SELECT * FROM tbl_users WHERE ma_nguoidung = '$username' AND matkhau = '$password' AND trangthai = '1' ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
     //Login admin
 
     public function loginAdmin($username, $password)
@@ -87,7 +96,7 @@ class User
 
 
     // Add new user
-    public function  addUser($manguoidung,$data, $password )
+    public function  addUser($manguoidung,$data, $password,$hinhanh )
     {
         
        
@@ -100,7 +109,7 @@ class User
         $stmt->bindParam(':sodienthoai', $data['sodienthoai']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':diachi', $data['diachi']);
-        $stmt->bindParam(':hinhanh', $data['hinhanh']);
+        $stmt->bindParam(':hinhanh', $hinhanh);
         $stmt->bindParam(':hoten', $data['hoten']);
         $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':khoavien', $data['khoa']);
@@ -109,7 +118,7 @@ class User
         $stmt->execute();
         return $stmt;
         
-        // echo 'username: ' . $manguoidung . ' password: ' . $password;
+        
     }
     // Change status user
     public function changeStatusUser($id, $status){
@@ -275,5 +284,47 @@ class User
         $sql = "SELECT COUNT(ma_nguoidung) AS totalUser FROM tbl_users";
         $result = $this->db->select($sql);
         return $result ;
+    }
+
+
+    // Function import user by excel.
+
+    public function importUserByExcel($data){
+        $password ="123456";
+        $hinhanh = "user.png";
+        $hashed_password = md5($password);
+        $sql = "INSERT INTO tbl_users (ma_nguoidung,hoten, email, sodienthoai, diachi, hinhanh, matkhau, khoavien, ma_nganh, vaitro) 
+        VALUES (:manguoidung,:hoten, :email, :sodienthoai, :diachi, :hinhanh,:password, :khoavien, :chuyennganh, :vaitro)";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':manguoidung', $data['Manguoidung']);
+        $stmt->bindParam(':sodienthoai', $data['Sodienthoai']);
+        $stmt->bindParam(':email', $data['Email']);
+        $stmt->bindParam(':diachi', $data['Diachi']);
+        $stmt->bindParam(':hinhanh', $hinhanh);
+        $stmt->bindParam(':hoten', $data['Hoten']);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':khoavien', $data['Khoa']);
+        $stmt->bindParam(':chuyennganh', $data['Nganh']);
+        $stmt->bindParam(':vaitro', $data['Vaitro']);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // Check user exist
+
+    public function checkUserExist($manguoidung){
+        $check = true;
+        $sql = "SELECT * FROM tbl_users WHERE ma_nguoidung = :manguoidung";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':manguoidung', $manguoidung);
+        $stmt->execute();
+        if(count($stmt->fetchAll()) == 1){
+            $check = true;
+        }   
+        else{
+            $check = false;
+        }
+        return $check;
     }
 }

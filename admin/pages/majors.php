@@ -38,19 +38,20 @@ if(isset($_GET['khoavien']) && $_GET['khoavien'] != ""){
           <table class="table table-bordered">
             <thead class="bg-primary">
               <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Mã khoa viện</th>
-                <th class="text-center">Tên khoa viện</th>
+                <th class="text-center">STT</th>
+                <th class="text-center">Mã ngành học</th>
+                <th class="text-center">Tên ngành học</th>
                 <th class="text-center"></th>
               </tr>
             </thead>
             <tbody>
               <?php
+              $dem = 1;
               foreach ($dataMajors as $key => $value) {
                 // $countMajors = $major->countMajorByDepartment($value['ma_khoavien'])->fetchColumn();
                 echo '
                                  <tr class="text-center">
-                                    <td>' . $key++ . '</td>
+                                    <td>' . $dem++ . '</td>
                                     <td>' . $value['ma_nganh'] . '</td>
                                     <td>' . $value['ten_nganh'] . '</td>
                                     <td>

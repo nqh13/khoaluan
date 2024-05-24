@@ -121,6 +121,9 @@ $tokenUser = $utility->generateSessionToken();
                                 case "quanlydetai":
                                     echo "Quản lý đề tài";
                                     break;
+                                case "chitietdetai":
+                                    echo "Chi tiết đề tài";
+                                    break;
 
                                 default:
                                     echo "404 NOT FOUND! ";
@@ -165,6 +168,9 @@ $tokenUser = $utility->generateSessionToken();
                         break;
                     case "quanlydetai":
                         include("./pages/adminTopic.php");
+                        break;
+                    case "chitietdetai":
+                        include("./pages/detailTopic.php");
                         break;
                     default:
                         echo "404 NOT FOUND! ";

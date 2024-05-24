@@ -189,4 +189,45 @@ class Topic
         return $result;
     }
 
+    //Get topics for Admin.
+    public function getTopicForAdmin($start, $limit)
+    {
+        $sql = "SELECT * FROM tbl_detai JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung 
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien 
+        JOIN tbl_chuyennganh ON tbl_khoavien.ma_khoavien = tbl_chuyennganh.ma_nganh 
+        JOIN tbl_loaidetai ON tbl_detai.loaidetai = tbl_loaidetai.id_loai 
+        JOIN tbl_hocki ON tbl_detai.hocki = tbl_hocki.ma_hk LIMIT :start, :limit";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':start', $start, PDO::PARAM_INT);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $result->execute();
+        return $result;
+    }
+
+    // get Topic For Admin By Semester
+    public function getTopicForAdminBySemester($id_semester,$start, $limit)
+    {
+        $sql = "SELECT * FROM tbl_detai JOIN tbl_users ON tbl_detai.ma_GV = tbl_users.ma_nguoidung 
+        JOIN tbl_khoavien ON tbl_users.khoavien = tbl_khoavien.ma_khoavien 
+        JOIN tbl_chuyennganh ON tbl_khoavien.ma_khoavien = tbl_chuyennganh.ma_nganh 
+        JOIN tbl_loaidetai ON tbl_detai.loaidetai = tbl_loaidetai.id_loai 
+        JOIN tbl_hocki ON tbl_detai.hocki = tbl_hocki.ma_hk WHERE tbl_hocki.ma_hk = :id_semester LIMIT :start, :limit";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':start', $start, PDO::PARAM_INT);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $result->bindParam(':id_semester', $id_semester, PDO::PARAM_INT);
+        $result->execute();
+        return $result;
+    } 
+    
+    //count Topic For Admin By Semester
+    public function countTopicForAdminBySemester($id_semester)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM tbl_detai WHERE tbl_detai.hocki = :id_semester;";
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':id_semester', $id_semester);
+        $result->execute();
+        return $result;
+    }
+
 }

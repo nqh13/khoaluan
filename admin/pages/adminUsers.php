@@ -22,13 +22,13 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
     <!-- Basic Table starts -->
     <div class="card">
         <div class="card-header">
-            <h5 class="card-header-text">DANH SÁCH TÀI KHOẢN</h5>
+            <h5 class="text-primary text-center" style=" padding: 20px;">DANH SÁCH NGƯỜI DÙNG</h5>
 
             <!-- <p>Basic example <code>without any additional modification</code> classes</p> -->
             <div class="">
                 <div class="form-group row">
-                    <div class="col-md-4"><label class="sr-only"></label></div>
-                    <div class="col-md-4">
+
+                    <div class="col-md-5">
                         <div class="input-group" id="dropdown2">
 
                             <div class="input-group-btn">
@@ -59,7 +59,7 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <form action="" method="post">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label ">
@@ -92,6 +92,12 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                         </form>
                     </div>
 
+                    <div class="col-md-2"><label class="sr-only"></label>
+                        <form action="./pages/exportUser.php" method="post">
+                            <input type="hidden" name="user_role" value="<?php if (isset($_POST['vaitro'])) echo ($_POST['vaitro'])?>">
+                            <button type="submit" class="btn btn-success" name="<?php echo !isset($_POST['filterRole']) ? 'exportUser' : 'exportUserFilter'; ?>" style="width: 100px; height: 38px;"><i class="fa-solid fa-file-export"></i>Xuất File</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -101,7 +107,7 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
         <div class="card-block">
             <div class="row">
                 <div class="col-sm-12 table-responsive">
-                    <table class="table hover table-bordered">
+                    <table class="table hover table-bordered" id ="data-table">
                         <thead class="">
                             <tr class="bg-info">
                                 <th class="text-center">#</th>
@@ -124,7 +130,7 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
                             foreach ($result as $key => $value) {
                                 $bg = ($value['trangthai'] == 1) ? '' : 'bg-default';
                                 echo ('
-                                    <tr class="'.$bg.'">
+                                    <tr class="' . $bg . '">
                                 
                                         <td>' . $dem++ . '</td>
                                         <td>' . $value['ma_nguoidung'] . '</td>
@@ -162,44 +168,42 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
     <!-- Basic Table ends -->
 </div>
 
-<div class="modal fade" id="changeStatusUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header ">
-                    <h5 class="modal-title text-primary text-center" id="exampleModalLabel">ĐỔI TRẠNG THÁI NGƯỜI DÙNG
-                    </h5>
-                    
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <input type="hidden" name="_token" id="tokenUser" value="<?php echo $tokenUser ?>">
-                        <input type="hidden" class="form-control" id="iduser">
-                        <div class="form-group">
-                            <label for="hoten" class="col-form-label font-weight-bold ">Họ tên:</label>
-                            <input type="text" class="form-control" id="nameuser" >
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label font-weight-bold">Trạng thái:</label>
-                            <select class="form-control" name="" id="trangthai">
-                                <option value="1" <?php echo $value['trangthai'] == 1 ? 'selected' : '' ?>>Đang hoạt động
-                                </option>
-                                <option value="2" <?php echo $value['trangthai'] == 2 ? 'selected' : '' ?>>Đã khóa
-                                </option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class=" btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class=" btn btn-primary" style="margin-left: 10px;"
-                        onclick="changeStatusUser()">Lưu</button>
-                </div>
+<div class="modal fade" id="changeStatusUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title text-primary text-center" id="exampleModalLabel">ĐỔI TRẠNG THÁI NGƯỜI DÙNG
+                </h5>
+
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="_token" id="tokenUser" value="<?php echo $tokenUser ?>">
+                    <input type="hidden" class="form-control" id="iduser">
+                    <div class="form-group">
+                        <label for="hoten" class="col-form-label font-weight-bold ">Họ tên:</label>
+                        <input type="text" class="form-control" id="nameuser">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Trạng thái:</label>
+                        <select class="form-control" name="" id="trangthai">
+                            <option value="1" <?php echo $value['trangthai'] == 1 ? 'selected' : '' ?>>Đang hoạt động
+                            </option>
+                            <option value="2" <?php echo $value['trangthai'] == 2 ? 'selected' : '' ?>>Đã khóa
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class=" btn btn-primary" style="margin-left: 10px;" onclick="changeStatusUser()">Lưu</button>
             </div>
         </div>
     </div>
-    <script type="">
-   document.querySelectorAll('#changeStatusButton').forEach(button => {
+</div>
+<script type="">
+    document.querySelectorAll('#changeStatusButton').forEach(button => {
     button.addEventListener('click', function() {
         var idUser = this.getAttribute('data-iduser');
         var nameUser = this.getAttribute('data-nameuser');
@@ -212,5 +216,10 @@ if (isset($_POST['searchMaNguoiDung']) && $_POST['searchMaNguoiDung'] != "") {
         document.getElementById('trangthai').value = trangThai;
     });
 });
+
+
+
+
+
 
 </script>

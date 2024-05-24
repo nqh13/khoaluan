@@ -1,8 +1,10 @@
 <?php
 require_once('../classes/department.php');
 require_once('../classes/user.php');
+require_once('../classes/majors.php');
 $user = new User();
 $d = new Department();
+$majors = new Majors();
 $department = $d->getDepartments();
 
 
@@ -28,68 +30,59 @@ if (isset($_GET['ma_nguoidung'])) {
         </div>
 
         <div class="card-block">
-            <form method="POST" action="" class="" id="formUpdateUser" style="display: flex; flex-direction: column"
-                enctype="multipart/form-data">
+            <form method="POST" action="" class="" id="formUpdateUser" style="display: flex; flex-direction: column" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="form-control-label">Mã người dùng:</label>
-                    <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung"
-                        value="<?php echo $result['ma_nguoidung']; ?>" readonly>
+                    <input name="manguoidung" type="text" class="form-control form-control-success" id="manguoidung" value="<?php echo $result['ma_nguoidung']; ?>" readonly>
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Tên người dùng:</label>
-                    <input name="hoten" type="text" class="form-control form-control-success" id="hoten"
-                        value="<?php echo $result['hoten']; ?>" placeholder="Nhập họ tên người dùng">
+                    <input name="hoten" type="text" class="form-control form-control-success" id="hoten" value="<?php echo $result['hoten']; ?>" placeholder="Nhập họ tên người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Email:</label>
-                    <input name="email" type="text" class="form-control form-control-success" id="email"
-                        value="<?php echo $result['email']; ?>" placeholder="Nhập họ tên người dùng"
-                        placeholder="Nhập email người dùng">
+                    <input name="email" type="text" class="form-control form-control-success" id="email" value="<?php echo $result['email']; ?>" placeholder="Nhập họ tên người dùng" placeholder="Nhập email người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Số điện thoại:</label>
-                    <input name="sdt" type="text" class="form-control form-control-success" id="sdt"
-                        value="<?php echo $result['sodienthoai']; ?>" placeholder="Nhập số điện thoại người dùng">
+                    <input name="sdt" type="text" class="form-control form-control-success" id="sdt" value="<?php echo $result['sodienthoai']; ?>" placeholder="Nhập số điện thoại người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label">Địa chỉ:</label>
-                    <input name="diachi" type="text" class="form-control form-control-success" id="diachi"
-                        value="<?php echo $result['diachi']; ?>" placeholder="Nhập địa chỉ người dùng">
+                    <input name="diachi" type="text" class="form-control form-control-success" id="diachi" value="<?php echo $result['diachi']; ?>" placeholder="Nhập địa chỉ người dùng">
                     <small class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label for="exampleSelect1" class="form-control-label">Khoa:</label>
                     <select class="form-control" id="id_khoa" name="khoa">
-                        <option value="<?php echo $result['ma_khoavien']; ?>" selected>
-                            <?php echo $result['ten_khoavien']; ?></option>
                         <?php
+                        
+                       
 
                         foreach ($department as $key => $value) {
-
-                            echo '<option value="' . $value['ma_khoavien'] . '"  >' . $value['ten_khoavien'] . '</option>';
+                           
+                            $selected = ($value['ma_khoavien'] === $result['ma_khoavien']) ? ' selected' : '';
+                            echo '<option value="' . $value['ma_khoavien'] . '"' . $selected . '>' . $value['ten_khoavien'] . '</option>';
                         }
-
                         ?>
-
-
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleSelect1" class="form-control-label">Ngành:</label>
                     <select class="form-control" id="id_nganh" name="nganh">
-
-                        <option value="<?php echo $result['ma_nganh']; ?>" selected>
-                            <?php echo $result['ten_nganh']; ?></option>
                         <?php
 
-
-
+                        foreach ($majors->getMajorByDepartment($value['ma_khoavien']) as $key => $items) {
+                            $selected = ($items['ma_nganh'] === $result['ma_nganh'])? ' selected' : '';
+                            echo '<option value="'. $items['ma_nganh']. '"'. $selected. '>'. $items['ten_nganh']. '</option>';
+                        }
                         ?>
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -125,18 +118,13 @@ if (isset($_GET['ma_nguoidung'])) {
 
                 <div style="display:flex; justify-content:start; align-items:start">
                     <div class="<?= $result['hinhanh'] != "" ? "" : " d-none" ?>" style="position:relative" id="divAnh">
-                        <span class=" "
-                            style="position:absolute;top:-10px; right:-10px ;font-size: 16px; border-radius: 50%; cursor:pointer; color:red ; font-weight: bold;  "
-                            id="btnXoaAnh">x</span>
-                        <img src="../Uploads/<?php echo $result['hinhanh']; ?>" alt="" id="imgPreview" width="100px"
-                            height="100px">
+                        <span class=" " style="position:absolute;top:-10px; right:-10px ;font-size: 16px; border-radius: 50%; cursor:pointer; color:red ; font-weight: bold;  " id="btnXoaAnh">x</span>
+                        <img src="../Uploads/<?php echo $result['hinhanh']; ?>" alt="" id="imgPreview" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="form-group text-center">
-                    <a class="btn btn-danger " href="?pages=quanlyUsers" style="margin-top: 10px; color: white;" id=""
-                        name="">Hủy</a>
-                    <button class="btn btn-primary" style="margin-top: 10px" type="submit" id="btnUpdateUser"
-                        name="updateUser">Cập nhật</button>
+                    <a class="btn btn-danger " href="?pages=quanlyUsers" style="margin-top: 10px; color: white;" id="" name="">Hủy</a>
+                    <button class="btn btn-primary" style="margin-top: 10px" type="submit" id="btnUpdateUser" name="updateUser">Cập nhật</button>
 
                 </div>
 
@@ -147,65 +135,65 @@ if (isset($_GET['ma_nguoidung'])) {
 </div>
 <script src="assets/js/validator.js"></script>
 <script type="text/javascript">
-function updateUser() {
-    var manguoidung = $("#manguoidung").val();
-    var hoten = $("#hoten").val();
-    var email = $("#email").val();
-    var sdt = $("#sdt").val();
-    var diachi = $("#diachi").val();
-    var khoa = $("#id_khoa").val();
-    var nganh = $("#id_nganh").val();
-    var vaitro = $("#vaitro").val();
-    var fileInput = $("#file")[0].files[0];
+    function updateUser() {
+        var manguoidung = $("#manguoidung").val();
+        var hoten = $("#hoten").val();
+        var email = $("#email").val();
+        var sdt = $("#sdt").val();
+        var diachi = $("#diachi").val();
+        var khoa = $("#id_khoa").val();
+        var nganh = $("#id_nganh").val();
+        var vaitro = $("#vaitro").val();
+        var fileInput = $("#file")[0].files[0];
 
-    var fd = new FormData();
-    fd.append("action", "updateUser");
-    fd.append("id", manguoidung);
-    fd.append("hoten", hoten);
-    fd.append("email", email);
-    fd.append("sdt", sdt);
-    fd.append("diachi", diachi);
-    fd.append("khoavien", khoa);
-    fd.append("ma_nganh", nganh);
-    fd.append("vaitro", vaitro);
-    fd.append("file", fileInput); // Thêm tệp vào FormData
-    if (hoten == "" || email == "" || sdt == "" || diachi == "") {
-        alert("Vui lòng nhập đầy đử thông tin!");
-    } else {
-        $.ajax({
-            type: "POST",
-            url: "./adminHandle/handleAddUser.php",
-            data: fd,
-            processData: false, // không xử lý dữ liệu
-            contentType: false, // không đặt header Content-Type
-            success: function(data) {
-                $("#formUpdateUser")[0].reset();
-                $("#divAnh").addClass("d-none");
-                $("#imgPreview").attr("src", "");
-                $("#hinhanh").removeClass("d-none");
-                alert(data);
-                // console.log(data);
-                window.location.reload();
-            },
-        });
+        var fd = new FormData();
+        fd.append("action", "updateUser");
+        fd.append("id", manguoidung);
+        fd.append("hoten", hoten);
+        fd.append("email", email);
+        fd.append("sdt", sdt);
+        fd.append("diachi", diachi);
+        fd.append("khoavien", khoa);
+        fd.append("ma_nganh", nganh);
+        fd.append("vaitro", vaitro);
+        fd.append("file", fileInput); // Thêm tệp vào FormData
+        if (hoten == "" || email == "" || sdt == "" || diachi == "") {
+            alert("Vui lòng nhập đầy đử thông tin!");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "./adminHandle/handleAddUser.php",
+                data: fd,
+                processData: false, // không xử lý dữ liệu
+                contentType: false, // không đặt header Content-Type
+                success: function(data) {
+                    $("#formUpdateUser")[0].reset();
+                    $("#divAnh").addClass("d-none");
+                    $("#imgPreview").attr("src", "");
+                    $("#hinhanh").removeClass("d-none");
+                    alert(data);
+                    // console.log(data);
+                    window.location.reload();
+                },
+            });
+        }
+
     }
-
-}
-const validate = () => {
-    return Validator({
-        form: '#formUpdateUser',
-        errorSelector: '.form-text',
-        rules: [
-            Validator.isRequired('#hoten'),
-            Validator.isRequired('#email'),
-            Validator.isRequired('#sdt'),
-            Validator.isRequired('#diachi'),
-            Validator.isEmail('#email'),
-            Validator.isNumberPhone('#sdt'),
-        ]
-    }, updateUser);
-}
-document.addEventListener('DOMContentLoaded', () => {
-    validate();
-})
+    const validate = () => {
+        return Validator({
+            form: '#formUpdateUser',
+            errorSelector: '.form-text',
+            rules: [
+                Validator.isRequired('#hoten'),
+                Validator.isRequired('#email'),
+                Validator.isRequired('#sdt'),
+                Validator.isRequired('#diachi'),
+                Validator.isEmail('#email'),
+                Validator.isNumberPhone('#sdt'),
+            ]
+        }, updateUser);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        validate();
+    })
 </script>

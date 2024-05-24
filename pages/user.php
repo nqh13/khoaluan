@@ -8,12 +8,6 @@ $user = new User();
 
 $info = $user->getUserInfo($_SESSION['ma_nguoidung'])->fetchAll(PDO::FETCH_ASSOC);
 
-
-
-
-
-
-
 ?>
 <div class="container-fluid">
     <div class="row profile">

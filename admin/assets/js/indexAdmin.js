@@ -98,21 +98,24 @@ function addSemester() {
   var tokenUser = document.getElementById("tokenUser").value;
   var trangthai = document.getElementById("addtrangthai").value;
 
-  // console.log(mahk, tenhocki, tokenUser, trangthai);
-  $.ajax({
-    type: "POST",
-    url: "./adminHandle/handle.php",
-    data: {
-      action: "addSemester",
-      tenhocki: tenhocki,
-      tokenUser: tokenUser,
-      trangthai: trangthai,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
+  if (tenhocki === "") {
+    alert("Bạn chưa nhập tên học kỳ!");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "addSemester",
+        tenhocki: tenhocki,
+        tokenUser: tokenUser,
+        trangthai: trangthai,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
 }
 
 // Cập nhật thông tin học kì:
@@ -122,22 +125,25 @@ function updateSemester() {
   var tokenUser = document.getElementById("tokenUser").value;
   var trangthai = document.getElementById("trangthai").value;
 
-  // console.log(mahk, tenhocki, tokenUser, trangthai);
-  $.ajax({
-    type: "POST",
-    url: "./adminHandle/handle.php",
-    data: {
-      action: "updateSemester",
-      ma_hk: ma_hk,
-      tenhocki: tenhocki,
-      tokenUser: tokenUser,
-      trangthai: trangthai,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
+  if (tenhocki === "") {
+    alert("Bạn chưa nhập tên học kỳ!");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "updateSemester",
+        ma_hk: ma_hk,
+        tenhocki: tenhocki,
+        tokenUser: tokenUser,
+        trangthai: trangthai,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
+  }
 }
 // Thêm khoa viện admin.
 
@@ -166,27 +172,27 @@ function addDepartment() {
 // Cập nhật thông tin khoa viện.
 
 function updateDepartment() {
-  var tenKhoaVien = document.getElementById('tenKhoaUpdate').value;
-  var tokenUser = document.getElementById('tokenUser').value;
-  var maKhoa = document.getElementById('idKhoaUpdate').value;
+  var tenKhoaVien = document.getElementById("tenKhoaUpdate").value;
+  var tokenUser = document.getElementById("tokenUser").value;
+  var maKhoa = document.getElementById("idKhoaUpdate").value;
 
-  if(tenKhoaVien == ""){
+  if (tenKhoaVien == "") {
     alert("Vui lòng nhập đầy đủ thông tin");
-  }
-  else{
-      $.ajax({
-    type: "POST",
-    url: "./adminHandle/handle.php",
-    data: { action: "updateDepartment", 
-    tenkhoavien: tenKhoaVien, 
-    tokenUser: tokenUser, 
-    id: maKhoa 
-  },
-  success: function (response) {
-    alert(response);
-    window.location.reload();
-  },
-})
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "updateDepartment",
+        tenkhoavien: tenKhoaVien,
+        tokenUser: tokenUser,
+        id: maKhoa,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
   }
 }
 //Thêm ngành học mới.
@@ -194,26 +200,24 @@ function addMajor(idkhoa) {
   var ten_nganh = document.getElementById("tenNganhMoi").value;
   var tokenUser = document.getElementById("tokenUser").value;
 
-  if(ten_nganh ==""){
+  if (ten_nganh == "") {
     alert("Vui lòng nhập tên ngành học!");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "addMajor",
+        ten_nganh: ten_nganh,
+        tokenUser: tokenUser,
+        khoavien: idkhoa,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
   }
-  else{
-  $.ajax({
-    type: "POST",
-    url: "./adminHandle/handle.php",
-    data: {
-      action: "addMajor",
-      ten_nganh: ten_nganh,
-      tokenUser: tokenUser,
-      khoavien : idkhoa
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
-  }
-
 }
 //Cập nhật thông tin ngành học.
 
@@ -221,28 +225,26 @@ function updateMajor() {
   var idNganhUpdate = document.getElementById("idNganhUpdate").value;
   var tenNganhUpdate = document.getElementById("tenNganhUpdate").value;
   var tokenUser = document.getElementById("tokenUser").value;
-  
-  if(tenNganhUpdate == ""){
+
+  if (tenNganhUpdate == "") {
     alert("Vui lòng nhập tên ngành!");
-  }
-  else{
-  $.ajax({
-    type: "POST",
-    url: "./adminHandle/handle.php",
-    data: {
-      action: "updateMajor",
-      id: idNganhUpdate,
-      ten_nganh: tenNganhUpdate,
-      tokenUser: tokenUser,
-    },
-    success: function (response) {
-      alert(response);
-      window.location.reload();
-    },
-  });
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "./adminHandle/handle.php",
+      data: {
+        action: "updateMajor",
+        id: idNganhUpdate,
+        ten_nganh: tenNganhUpdate,
+        tokenUser: tokenUser,
+      },
+      success: function (response) {
+        alert(response);
+        window.location.reload();
+      },
+    });
   }
 }
-
 
 // Thay đổi trạng thái Users
 function changeStatusUser() {
@@ -267,3 +269,66 @@ function changeStatusUser() {
     });
   }
 }
+
+// Search đề tài.
+function searchTopic() {
+  var action = document
+    .getElementById("dropdownMenuButton")
+    .getAttribute("data-search");
+  var keyword = document.getElementById("keyword").value;
+
+  if (keyword == "") {
+    alert("Vui lòng nhập thông tin cần tìm!");
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "../../index.php",
+      data: {
+        action: action,
+        keyword: keyword,
+      },
+      success: function (response) {},
+    });
+  }
+}
+
+
+// Lấy dữ liệu từ bảng User
+
+/*
+function getDataFromTable() {
+  var table = document.getElementById("data-table"); // Lấy thẻ bảng từ id
+  var data = []; // Mảng để lưu trữ dữ liệu
+
+  // Lặp qua từng hàng của bảng
+  for (var i = 0; i < table.rows.length; i++) {
+    var row = table.rows[i]; // Lấy hàng thứ i
+    var rowData = []; // Mảng để lưu trữ dữ liệu của hàng
+
+    // Lặp qua từng ô trong hàng
+    for (var j = 0; j < row.cells.length; j++) {
+      var cell = row.cells[j]; // Lấy ô thứ j
+      rowData.push(cell.innerText); // Lấy dữ liệu của ô và thêm vào mảng
+    }
+
+    data.push(rowData); // Thêm mảng dữ liệu của hàng vào mảng chính
+  }
+
+  // Chuyển đổi dữ liệu thành chuỗi JSON
+  var jsonData = JSON.stringify(data);
+
+  // Gửi yêu cầu AJAX
+  $.ajax({
+    type: "POST",
+    url: "./pages/exportUser.php",
+    data: {
+      action: "exportUser",
+      table_data: jsonData, // Truyền dữ liệu dưới dạng chuỗi JSON
+    },
+    success: function (response) {
+      console.log(response);
+    },
+  });
+}
+
+*/
